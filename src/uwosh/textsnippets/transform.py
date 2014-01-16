@@ -2,12 +2,15 @@ from zope.interface import implements, Interface
 from zope.component import adapts
 
 from plone.transformchain.interfaces import ITransform
+from repoze.xmliter.utils import getHTMLSerializer
+
+from uwosh.textsnippets.parser import SnippetParser
 
 class SnippetTransform(object):
     implements(ITransform)
     adapts(Interface, Interface) # any context, any request
 
-    order = 1000
+    order = 9000
 
     def __init__(self, published, request):
         self.published = published
@@ -20,4 +23,21 @@ class SnippetTransform(object):
         return result
 
     def transformIterable(self, result, encoding):
-        return [s.upper() for s in result]
+        parser = SnippetParser()
+
+        contentType = self.request.response.getHeader('Content-Type')
+        if contentType is None or not contentType.startswith('text/html'):
+            return None
+
+        ce = self.request.response.getHeader('Content-Encoding')
+        if ce and ce in ('zip', 'deflate', 'compress'):
+            return None
+        try:
+            result = getHTMLSerializer(result, pretty_print=False)
+        except (TypeError, etree.ParseError):
+            return None
+
+        if self.request['PATH_INFO'].endswith('edit'):
+            return result
+
+        return [ parser.replaceIds(r) for r in result ]
