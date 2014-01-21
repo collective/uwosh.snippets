@@ -20,4 +20,11 @@
   <!-- -*- extra stuff goes here -*- -->
 
   <adapter factory=".transform.SnippetTransform" name="uwosh.textsnippets" />
+
+  <include package=".browser"/>
+
+  <browser:resourceDirectory
+    name="uwosh.textsnippets"
+    directory="browser/resources"
+    />
 </configure>

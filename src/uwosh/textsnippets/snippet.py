@@ -49,6 +49,13 @@ class SnippetManager():
 		if snippetId in self.folder:
 			self.folder.manage_delObject(snippetId)
 
+	def getEditURL(self, snippetId):
+		if snippetId in self.folder:
+			doc = self.folder[snippetId]
+			portal = getSite()
+			url = portal.absolute_url()
+			url += doc.absolute_url_path()
+
 	def getSnippet(self, snippetId):
 		if snippetId in self.folder:
 			snippet = Snippet(snippetId)

@@ -23,7 +23,13 @@ class SnippetTransform(object):
         return result
 
     def transformIterable(self, result, encoding):
-        parser = SnippetParser()
+        try:
+            parser = SnippetParser()
+        except AttributeError:
+            return result
+
+        if self.request['PATH_INFO'].endswith('edit'):
+            return result
 
         contentType = self.request.response.getHeader('Content-Type')
         if contentType is None or not contentType.startswith('text/html'):
@@ -36,8 +42,5 @@ class SnippetTransform(object):
             result = getHTMLSerializer(result, pretty_print=False)
         except (TypeError, etree.ParseError):
             return None
-
-        if self.request['PATH_INFO'].endswith('edit'):
-            return result
 
         return [ parser.replaceIds(r) for r in result ]
