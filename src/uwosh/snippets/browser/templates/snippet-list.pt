@@ -14,7 +14,7 @@
 			<option value="None">None</option>
 		</select>
 
-		<input type="button" value="Save" id="snippet-save" />
+		<input type="button" value="Insert" id="snippet-insert" />
 		<input type="button" value="Cancel" id="snippet-cancel" />
 	</form>
 	<div class="snippet" tal:repeat="snippet snippets" style="display: none;" tal:attributes="id string:snippet-${snippet/getId}">

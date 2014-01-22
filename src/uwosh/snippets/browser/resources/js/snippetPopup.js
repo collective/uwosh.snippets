@@ -17,11 +17,11 @@ $(document).ready(function() {
 		$('#snippet-preview').html(($(id).find('.snippet-text').html()));
 	})
 
-	$('#snippet-save').click(function() {
+	$('#snippet-insert').click(function() {
 		var snippet = $('#snippet-select').find('option:selected').val();
 		if( snippet != "None" )
 		{
-			tinyMCEPopup.editor.selection.setContent('!{{' + snippet + '}}!');
+			tinyMCEPopup.editor.selection.setContent('!{{' + snippet + '}}!', {format: 'raw'});
 			tinyMCEPopup.close();
 		}
 		else if( snippet == "None" )
