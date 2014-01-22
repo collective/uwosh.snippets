@@ -1,0 +1,11 @@
+#snippet-list {
+	font: 100% Arial, FreeSans, sans-serif;
+}
+
+#snippet-preview {
+	border: 2px solid #ddd;
+	padding: 5px;
+	width: auto;
+	height: 50%;
+	overflow: auto;
+}

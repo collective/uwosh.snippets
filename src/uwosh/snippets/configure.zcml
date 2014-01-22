@@ -1,0 +1,30 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="uwosh.snippets">
+
+  <five:registerPackage package="." initialize=".initialize" />
+
+  <includeDependencies package="." />
+
+  <genericsetup:registerProfile
+      name="default"
+      title="uwosh.snippets"
+      directory="profiles/default"
+      description="Installs the uwosh.snippets package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+  <!-- -*- extra stuff goes here -*- -->
+
+  <adapter factory=".transform.SnippetTransform" name="uwosh.snippets" />
+
+  <include package=".browser"/>
+
+  <browser:resourceDirectory
+    name="uwosh.snippets"
+    directory="browser/resources"
+    />
+</configure>

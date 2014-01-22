@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '0.1'
 
 long_description = (
     open('README.txt').read()
@@ -14,7 +14,7 @@ long_description = (
     open('CHANGES.txt').read()
     + '\n')
 
-setup(name='uwosh.textsnippets',
+setup(name='uwosh.snippets',
       version=version,
       description="Adds dynamic rich-text snippets",
       long_description=long_description,
