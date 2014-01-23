@@ -45,10 +45,28 @@ $(document).ready(function() {
 			//grabs the actual DOM element. 
 			text = $(text).clone().get(0);
 
-			sel = window.getSelection();
-			sel.deleteFromDocument();
-			sel = sel.getRangeAt(0);
-			sel.insertNode(text);
+			var preview = $('#snippet-preview').get(0);
+
+			var sel = window.getSelection();
+			range = sel.getRangeAt(0);
+
+			//makes sure the user selection is inside the 
+			//preview window. Otherwise, the user could replace
+			//text anywhere on the window.
+			if( range.intersectsNode(preview) )
+			{
+				sel.deleteFromDocument();
+				range.insertNode(text);
+			}
+			else
+			{
+				alert('You must select select a location to insert the snippet.');
+			}
+		}
+		else
+		{
+			alert("You must select a snippet to insert.");
+			$('#snippet-select').focus();
 		}
 	});
 
