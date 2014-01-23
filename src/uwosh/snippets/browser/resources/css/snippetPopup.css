@@ -6,6 +6,16 @@
 	border: 2px solid #ddd;
 	padding: 5px;
 	width: auto;
-	height: 50%;
+	height: 75%;
 	overflow: auto;
+}
+
+#snippet-list iframe {
+	width: 100%;
+	height: 100%;
+}
+
+#snippet-list p {
+	font-size: 85%;
+	padding: 5px 0 5px 0;
 }

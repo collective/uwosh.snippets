@@ -16,7 +16,7 @@ class SnippetParser():
 		self.sm = SnippetManager()
 
 	#regEx to catch a string tagged like !{{this}}!
-	regex = '!{{([a-zA-Z0-9_-]+?)}}!'
+	regex = '<span onClick="this.select()">!{{([a-zA-Z0-9_-]+?)}}!</span>'
 
 	def findIds(self, pageText):
 		pattern = re.compile(self.regex)
