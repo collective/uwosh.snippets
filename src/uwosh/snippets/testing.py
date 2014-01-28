@@ -66,6 +66,10 @@ class BaseTest(unittest.TestCase):
         folder.invokeFactory('Document', 'testDoc')
         self.doc = self.folder['testDoc']
 
+        folder.invokeFactory('Folder', 'testFolder')
+        folder2 = folder['testFolder']
+        folder2.invokeFactory('Document', 'testDoc2')
+
         #need to verify that the regex will catch more than 1
         self.testString = "This is a !{{testDoc}}! test! Or is it !{{testDoc}}!?"
 

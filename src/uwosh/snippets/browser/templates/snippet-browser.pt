@@ -1,0 +1,23 @@
+<div id="snippet-list" tal:define="snippets view/getSnippets">
+	<script type="text/javascript" src="++resource++plone.app.jquery.js" />
+	<script type="text/javascript" src="../tiny_mce_popup.js" />
+	<script type="text/javascript" src="++resource++uwosh.snippets/js/snippetBrowser.js" />
+	<link rel="stylesheet" type="text/css" href="++resource++uwosh.snippets/css/snippetPopup.css" />
+
+	<label for="snippet-browser">Select a snippet</label>
+	<div id="snippet-browser">
+		<div class="snippet-box" tal:repeat="snippet snippets" tal:attributes="id string:snippet-${snippet/getId}">
+			<input type="radio" class="snippet-browser-radio" name="snippet" tal:attributes="value snippet/id">
+			<div class="snippet-browser-title" tal:content="snippet/title"></div>
+			<div class="snippet-id" style="display: none;" tal:content="snippet/getId"></div>
+			<div class="snippet-browser-desc" tal:content="snippet/description"></div>
+			<br style="clear: left;" />
+		</div>
+	</div>
+	<form>
+		<div id="snippet-normal-buttons" class="snippet-buttons">
+			<input type="button" value="Select" id="snippet-browser-select" />
+			<input type="button" value="Cancel" id="snippet-browser-cancel" />
+		</div>
+	</form>
+</div>

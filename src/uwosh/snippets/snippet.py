@@ -3,6 +3,9 @@ from Products.CMFCore.utils import getToolByName
 
 class Snippet():
 
+	def getDescription(self):
+		return self.description
+
 	def getId(self):
 		return self.id
 
@@ -11,6 +14,9 @@ class Snippet():
 
 	def getTitle(self):
 		return self.title
+
+	def setDescription(self, description):
+		self.description = description
 
 	def setId(self, snippetId):
 		self.id = snippetId
@@ -39,45 +45,71 @@ class SnippetManager():
 		if not self.folder.getExcludeFromNav():
 			self.folder.setExcludeFromNav('true')
 
-	def createSnippet(self, snippetId):
-		if not snippetId in self.folder:
-			return self.folder.invokeFactory("Document", snippetId)
+	def createSnippet(self, snippetId, folder=False):
+
+		if not folder:
+			folder = self.folder
+
+		if not snippetId in folder:
+			return folder.invokeFactory("Document", snippetId)
 		else:
-			raise IndexError(u'Invalid or duplicate id: %s') % snippetId
+			raise LookupError(u'Invalid or duplicate id: ' + snippetId)
 
-	def deleteSnippet(self, snippetId):
-		if snippetId in self.folder:
-			self.folder.manage_delObject(snippetId)
+	def deleteSnippet(self, snippetId, folder=False):
 
-	def getSnippet(self, snippetId):
-		if snippetId in self.folder:
+		if not folder:
+			folder = self.folder
+
+		if snippetId in folder:
+			folder.manage_delObjects(snippetId)
+
+	def getSnippet(self, snippetId, folder=False):
+
+		if not folder:
+			folder = self.folder
+
+		if snippetId in folder:
 			snippet = Snippet()
 			snippet.setId(snippetId)
-			doc = self.folder[snippetId]
+			doc = folder[snippetId]
 
 			snippet.setText(doc.getRawText())
 			snippet.setTitle(doc.Title())
+			snippet.setDescription(doc.Description())
 
 			return snippet
 		else:
-			raise LookupError(u'Invalid Snippet id: %s') % snippetId
+			raise LookupError(u'Invalid id: ' + snippetId)
 
-	def getSnippets(self, asDict=False):
-		items = self.folder.contentItems()
+	def getSnippets(self, asDict=False, folder=False, snippets=False):
+		
+		"""
+		Recursively finds all the snippet documents within the 
+		folder, and all sub-folders.
+		"""
 
-		if asDict:
-			snippets = {}
-			for item in items:
-				snippets[item[0]] = self.getSnippet(item[0])
-		else:
-			snippets = []
-			for item in items:
-				snippets.append(self.getSnippet(item[0]))
+		if not folder:
+			folder = self.folder
+		
+		items = folder.contentItems()
+
+		if not snippets:
+			if asDict:
+				snippets = {}
+			else:
+				snippets = []
+
+		for item in items:
+			if( item[1].Type() == u'Page' ):
+
+				if asDict:
+					snippets[item[0]] = self.getSnippet(item[0], folder)
+				else:
+					snippets.append(self.getSnippet(item[0], folder))
+			elif( item[1].Type() == u'Folder' ):
+				snippets = self.getSnippets(asDict, item[1], snippets)
 
 		return snippets
-
-	def snippetExists(self, snippetId):
-		return snippetId in self.folder
 
 
 

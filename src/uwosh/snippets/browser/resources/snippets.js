@@ -10,6 +10,8 @@
           width : ed.getParam('template_popup_width', 500),
           height : ed.getParam('template_popup_height', 500),
           inline : 1
+        }, {
+          current_url: url,
         });
       });
 

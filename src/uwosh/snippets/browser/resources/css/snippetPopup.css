@@ -6,16 +6,71 @@
 	border: 2px solid #ddd;
 	padding: 5px;
 	width: auto;
-	height: 75%;
+	height: 60%;
 	overflow: auto;
-}
-
-#snippet-list iframe {
-	width: 100%;
-	height: 100%;
 }
 
 #snippet-list p {
 	font-size: 85%;
-	padding: 5px 0 5px 0;
+	padding-top: 5px;
+}
+
+#snippet-list .snippet-buttons input {
+	margin-top: 5px;
+	margin-right: 5px;
+}
+
+#snippet-list .snippet-box {
+	width: auto;
+	padding: 5px;
+}
+
+#snippet-browser {
+	height: 85%;
+	overflow: auto;
+	border: 2px solid #ddd;
+}
+
+#snippet-browser .snippet-box > div {
+	float: left;
+}
+
+#snippet-browser .snippet-box.even {
+	background-color: #ddd;
+}
+
+#snippet-browser .snippet-browser-radio {
+	width: 5%;
+	height: auto;
+	float: left;
+}
+
+#snippet-browser .snippet-browser-title {
+	width: 30%;
+	overflow: hidden;
+	height: auto;
+	text-overflow: ellipsis;
+}
+
+#snippet-browser .snippet-browser-desc {
+	width: 60%;
+	padding-left: 10px;
+	height: auto;
+}
+
+#snippet-browser .snippet-box.highlight {
+	background-color: SkyBlue;
+}
+
+#snippet-info {
+	font-size: 75%;
+	display: inline-block;
+	border: 2px solid #ddd;
+	padding: 5px;
+	margin-top: 5px;
+}
+
+#snippet-info input {
+	display: block;
+	margin-top: 5px;
 }
