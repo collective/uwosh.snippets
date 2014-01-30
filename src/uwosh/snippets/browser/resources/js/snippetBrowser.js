@@ -1,8 +1,11 @@
 $(document).ready(function() {
 
-	if( tinyMCEPopup.editor.selected_snippet != undefined )
+	var t = tinyMCEPopup.getWindowArg('t');
+	var selectedSnippet = $(t).find('#snippet-selection');
+
+	if( selectedSnippet.val() != "" )
 	{
-		var selected = $(':radio[value="' + tinyMCEPopup.editor.selected_snippet + '"]');
+		var selected = $(':radio[value="' + selectedSnippet.val() + '"]');
 		$(selected).attr('checked', true);
 		$(selected).addClass('highlight');
 	}
@@ -30,7 +33,11 @@ $(document).ready(function() {
 		}
 		else
 		{
-			tinyMCEPopup.editor.selected_snippet = selected;
+			selectedSnippet.val(selected);
+
+			var id = '#snippet-' + selected;
+			var snippet = $(t).find(id);
+			setPreviewWindow(snippet);
 			tinyMCEPopup.close();
 		}
 	});
@@ -51,4 +58,29 @@ $(document).ready(function() {
 		}
 		$(this).removeClass('highlight');
 	});
+
+	function setPreviewWindow(snippet) {
+
+
+		if( $(t).find('#snippet-normal-buttons').css('display') != "none" )
+		{
+			//We want to preserve all the formatting, so we use .html(), not .text()
+			$(t).find('#snippet-preview').html(snippet.find('.snippet-text').html());
+		}
+
+		$(t).find('#snippet-info-title').text(snippet.find('.snippet-title').text());
+		
+		var snippetDesc = snippet.find('.snippet-desc').text();
+		var descText = "None";
+
+		if( snippetDesc != "" )
+		{
+			descText = snippetDesc;
+		}
+
+		$(t).find('#snippet-info-desc').text(descText);
+		
+		$(t).find('#snippet-info').show();
+
+	}
 })

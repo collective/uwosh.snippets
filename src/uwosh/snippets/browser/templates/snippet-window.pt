@@ -3,24 +3,24 @@
 	<script type="text/javascript" src="../tiny_mce_popup.js" />
 	<script type="text/javascript" src="++resource++uwosh.snippets/js/snippetWindow.js" />
 	<link rel="stylesheet" href="++resource++uwosh.snippets/css/snippetPopup.css" />
-
-	<label for="snippet-preview">Preview</label>
-	<div id="snippet-preview">
-	</div>
 	<div id="snippet-info">
 		<h3>Selected snippet</h3>
 		<label for="snippet-info-title">Title:</label>
 		<span id="snippet-info-title">None</span>
 		<label for="snippet-info-desc">Description:</label>
 		<span id="snippet-info-desc">None</span>
+		<input type="hidden" id="snippet-selection" />
 		<input type="button" value="Browse" id="snippet-select" />
+	</div>
+	<div style="clear: both;"></div>
+	<label for="snippet-preview">Preview</label>
+	<div id="snippet-preview">
 	</div>
 	<form>
 		<div id="snippet-normal-buttons" class="snippet-buttons">
 			<input type="button" value="Insert" id="snippet-insert" />
 			<input type="button" value="Cancel" id="snippet-cancel" />
 			<input type="button" value="Preview" id="snippet-view" />
-			<input type="hidden" id="snippet-selection" />
 		</div>
 		<div id="snippet-preview-buttons" style="display: none;" class="snippet-buttons">
 			<p>In the preview window, click/highlight where you want the snippet, then click "Insert"</p>

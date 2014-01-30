@@ -1,11 +1,13 @@
 $(document).ready(function() {
 
+	document.title = 'Add a snippet';
+	var t = $(this);
+
 	$('#snippet-insert').click(function() {
 		var snippet = $('#snippet-selection').val();
 		if( snippet != "None" )
 		{
 			tinyMCEPopup.editor.selection.setContent('!{{' + snippet + '}}!', {format: 'raw'});
-			tinyMCEPopup.editor.selected_snippet = null;
 			tinyMCEPopup.close();
 		}
 		else if( snippet == undefined )
@@ -41,11 +43,9 @@ $(document).ready(function() {
 			width : 800,
           	height : 600,
           	inline : 1
-		});
-		
-		tinyMCE.activeEditor.windowManager.onClose.add(function() {
-			$('#snippet-selection').val(ed.selected_snippet);
-			setPreviewWindow();
+
+		}, {
+			t: t,
 		});
 	});
 
@@ -104,30 +104,6 @@ $(document).ready(function() {
 
 		tinyMCEPopup.close();
 	});
-
-	function setPreviewWindow() {
-		if( $('#snippet-normal-buttons').css('display') != "none" )
-		{
-			var snippet = getSelectedSnippet();
-			//We want to preserve all the formatting, so we use .html(), not .text()
-			$('#snippet-preview').html(snippet.html());
-
-			$('#snippet-info-title').text(snippet.parent().find('.snippet-title').text());
-
-
-			var snippetDesc = snippet.parent().find('.snippet-desc').text();
-			var descText = "None";
-
-			if( snippetDesc != "" )
-			{
-				descText = snippetDesc;
-			}
-
-			$('#snippet-info-desc').text(descText);
-			
-			$('#snippet-info').show();
-		}
-	}
 
 	function getSelectedSnippet() {
 		var selected = $('#snippet-selection').val();

@@ -7,8 +7,8 @@
       ed.addCommand('snippets', function(ui) {
         ed.windowManager.open({
           file : url + '/@@get-snippet-list',
-          width : ed.getParam('template_popup_width', 500),
-          height : ed.getParam('template_popup_height', 500),
+          width : 600,
+          height : 600,
           inline : 1
         }, {
           current_url: url,
