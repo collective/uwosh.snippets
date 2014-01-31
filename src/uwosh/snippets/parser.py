@@ -15,28 +15,45 @@ class SnippetParser():
 	def __init__(self):
 		self.sm = SnippetManager()
 
-	#regEx to catch a string tagged like !{{this}}!
-	regex = '!{{([a-zA-Z0-9_-]+?)}}!'
+	#regEx to catch a string tagged like !{{id=this}}!
+	#Eventually, needs support for international versions of youtube
+	snippetRegex = '!{{\s*id\s*=\s*([a-zA-Z0-9_-]+?)\s*}}!'
+	youtubeRegex = '!{{\s*youtube\s*=\s*([a-zA-Z0-9_.?=:/-]+?)\s*}}!'
+	urlCheckRegex = '(http://|)?(www.youtube.com|youtu.be)/(watch\?v=|)?([a-zA-Z0-9_.?=/-]+)'
 
-	def findIds(self, pageText):
-		pattern = re.compile(self.regex)
+	def parsePage(self, pageText):
+		result = self.parseSnippets(pageText)
+		result = self.parseYouTubeLinks(result)
+
+		return result
+
+	def parseSnippets(self, pageText):
+		pattern = re.compile(self.snippetRegex)
 		matches = pattern.finditer(pageText)
+
+		snippets = self.sm.getSnippets(True)
 
 		ids = []
 
 		for match in matches:
-			ids.append( match.group(1) )
+			pageText = replace(pageText, match.group(0), snippets[match.group(1)].getText())
 
-		return ids
+		return pageText
 
-	def replaceIds(self, pageText):
-		snippets = self.sm.getSnippets(True)
+	def parseYouTubeLinks(self, pageText):
+		snippetPattern = re.compile(self.youtubeRegex)
+		matches = snippetPattern.finditer(pageText)
 
-		ids = self.findIds(pageText)
+		urlPattern = re.compile(self.urlCheckRegex)
 
-		for i in ids:
-			if( i in snippets ):
-				slug = '!{{' + i + '}}!'
-				pageText = replace(pageText, slug, snippets[i].getText())
+		vids = []
+		iframeStart = '<iframe width="560" height="315" src="//www.youtube.com/embed/'
+		iframeEnd = '" frameborder="0" allowfullscreen></iframe>'
+
+		for m in matches:
+			url = urlPattern.match(m.group(1))
+			if url:
+				link = iframeStart + url.group(4) + iframeEnd
+				pageText = replace(pageText, m.group(0), link)
 
 		return pageText

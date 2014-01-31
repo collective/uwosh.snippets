@@ -7,7 +7,7 @@ $(document).ready(function() {
 		var snippet = $('#snippet-selection').val();
 		if( snippet != "None" )
 		{
-			tinyMCEPopup.editor.selection.setContent('!{{' + snippet + '}}!', {format: 'raw'});
+			tinyMCEPopup.editor.selection.setContent('!{{id=' + snippet + '}}!', {format: 'raw'});
 			tinyMCEPopup.close();
 		}
 		else if( snippet == undefined )
@@ -96,7 +96,7 @@ $(document).ready(function() {
 		$(snippets).each(function() {
 			var name = $(this).attr('snippet-id');
 
-			$(this).replaceWith('!{{' + name + '}}!');
+			$(this).replaceWith('!{{id=' + name + '}}!');
 		});
 
 		var body = $('#snippet-preview').html();

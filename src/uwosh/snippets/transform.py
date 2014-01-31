@@ -43,4 +43,4 @@ class SnippetTransform(object):
         except (TypeError, etree.ParseError):
             return None
 
-        return [ parser.replaceIds(r) for r in result ]
+        return [ parser.parsePage(r) for r in result ]
