@@ -15,10 +15,13 @@ class SnippetParser():
 	def __init__(self):
 		self.sm = SnippetManager()
 
-	#regEx to catch a string tagged like !{{id=this}}!
-	#Eventually, needs support for international versions of youtube
+	#catches !{{id=this}}
 	snippetRegex = '!{{\s*id\s*=\s*([a-zA-Z0-9_-]+?)\s*}}!'
+
+	#catches !{{youtube=http://youtube.com/watch?v=randomvideo}}
 	youtubeRegex = '!{{\s*youtube\s*=\s*([a-zA-Z0-9_.?=:/-]+?)\s*}}!'
+
+	#makes sure that link from above comes from actual youtube domain
 	urlCheckRegex = '(http://|)?(www.youtube.com|youtu.be)/(watch\?v=|)?([a-zA-Z0-9_.?=/-]+)'
 
 	def parsePage(self, pageText):

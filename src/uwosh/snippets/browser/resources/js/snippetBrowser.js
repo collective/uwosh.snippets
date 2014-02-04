@@ -35,7 +35,8 @@ $(document).ready(function() {
 		{
 			selectedSnippet.val(selected);
 
-			var id = '#snippet-' + selected;
+			selected = selected.replace(/\./g, '\\.');			
+			var id = "#snippet-" + selected;
 			var snippet = $(t).find(id);
 			setPreviewWindow(snippet);
 			tinyMCEPopup.close();
