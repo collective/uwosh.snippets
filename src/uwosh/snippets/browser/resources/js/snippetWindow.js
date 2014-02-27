@@ -80,9 +80,11 @@ $(document).ready(function() {
 			text = $(text).find('.snippet-text').text();
 
 			var snippet = document.createElement('span');
+			$(snippet).css('outline', "black dotted thin");
+			$(snippet).css('display', 'inline-block');
+
 			$(snippet).attr('data-type', 'snippet_tag');
 			$(snippet).attr('data-snippet-id', id);
-			$(snippet).attr('style', 'outline: dotted thin black; display: inline-block');
 
 			$(snippet).text(text);
 
@@ -147,8 +149,8 @@ $(document).ready(function() {
 	{
 		if( snippetId != "" )
 		{
-			var style = "outline: black dotted thin; display: inline-block"
-			return '<span style='+ style +'data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
+			var style = "outline-style: dotted; outline-width: thin; outline-color: black; display: inline-block;";
+			return '<span style="'+ style +'" data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
 		}
 	}
 
