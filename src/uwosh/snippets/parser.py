@@ -17,6 +17,7 @@ class SnippetParser():
 
 	#catches !{{id=this}}
 	snippetRegex = '!{{\s*id\s*=\s*([a-zA-Z0-9_-]+?)\s*}}!'
+	testRegex = '<span\s*data-type="snippet_tag"\s*data-snippet-id="([a-zA-Z0-9_-]+?)"\s*></span>'
 
 	#catches !{{youtube=http://youtube.com/watch?v=randomvideo}}
 	youtubeRegex = '!{{\s*youtube\s*=\s*([a-zA-Z0-9_.?=:/-]+?)\s*}}!'
@@ -31,13 +32,10 @@ class SnippetParser():
 		return result
 
 	def parseSnippets(self, pageText):
-		pattern = re.compile(self.snippetRegex)
+		pattern = re.compile(self.testRegex)
 		matches = pattern.finditer(pageText)
 
 		snippets = self.sm.getSnippets(True)
-
-		ids = []
-
 		for match in matches:
 			pageText = replace(pageText, match.group(0), snippets[match.group(1)].getText())
 

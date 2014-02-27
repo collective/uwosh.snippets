@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 	var t = tinyMCEPopup.getWindowArg('t');
+	var setSelected = tinyMCEPopup.getWindowArg('setSelected');
 	var selectedSnippet = $(t).find('#snippet-selection');
 
 	if( selectedSnippet.val() != "" )
@@ -33,12 +34,12 @@ $(document).ready(function() {
 		}
 		else
 		{
+
+			selected = sanitize(selected);
 			selectedSnippet.val(selected);
 
-			selected = selected.replace(/\./g, '\\.');			
 			var id = "#snippet-" + selected;
-			var snippet = $(t).find(id);
-			setPreviewWindow(snippet);
+			setPreviewWindow(selected);
 			tinyMCEPopup.close();
 		}
 	});
@@ -60,28 +61,18 @@ $(document).ready(function() {
 		$(this).removeClass('highlight');
 	});
 
+	function sanitize(snippetId) {
+		snippet = snippetId.replace(/\./g, '\\.');
+		snippet = snippet.replace(/\:/g, '\\:');
+
+		return snippet;
+	}
+
 	function setPreviewWindow(snippet) {
 
-
-		if( $(t).find('#snippet-normal-buttons').css('display') != "none" )
-		{
-			//We want to preserve all the formatting, so we use .html(), not .text()
-			$(t).find('#snippet-preview').html(snippet.find('.snippet-text').html());
-		}
-
-		$(t).find('#snippet-info-title').text(snippet.find('.snippet-title').text());
-		
-		var snippetDesc = snippet.find('.snippet-desc').text();
-		var descText = "None";
-
-		if( snippetDesc != "" )
-		{
-			descText = snippetDesc;
-		}
-
-		$(t).find('#snippet-info-desc').text(descText);
-		
-		$(t).find('#snippet-info').show();
-
+		$(t).find('#snippet-selection').val($(snippet).find('.snippet-id').text());
+		selectedSnippet.val(snippet);
+		var selected = $(t).find('#snippet-' + snippet);
+		setSelected(selected);
 	}
 })

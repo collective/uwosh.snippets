@@ -1,3 +1,8 @@
 .mceIcon.mce_snippetbutton {
 	background: url('brackets.png')
 }
+
+.snippet-tag {
+	outline: black dotted thin;
+	display: inline-block;
+}

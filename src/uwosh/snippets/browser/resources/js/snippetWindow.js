@@ -3,11 +3,33 @@ $(document).ready(function() {
 	document.title = 'Add a snippet';
 	var t = $(this);
 
+	var editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
+
+	if( editor_snippet != false )
+	{
+		$('#snippet-selection').val($(editor_snippet).attr('data-snippet-id'));
+		setSelectedSnippet();
+	}
+
 	$('#snippet-insert').click(function() {
 		var snippet = $('#snippet-selection').val();
+
+		var text = getSelectedSnippet().find('.snippet-text').html();
+
 		if( snippet != "None" )
 		{
-			tinyMCEPopup.editor.selection.setContent('!{{id=' + snippet + '}}!', {format: 'raw'});
+			output = createSpanTag(snippet, text);
+
+			var editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
+
+			if( editor_snippet != false )
+			{
+				editor_snippet = catchNestedSpans(editor_snippet);
+				$(editor_snippet).replaceWith(output);
+				editor_snippet = false;
+				tinyMCEPopup.close();
+			}
+			tinyMCEPopup.editor.selection.setContent(output, {format: 'raw'});
 			tinyMCEPopup.close();
 		}
 		else if( snippet == undefined )
@@ -32,7 +54,7 @@ $(document).ready(function() {
 	$('#snippet-preview-cancel').click(function() {
 		$('#snippet-normal-buttons').show();
 		$('#snippet-preview-buttons').hide();
-		$('#snippet-preview').html(getSelectedSnippet().html());
+		$('#snippet-preview').html(getSelectedSnippet().find('.snippet-text').html());
 	});
 
 	$('#snippet-select').click(function() {
@@ -46,24 +68,23 @@ $(document).ready(function() {
 
 		}, {
 			t: t,
+			setSelected: setSelectedSnippet,
 		});
 	});
 
 	$('#snippet-preview-insert').click(function() {
-		if( $('#snippet-select').find('option:selected').val() != "None" )
+		if( $('#snippet-select').val() != "None" )
 		{
 			var text = getSelectedSnippet();
 			var id = $(text).parent().find('.snippet-id').text();
+			text = $(text).find('.snippet-text').text();
 
-			text = $(text).clone();
+			var snippet = document.createElement('span');
+			$(snippet).attr('data-type', 'snippet_tag');
+			$(snippet).attr('data-snippet-id', id);
+			$(snippet).attr('style', 'outline: dotted thin black; display: inline-block');
 
-			//we wrap the snippet in a span that lets us work with it easier
-			//when we go to "save" the preview
-			$(text).wrap('<span class="snippet-wrapper" snippet-id="' + id + '"></span>');
-			text = $(text).parent();
-
-			//grabs the actual DOM element.
-			text = $(text).get(0);
+			$(snippet).text(text);
 
 			var preview = $('#snippet-preview').get(0);
 
@@ -72,11 +93,11 @@ $(document).ready(function() {
 
 			//makes sure the user selection is inside the 
 			//preview window. Otherwise, the user could replace
-			//text anywhere on the window.
+			//text anywhere on the window. Chaos ensues.
 			if( range.intersectsNode(preview) )
 			{
 				sel.deleteFromDocument();
-				range.insertNode(text);
+				range.insertNode($(snippet).get(0));
 			}
 			else
 			{
@@ -96,7 +117,9 @@ $(document).ready(function() {
 		$(snippets).each(function() {
 			var name = $(this).attr('snippet-id');
 
-			$(this).replaceWith('!{{id=' + name + '}}!');
+			var tag = createSpanTag(name);
+
+			$(this).replaceWith(tag);
 		});
 
 		var body = $('#snippet-preview').html();
@@ -105,10 +128,58 @@ $(document).ready(function() {
 		tinyMCEPopup.close();
 	});
 
+	function catchNestedSpans(plug) {
+
+		//once in a while, the snippet-tag spans will
+		//not get properly removed, so you'll have several nested 
+		//inside one another. This function gets the
+		//upper-most of the 'snippet-plug' spans and returns it.
+
+		if( $(plug).parent().attr('data-type') == 'snippet_tag' )
+		{
+			plug = catchNestedSpans($(plug).parent());
+		}
+
+		return plug;
+	}
+
+	function createSpanTag(snippetId, snippetText)
+	{
+		if( snippetId != "" )
+		{
+			var style = "outline: black dotted thin; display: inline-block"
+			return '<span style='+ style +'data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
+		}
+	}
+
 	function getSelectedSnippet() {
 		var selected = $('#snippet-selection').val();
 		var id = '#snippet-' + selected;
 
-		return $(id).find('.snippet-text');
+		return $(id);
+	}
+
+	function setSelectedSnippet(selected) {
+		snippet = typeof(selected) != 'undefined' ? selected : getSelectedSnippet();
+
+		if( $('#snippet-normal-buttons').css('display') != "none" )
+		{
+			//We want to preserve all the formatting, so we use .html(), not .text()
+			$('#snippet-preview').html(snippet.find('.snippet-text').html());
+		}
+
+		$('#snippet-info-title').text(snippet.find('.snippet-title').text());
+		
+		var snippetDesc = snippet.find('.snippet-desc').text();
+		var descText = "None";
+
+		if( snippetDesc != "" )
+		{
+			descText = snippetDesc;
+		}
+
+		$('#snippet-info-desc').text(descText);
+		
+		$('#snippet-info').show();
 	}
 });

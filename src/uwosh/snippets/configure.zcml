@@ -10,6 +10,13 @@
 
   <includeDependencies package="." />
 
+  <genericsetup:importStep
+      name="uwosh.snippets"
+      title="uwosh.snippets special import handlers"
+      description=""
+      handler="uwosh.snippets.setuphandlers.setupVarious"
+      />
+
   <genericsetup:registerProfile
       name="default"
       title="uwosh.snippets"

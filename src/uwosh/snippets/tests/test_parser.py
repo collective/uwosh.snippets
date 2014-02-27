@@ -25,7 +25,7 @@ class TestSnippetParser(BaseTest):
 
     def test_replace_ids(self):
         sp = SnippetParser()
-        text = sp.replaceIds(self.testString)
+        text = sp.parsePage(self.testString)
 
         correct = "This is a meaningless test! Or is it meaningless?"
 

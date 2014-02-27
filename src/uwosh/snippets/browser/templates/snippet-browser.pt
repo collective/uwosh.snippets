@@ -6,7 +6,7 @@
 
 	<label for="snippet-browser">Select a snippet</label>
 	<div id="snippet-browser">
-		<div class="snippet-box" tal:repeat="snippet snippets" tal:attributes="id string:snippet-${snippet/getId}">
+		<div class="snippet-box" tal:repeat="snippet snippets" tal:attributes="id string:snippet-browser-${snippet/getId}">
 			<input type="radio" class="snippet-browser-radio" name="snippet" tal:attributes="value snippet/id">
 			<div class="snippet-browser-title" tal:content="snippet/title"></div>
 			<div class="snippet-id" style="display: none;" tal:content="snippet/getId"></div>
