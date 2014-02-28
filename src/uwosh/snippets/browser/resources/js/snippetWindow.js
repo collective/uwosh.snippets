@@ -98,8 +98,15 @@ $(document).ready(function() {
 			//text anywhere on the window. Chaos ensues.
 			if( range.intersectsNode(preview) )
 			{
-				sel.deleteFromDocument();
-				range.insertNode($(snippet).get(0));
+				if( $(range.startContainer.parentElement).attr('data-type') != 'snippet_tag' )
+				{
+					sel.deleteFromDocument();
+					range.insertNode($(snippet).get(0));
+				}
+				else
+				{
+					tinyMCEPopup.editor.windowManager.alert('Snippets cannot overlap. Please adjust your selection.');
+				}
 			}
 			else
 			{
