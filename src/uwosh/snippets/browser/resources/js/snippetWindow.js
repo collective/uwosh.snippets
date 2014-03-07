@@ -18,13 +18,14 @@ $(document).ready(function() {
 
 		if( snippet != "None" )
 		{
-			output = createSpanTag(snippet, text);
+			output = createSpanElement(snippet, text);
 
 			var editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
 
 			if( editor_snippet != false )
 			{
 				editor_snippet = catchNestedSpans(editor_snippet);
+				//editor_snippet.parentElement.replaceChild(output, editor_snippet);
 				$(editor_snippet).replaceWith(output);
 				editor_snippet = false;
 				tinyMCEPopup.close();
@@ -79,14 +80,7 @@ $(document).ready(function() {
 			var id = $(text).parent().find('.snippet-id').text();
 			text = $(text).find('.snippet-text').text();
 
-			var snippet = document.createElement('span');
-			$(snippet).css('outline', "black dotted thin");
-			$(snippet).css('display', 'inline-block');
-
-			$(snippet).attr('data-type', 'snippet_tag');
-			$(snippet).attr('data-snippet-id', id);
-
-			$(snippet).text(text);
+			snippet = createSpanElement(id, text);
 
 			var preview = $('#snippet-preview').get(0);
 
@@ -150,6 +144,20 @@ $(document).ready(function() {
 		}
 
 		return plug;
+	}
+
+	function createSpanElement(snippetId, snippetText)
+	{
+		var snippet = document.createElement('span');
+		$(snippet).css('outline', "black dotted thin");
+		$(snippet).css('display', 'inline-block');
+
+		$(snippet).attr('data-type', 'snippet_tag');
+		$(snippet).attr('data-snippet-id', snippetId);
+
+		$(snippet).text(snippetText);
+
+		return snippet;
 	}
 
 	function createSpanTag(snippetId, snippetText)
