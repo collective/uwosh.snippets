@@ -15,6 +15,9 @@ class Snippet():
 	def getTitle(self):
 		return self.title
 
+	def getWorkflowState(self):
+		return self.state
+
 	def setDescription(self, description):
 		self.description = description
 
@@ -26,6 +29,9 @@ class Snippet():
 
 	def setTitle(self, snippetTitle):
 		self.title = snippetTitle
+
+	def setWorkflowState(self, state):
+		self.state = state
 
 class SnippetManager():
 
@@ -73,6 +79,11 @@ class SnippetManager():
 			snippet.setText(doc.getRawText())
 			snippet.setTitle(doc.Title())
 			snippet.setDescription(doc.Description())
+
+			portal = getSite()
+			wf = getToolByName(portal, 'portal_workflow')
+			wfs = wf.getInfoFor(doc, 'review_state')
+			snippet.setWorkflowState(wfs)
 
 			return snippet
 		else:

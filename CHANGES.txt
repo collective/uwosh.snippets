@@ -1,8 +1,17 @@
 Changelog
 =========
 
-1.0-dev (unreleased)
---------------------
+.01 
+-------------------
+- Basic proof-of-concept implementation
+- Added TinyMCE plugin
 
-- Package created using templer
-  []
+.02
+-------------------
+- Added ability to embed youtube videos.
+
+.03
+-------------------
+- Extended TinyMCE plugin to make snippets "clickable" in the edit page.
+- Added snippet browser window to TinyMCE plugin.
+- Removed support for YouTube embedding (other products handle this better).
