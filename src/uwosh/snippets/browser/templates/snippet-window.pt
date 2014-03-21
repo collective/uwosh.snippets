@@ -21,6 +21,7 @@
 			<input type="button" value="Insert" id="snippet-insert" />
 			<input type="button" value="Cancel" id="snippet-cancel" />
 			<input type="button" value="Preview" id="snippet-view" />
+			<input type="button" value="Create" id="snippet-create" />
 		</div>
 		<div id="snippet-preview-buttons" style="display: none;" class="snippet-buttons">
 			<p>In the preview window, click/highlight where you want the snippet, then click "Insert"</p>

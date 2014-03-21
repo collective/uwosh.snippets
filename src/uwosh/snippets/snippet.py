@@ -1,5 +1,7 @@
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
+from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class Snippet():
 
@@ -119,7 +121,11 @@ class SnippetManager():
 
 		return snippets
 
+# class SnippetView(BrowserView):
+# 	window_template = ViewPageTemplateFile('browser/templates/snippet-create.pt')
 
+# 	def __call__(self):
+# 		return self.window_template()
 
 
 

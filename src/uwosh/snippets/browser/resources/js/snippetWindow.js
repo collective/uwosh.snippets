@@ -11,6 +11,16 @@ $(document).ready(function() {
 		setSelectedSnippet();
 	}
 
+	$('#snippet-create').click(function() {
+		var url = tinyMCEPopup.getWindowArg('current_url');
+		tinyMCEPopup.editor.windowManager.open({
+			file: url + '/@@create-snippet',
+			width : 800,
+          	height : 600,
+          	inline : 1
+		});
+	});
+
 	$('#snippet-insert').click(function() {
 		var snippet = $('#snippet-selection').val();
 
