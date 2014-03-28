@@ -13,4 +13,18 @@
 	    permission="cmf.ManagePortal"
 	    />
 
+    <browser:page
+        name="create-snippet"
+        for="*"
+        class=".addsnippet.SnippetForm"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:page
+        name="edit-snippet"
+        for="*"
+        class=".addsnippet.SnippetEditForm"
+        permission="cmf.ManagePortal"
+        />
+
 </configure>

@@ -8,7 +8,7 @@ from string import replace
 from plone.dexterity.utils import createContentInContainer
 from Products.CMFCore.utils import getToolByName
 
-from uwosh.snippets.snippet import SnippetManager
+from uwosh.snippets.snippetmanager import SnippetManager
 
 class SnippetParser():
 

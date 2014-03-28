@@ -34,11 +34,4 @@
     name="uwosh.snippets"
     directory="browser/resources"
     />
-
-  <browser:page
-    name="create-snippet"
-    for="*"
-    class=".interfaces.SnippetView"
-    permission="cmf.ManagePortal"
-    />
 </configure>

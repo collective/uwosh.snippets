@@ -9,7 +9,8 @@ from uwosh.snippets.testing import \
     UWOSH_SNIPPETS_INTEGRATION_TESTING
 
 from plone.app.testing import setRoles, login, TEST_USER_NAME
-from uwosh.snippets.snippet import SnippetManager, Snippet
+from uwosh.snippets.snippet import Snippet
+from uwosh.snippets.snippetmanager import SnippetManager
 
 
 class TestSnippetManager(BaseTest):

@@ -1,6 +1,6 @@
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from uwosh.snippets.snippet import SnippetManager
+from uwosh.snippets.snippetmanager import SnippetManager
 import json
 
 class SnippetList(BrowserView):
