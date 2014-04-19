@@ -12,13 +12,24 @@ $(document).ready(function() {
 	}
 
 	$('#snippet-create').click(function() {
-		var url = tinyMCEPopup.getWindowArg('current_url');
-		tinyMCEPopup.editor.windowManager.open({
-			file: url + '/@@create-snippet',
-			width : 800,
-          	height : 600,
-          	inline : 1
+		var url = tinyMCE.documentBaseURL;
+		var doc = tinyMCE.DOM.doc;
+		var body = $(doc).find('body');
+
+		if($('#snippet-create-link').length <= 0 )
+        {
+          $(body).append('<a id="snippet-create-link" href="' + url + '@@create-snippet" class="overlay" style="display: none">Click me</a>');
+        }
+
+        $(body).attr('height', '800px').attr('width', '600px');
+		$(body).find('#snippet-create-link').prepOverlay({
+			subtype: 'iframe',
+			cssclass: 'snippet-create-container',
+			config: {top: '0%',
+                    load: true,
+                    oneinstance: false,},
 		});
+		$(body).find('.snippet-create-container iframe').attr('height', '700px').attr('width', '500px');
 	});
 
 	$('#snippet-insert').click(function() {
@@ -69,7 +80,7 @@ $(document).ready(function() {
 	});
 
 	$('#snippet-select').click(function() {
-		var url = tinyMCEPopup.getWindowArg('current_url');
+		var url = tinyMCE.documentBaseURL;
 		var ed = tinyMCE.activeEditor;
 		ed.windowManager.open({
 			file: url + '/@@get-snippet-list?list-view=true',

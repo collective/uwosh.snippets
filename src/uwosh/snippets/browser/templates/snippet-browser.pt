@@ -1,6 +1,9 @@
 <div id="snippet-list" tal:define="snippets view/getSnippets">
 	<script type="text/javascript" src="++resource++plone.app.jquery.js" />
 	<script type="text/javascript" src="../tiny_mce_popup.js" />
+	<script type="text/javascript" src="++resource++plone.app.jquerytools.js" />
+	<script type="text/javascript" src="++resource++plone.app.jquerytools.form.js" />
+	<script type="text/javascript" src="++resource++plone.app.jquerytools.overlayhelpers.js" />
 	<script type="text/javascript" src="++resource++uwosh.snippets/js/snippetBrowser.js" />
 	<link rel="stylesheet" type="text/css" href="++resource++uwosh.snippets/css/snippetPopup.css" />
 
@@ -11,6 +14,7 @@
 			<div class="snippet-browser-title" tal:content="snippet/title"></div>
 			<div class="snippet-id" style="display: none;" tal:content="snippet/getId"></div>
 			<div class="snippet-browser-desc" tal:content="snippet/description"></div>
+			<a class="snippet-edit" tal:attributes="href string:${view/siteUrl}/@@edit-snippet?snippet-id=${snippet/getId}">Edit</a>
 			<br style="clear: left;" />
 		</div>
 	</div>

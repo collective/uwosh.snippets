@@ -37,7 +37,10 @@ class SnippetParser():
 
 		snippets = self.sm.getSnippets(True)
 		for match in matches:
-			pageText = replace(pageText, match.group(0), snippets[match.group(1)].getText())
+			try:
+				pageText = replace(pageText, match.group(0), snippets[match.group(1)].getText())
+			except KeyError:
+				pageText = replace(pageText, match.group(0), '')
 
 		return pageText
 

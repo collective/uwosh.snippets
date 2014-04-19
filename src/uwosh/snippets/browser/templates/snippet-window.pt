@@ -1,6 +1,9 @@
 <div id="snippet-list" tal:define="snippets view/getSnippets">
 	<script type="text/javascript" src="++resource++plone.app.jquery.js" />
 	<script type="text/javascript" src="../tiny_mce_popup.js" />
+	<script type="text/javascript" src="++resource++plone.app.jquerytools.js" />
+	<script type="text/javascript" src="++resource++plone.app.jquerytools.form.js" />
+	<script type="text/javascript" src="++resource++plone.app.jquerytools.overlayhelpers.js" />
 	<script type="text/javascript" src="++resource++uwosh.snippets/js/snippetWindow.js" />
 	<link rel="stylesheet" href="++resource++uwosh.snippets/css/snippetPopup.css" />
 	<div id="snippet-info">
@@ -21,7 +24,7 @@
 			<input type="button" value="Insert" id="snippet-insert" />
 			<input type="button" value="Cancel" id="snippet-cancel" />
 			<input type="button" value="Preview" id="snippet-view" />
-			<input type="button" value="Create" id="snippet-create" />
+			<a tal:attributes="href string:${view/siteUrl}/@@create-snippet" id="snipped-create">Create a new snippet</a>
 		</div>
 		<div id="snippet-preview-buttons" style="display: none;" class="snippet-buttons">
 			<p>In the preview window, click/highlight where you want the snippet, then click "Insert"</p>

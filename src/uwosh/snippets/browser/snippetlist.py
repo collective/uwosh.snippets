@@ -1,6 +1,7 @@
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from uwosh.snippets.snippetmanager import SnippetManager
+from Products.CMFCore.utils import getToolByName
 import json
 
 class SnippetList(BrowserView):
@@ -32,3 +33,8 @@ class SnippetList(BrowserView):
 
 	def getSnippetAsJSON(self, snippet):
 		return json.dumps(snippet, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+	def siteUrl(self):
+		portal_url = getToolByName(self.context, "portal_url")
+		portal = portal_url.getPortalObject()
+		return portal.absolute_url()

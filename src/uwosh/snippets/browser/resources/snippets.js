@@ -5,10 +5,11 @@
       tinymce.DOM.loadCSS(url + '/snippets.css');
 
       ed.addCommand('snippets', function(ui) {
+        
         options = {
           current_url: url,
-          editor_snippet: false,
         };
+        
         openSnippetWindow(options);
       });
 
@@ -85,8 +86,8 @@
       {
         ed.windowManager.open({
           file: url + '/@@get-snippet-list',
-          width: 600,
-          height: 600,
+          width: 800,
+          height: 700,
           inline: 1,
         }, options);
       }
@@ -94,3 +95,9 @@
   });
   tinymce.PluginManager.add('snippets', tinymce.plugins.SnippetsPlugin);
 })();
+
+function closeIFrame()
+{
+  $('div.snippet-frame-container > div.close').click();
+  $('#snippet-link').overlay().close();
+}

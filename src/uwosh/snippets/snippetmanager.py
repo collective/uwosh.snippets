@@ -1,8 +1,11 @@
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 from uwosh.snippets.snippet import Snippet
+import re
 
 class SnippetManager():
+	#TODO: Get rid of the current folder scheme and 
+	#make it automated
 
 	folderName = '.snippets'
 
@@ -17,6 +20,8 @@ class SnippetManager():
 		if not self.folder.getExcludeFromNav():
 			self.folder.setExcludeFromNav('true')
 
+		self.index = self.indexSnippets()
+
 	def createSnippetDoc(self, snippetId, folder=False):
 
 		if not folder:
@@ -28,6 +33,10 @@ class SnippetManager():
 			raise LookupError(u'Invalid or duplicate id: ' + snippetId)
 
 	def createSnippet(self, snippetId, folder=False, data=False):
+
+		if not folder:
+			folder = self.folder
+
 		self.createSnippetDoc(snippetId, folder) 
 
 		doc = self.folder[snippetId]
@@ -37,69 +46,95 @@ class SnippetManager():
 		if data['description']:
 			doc.setDescription(data['description'])
 
-		if data['body']:
-			doc.setText(data['body'])
+		if data['text']:
+			doc.setText(data['text'])
+
+		self.index = self.indexSnippets()
 
 		#this returns the actual snippet object, not the document
 		return self.getSnippet(snippetId)
 
-	def deleteSnippet(self, snippetId, folder=False):
+	def deleteSnippet(self, snippetId):
 
-		if not folder:
-			folder = self.folder
+		folder = self.index[snippetId].aq_parent
+		folder.manage_delObjects(snippetId)
 
-		if snippetId in folder:
-			folder.manage_delObjects(snippetId)
+	def getSnippet(self, snippetId):
 
-	def getSnippet(self, snippetId, folder=False):
+		snippet = Snippet()
+		snippet.setId(snippetId)
+		doc = self.index[snippetId]
 
-		if not folder:
-			folder = self.folder
+		snippet.setText( doc.getRawText() )
+		snippet.setTitle(doc.Title())
+		snippet.setDescription(doc.Description())
 
-		if snippetId in folder:
-			snippet = Snippet()
-			snippet.setId(snippetId)
-			doc = folder[snippetId]
+		portal = getSite()
+		wf = getToolByName(portal, 'portal_workflow')
+		wfs = wf.getInfoFor(doc, 'review_state')
+		snippet.setWorkflowState(wfs)
 
-			snippet.setText(doc.getRawText())
-			snippet.setTitle(doc.Title())
-			snippet.setDescription(doc.Description())
+		return snippet
 
-			portal = getSite()
-			wf = getToolByName(portal, 'portal_workflow')
-			wfs = wf.getInfoFor(doc, 'review_state')
-			snippet.setWorkflowState(wfs)
-
-			return snippet
-		else:
-			raise LookupError(u'Invalid id: ' + snippetId)
-
-	def getSnippets(self, asDict=False, folder=False, snippets=False):
+	def getSnippets(self, asDict=False):
 		
 		"""
 		Recursively finds all the snippet documents within the 
 		folder, and all sub-folders.
 		"""
+		
+		items = self.index
+
+		if asDict:
+			snippets = {}
+		else:
+			snippets = []
+
+		for item in items:
+
+				if asDict:
+					snippets[item] = self.getSnippet(item)
+				else:
+					snippets.append(self.getSnippet(item))
+
+		return snippets
+
+	def indexSnippets(self, snippets=False, folder=False):
+		
+		if not snippets:
+			snippets = {}
 
 		if not folder:
 			folder = self.folder
-		
-		items = folder.contentItems()
 
-		if not snippets:
-			if asDict:
-				snippets = {}
-			else:
-				snippets = []
+		items = folder.contentItems()
 
 		for item in items:
 			if( item[1].Type() == u'Page' ):
 
-				if asDict:
-					snippets[item[0]] = self.getSnippet(item[0], folder)
-				else:
-					snippets.append(self.getSnippet(item[0], folder))
+				snippets[item[0]] = item[1]
 			elif( item[1].Type() == u'Folder' ):
-				snippets = self.getSnippets(asDict, item[1], snippets)
+				snippets = self.indexSnippets(snippets, item[1])
 
 		return snippets
+
+
+	def updateDoc(self, snippetId, data):
+		
+		#This updates the underlying ATDocument after
+		#z3c.form.EditForm updates the Snippet object
+		#See uwosh.snippets.browser.addsnippet.SnippetEditForm
+
+		doc = self.index[snippetId]
+
+		if 'title' in data:
+			doc.setTitle(data['title'])
+
+		if 'description' in data:
+			doc.setDescription(data['description'])
+
+		if 'text' in data:
+			doc.setText(data['text'])
+
+
+

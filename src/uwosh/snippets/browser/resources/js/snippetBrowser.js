@@ -3,6 +3,7 @@ $(document).ready(function() {
 	var t = tinyMCEPopup.getWindowArg('t');
 	var setSelected = tinyMCEPopup.getWindowArg('setSelected');
 	var selectedSnippet = $(t).find('#snippet-selection');
+	var lastURL;
 
 	if( selectedSnippet.val() != "" )
 	{
@@ -19,7 +20,7 @@ $(document).ready(function() {
 		}
 		even += 1;
 	});
-	
+
 	$('#snippet-browser-cancel').click(function() {
 		tinyMCEPopup.close();
 	});
@@ -34,7 +35,6 @@ $(document).ready(function() {
 		}
 		else
 		{
-
 			selected = sanitize(selected);
 			selectedSnippet.val(selected);
 

@@ -16,7 +16,7 @@ from plone.testing import z2
 from zope.configuration import xmlconfig
 
 from uwosh.snippets.parser import SnippetParser
-from uwosh.snippets.snippet import SnippetManager
+from uwosh.snippets.snippetmanager import SnippetManager
 
 
 class UwoshsnippetsLayer(PloneSandboxLayer):
@@ -60,7 +60,9 @@ class BaseTest(unittest.TestCase):
         portal = self.layer['portal']
         app = self.layer['app']
 
-        portal.invokeFactory('Folder', '.snippets')
+        if not portal['.snippets']:
+            portal.invokeFactory('Folder', '.snippets')
+
         folder = portal['.snippets']
         self.folder = folder
         folder.invokeFactory('Document', 'testDoc')
