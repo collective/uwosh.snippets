@@ -43,7 +43,7 @@ $(document).ready(function() {
 
 			var editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
 
-			if( editor_snippet != false )
+			if( editor_snippet != false && editor_snippet != undefined )
 			{
 				editor_snippet = catchNestedSpans(editor_snippet);
 				//editor_snippet.parentElement.replaceChild(output, editor_snippet);
@@ -51,7 +51,7 @@ $(document).ready(function() {
 				editor_snippet = false;
 				tinyMCEPopup.close();
 			}
-			tinyMCEPopup.editor.selection.setContent(output, {format: 'raw'});
+			tinyMCEPopup.editor.selection.setContent($(output).prop('outerHTML'), {format: 'raw'});
 			tinyMCEPopup.close();
 		}
 		else if( snippet == undefined )
@@ -176,7 +176,7 @@ $(document).ready(function() {
 		$(snippet).attr('data-type', 'snippet_tag');
 		$(snippet).attr('data-snippet-id', snippetId);
 
-		$(snippet).text(snippetText);
+		$(snippet).html(snippetText);
 
 		return snippet;
 	}

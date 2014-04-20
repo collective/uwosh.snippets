@@ -44,7 +44,7 @@
             var text = data.text;
             var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + id + '"]');
 
-            $(snippet).text(text);
+            $(snippet).html(text);
             $(snippet).css('outline', 'black dotted thin');
             $(snippet).css('display', 'inline-block');
 
