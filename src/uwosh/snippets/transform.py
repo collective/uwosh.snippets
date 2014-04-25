@@ -5,6 +5,9 @@ from plone.transformchain.interfaces import ITransform
 from repoze.xmliter.utils import getHTMLSerializer
 
 from uwosh.snippets.parser import SnippetParser
+from Products.CMFCore.utils import getToolByName
+
+from zope.component.hooks import getSite
 
 class SnippetTransform(object):
     implements(ITransform)
@@ -13,6 +16,7 @@ class SnippetTransform(object):
     order = 9000
 
     def __init__(self, published, request):
+
         self.published = published
         self.request = request
 
@@ -23,6 +27,17 @@ class SnippetTransform(object):
         return result
 
     def transformIterable(self, result, encoding):
+
+        site = getSite()
+
+        #This prevents the transform from running even when
+        #The add-on isn't installed =\ 
+        #
+        #There must be a better way....
+        qi = getToolByName(site, 'portal_quickinstaller')
+        if not qi.isProductInstalled('uwosh.snippets'):
+            return result
+
         try:
             parser = SnippetParser()
         except AttributeError:
