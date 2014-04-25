@@ -35,13 +35,13 @@
 		        <metal:styleslot define-slot="style_slot" />
 		        <metal:javascriptslot define-slot="javascript_head_slot" />
     		    <link rel="stylesheet" href="++resource++uwosh.snippets/css/snippetPopup.css" />
-		    	<script type="text/javascript" src="++resource++uwosh.snippets/js/snippetForm.js" />
 
 		        <meta name="viewport" content="width=device-width, initial-scale=0.6666, maximum-scale=1.0, minimum-scale=0.6666" />
 		        <meta name="generator" content="Plone - http://plone.org" />
 		    </tal:notajax>
 		</head>
 		<body>
+			<script type="text/javascript" src="++resource++uwosh.snippets/js/snippetForm.js" />
 			<div style="padding: 10px">
 				<metal:use use-macro="context/@@ploneform-macros/titlelessform" />
 			</div>

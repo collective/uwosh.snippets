@@ -34,23 +34,34 @@
 
       ed.onLoadContent.add(function(ed, e) {
         var snippets = $(ed.contentDocument).find('span[data-type="snippet_tag"]');
-        snippets.each(function() {
 
-          var id = $(this).attr('data-snippet-id');
+        //We just want get each snippet once, if there are duplicates, just ignore them
+        snippet_ids = [];
+        $(snippets).each(function(index, item) {
+          if( $.inArray($(item).attr('data-snippet-id'), snippet_ids) == -1 )
+          {
+            snippet_ids.push($(item).attr('data-snippet-id'));
+          }
+        });
 
-          var dataObj;
-
-          $.getJSON('http://localhost:7000/Plone/@@get-snippet-list?json=true&snippet_id=' + id , function(data) {
-            var text = data.text;
-            var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + id + '"]');
-
-            $(snippet).html(text);
-            $(snippet).css('outline', 'black dotted thin');
-            $(snippet).css('display', 'inline-block');
-
+        $(snippet_ids).each(function(index, item) {
+          $.ajax({
+            url: 'http://localhost:7000/Plone/@@get-snippet-list?json=true&snippet_id=' +  item,
+            dataType: 'json',
+            success: function(data) {
+              var text = data.text;
+              console.log(text);
+              var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + item + '"]');
+              $(snippet).each(function() {
+                $(this).html(text);
+                $(this).css('outline', 'black dotted thin');
+                $(this).css('display', 'inline-block');
+              });
+            },
+            error: function(xhr) {
+              console.log(xhr);
+            },
           });
-
-          var t = $('.snippet-plug')
         });
       });
       ed.onPostProcess.add(function(ed, o) {
@@ -95,9 +106,3 @@
   });
   tinymce.PluginManager.add('snippets', tinymce.plugins.SnippetsPlugin);
 })();
-
-function closeIFrame()
-{
-  $('div.snippet-frame-container > div.close').click();
-  $('#snippet-link').overlay().close();
-}

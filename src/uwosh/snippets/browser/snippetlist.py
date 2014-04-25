@@ -14,6 +14,8 @@ class SnippetList(BrowserView):
 			return self.browser_template()
 		elif self.request.get('json'):
 			if self.request.get('snippet_id'):
+				self.request.response.setHeader('Content-Type', 
+'application/JSON;;charset="utf-8"') 
 				sm = SnippetManager()
 				snippet = sm.getSnippet(self.request.get('snippet_id'))
 
@@ -38,3 +40,9 @@ class SnippetList(BrowserView):
 		portal_url = getToolByName(self.context, "portal_url")
 		portal = portal_url.getPortalObject()
 		return portal.absolute_url()
+
+	def render(self):
+		"""
+		Breaking things, because I can
+		"""
+		return 
