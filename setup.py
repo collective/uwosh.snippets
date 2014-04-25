@@ -40,6 +40,7 @@ setup(name='uwosh.snippets',
       zip_safe=False,
       install_requires=[
           'setuptools',
+	  'plone.directives.form',
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},

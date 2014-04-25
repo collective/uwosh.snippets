@@ -6,6 +6,8 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="uwosh.snippets">
 
+    <include package="Products.CMFCore" file="permissions.zcml" />
+
     <browser:page
 	    name="get-snippet-list"
 	    for="*"
