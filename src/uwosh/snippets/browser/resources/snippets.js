@@ -45,12 +45,12 @@
         });
 
         $(snippet_ids).each(function(index, item) {
+          var edit_url = document.baseURI + '/@@get-snippet-list?json=true&snippet_id=';
           $.ajax({
-            url: 'http://localhost:7000/Plone/@@get-snippet-list?json=true&snippet_id=' +  item,
+            url: edit_url + item,
             dataType: 'json',
             success: function(data) {
               var text = data.text;
-              console.log(text);
               var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + item + '"]');
               $(snippet).each(function() {
                 $(this).html(text);
@@ -65,28 +65,34 @@
         });
       });
       ed.onPostProcess.add(function(ed, o) {
-        var regex = /<span\s*data-type="snippet_tag"\s*data-snippet-id="([a-zA-Z0-9_-]+?)"\s*>.+?<\/span>/
+        // var regex = /<span\s*data-type="snippet_tag"\s*data-snippet-id="([a-zA-Z0-9_-]+?)"\s*>.+?<\/span>/
 
-        var text = o.content;
+        // var text = o.content;
 
-        while( regex.test(text) )
-        {
-          var match = regex.exec(text);
+        // while( regex.test(text) )
+        // {
+        //   var match = regex.exec(text);
 
-          var tag = match[0]
-          var id = match[1];
+        //   var tag = match[0]
+        //   var id = match[1];
 
-          var newTag = '<span data-type="snippet_tag" data-snippet-id="' + id + '"></span>';
+        //   var newTag = '<span data-type="snippet_tag" data-snippet-id="' + id + '"></span>';
 
-          text = text.replace(tag, newTag);
-        }
+        //   text = text.replace(tag, newTag);
+        // }
 
-        o.content = text;
+        // o.content = text;
+
+        var body = o.node;
+        $(body).find('span[data-type="snippet_tag"]').html("");
+
+        o.content = $(body).html();
       });
       //Prevents TinyMCE from wrapping text in <p> tags. 
       //Since these are meant to be used in-line, 
       //breaking to a new paragraph obviously isn't desired.
-      if( String(document.URL).indexOf('.snippets') >= 0 )
+      var pageUrl = String(document.URL);
+      if( pageUrl.indexOf('@@edit-snippet') >= 0 || pageUrl.indexOf('@@create-snippet') >= 0)
       {
         ed.settings.force_p_newlines = 0;
         ed.settings.forced_root_block = false;

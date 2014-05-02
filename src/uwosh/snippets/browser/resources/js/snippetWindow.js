@@ -51,7 +51,7 @@ $(document).ready(function() {
 				editor_snippet = false;
 				tinyMCEPopup.close();
 			}
-			tinyMCEPopup.editor.selection.setContent($(output).prop('outerHTML'), {format: 'raw'});
+			tinyMCEPopup.editor.selection.setContent($(output).prop('outerHTML').toString());
 			tinyMCEPopup.close();
 		}
 		else if( snippet == undefined )
@@ -99,9 +99,9 @@ $(document).ready(function() {
 		{
 			var text = getSelectedSnippet();
 			var id = $(text).parent().find('.snippet-id').text();
-			text = $(text).find('.snippet-text').text();
+			text = $(text).find('.snippet-text').html();
 
-			snippet = createSpanElement(id, text);
+			snippet = createSpanTag(id, text);
 
 			var preview = $('#snippet-preview').get(0);
 
@@ -136,15 +136,6 @@ $(document).ready(function() {
 	});
 
 	$('#snippet-preview-save').click(function() {
-
-		var snippets = $('.snippet-wrapper');
-		$(snippets).each(function() {
-			var name = $(this).attr('snippet-id');
-
-			var tag = createSpanTag(name);
-
-			$(this).replaceWith(tag);
-		});
 
 		var body = $('#snippet-preview').html();
 		tinyMCEPopup.editor.setContent(body);
