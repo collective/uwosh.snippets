@@ -6,12 +6,12 @@ from repoze.xmliter.utils import getHTMLSerializer
 
 from uwosh.snippets.parser import SnippetParser
 from Products.CMFCore.utils import getToolByName
-
+from uwosh.snippets.browser.interfaces import SnippetsLayer
 from zope.component.hooks import getSite
 
 class SnippetTransform(object):
     implements(ITransform)
-    adapts(Interface, Interface) # any context, any request
+    adapts(Interface, SnippetsLayer)
 
     order = 9000
 
@@ -27,16 +27,6 @@ class SnippetTransform(object):
         return result
 
     def transformIterable(self, result, encoding):
-
-        site = getSite()
-
-        #This prevents the transform from running even when
-        #The add-on isn't installed =\ 
-        #
-        #There must be a better way....
-        qi = getToolByName(site, 'portal_quickinstaller')
-        if not qi.isProductInstalled('uwosh.snippets'):
-            return result
 
         try:
             parser = SnippetParser()

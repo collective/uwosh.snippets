@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 		function successHandler(responseText, statusText, xhr, $form)
 		{
-			alert('The snippet was created successfully!');
+			alert('The snippet was saved successfully!');
 			close();
 		}
 	});

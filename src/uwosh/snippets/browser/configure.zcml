@@ -13,6 +13,7 @@
 	    for="*"
 	    class=".snippetlist.SnippetList"
 	    permission="cmf.ManagePortal"
+        layer=".interfaces.SnippetsLayer"
 	    />
 
     <browser:page
@@ -20,6 +21,7 @@
         for="*"
         class=".addsnippet.SnippetForm"
         permission="cmf.ManagePortal"
+        layer=".interfaces.SnippetsLayer"
         />
 
     <browser:page
@@ -27,5 +29,6 @@
         for="*"
         class=".addsnippet.SnippetEditForm"
         permission="cmf.ManagePortal"
+        layer=".interfaces.SnippetsLayer"
         />
 </configure>

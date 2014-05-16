@@ -2,6 +2,7 @@ from plone.directives import form
 import zope.schema
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 from plone.autoform.directives import widget
+from zope.interface import Interface
 
 class ISnippet(form.Schema):
 
@@ -27,3 +28,5 @@ class ISnippet(form.Schema):
 	                             description=u'The actual content to be rendered on the page.',
 	                             required=True)
 
+class SnippetsLayer(Interface):
+	pass
