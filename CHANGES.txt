@@ -1,17 +1,24 @@
 Changelog
 =========
 
-.01 
+.1 
 -------------------
 - Basic proof-of-concept implementation
 - Added TinyMCE plugin
 
-.02
+.2
 -------------------
 - Added ability to embed youtube videos.
 
-.03
+.3
 -------------------
 - Extended TinyMCE plugin to make snippets "clickable" in the edit page.
 - Added snippet browser window to TinyMCE plugin.
 - Removed support for YouTube embedding (other products handle this better).
+
+.8a
+------------------
+- Added a Create/Edit extension to the TinyMCE plugin
+- Inumerable bug fixes I've neglected to document :(
+- Added layer to prevent premature execution
+- Reworked JS to be more flexible

@@ -9,6 +9,8 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
 
+from Products.CMFCore.utils import getToolByName
+
 import unittest2 as unittest
 
 from plone.testing import z2
@@ -73,10 +75,13 @@ class BaseTest(unittest.TestCase):
         folder2.invokeFactory('Document', 'testDoc2')
 
         #need to verify that the regex will catch more than 1
-        self.testString = "This is a !{{testDoc}}! test! Or is it !{{testDoc}}!?"
+        self.testString = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testDoc"></span>?'
 
         self.doc.setText("meaningless")
         self.doc.setTitle("Meaningless")
+
+        wft = getToolByName(portal, 'portal_workflow')
+        wft.setDefaultChain('simple_publication_workflow')
 
     def tearDown(self):
         portal = self.layer['portal']
