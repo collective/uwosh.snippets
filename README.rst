@@ -7,7 +7,7 @@ The snippets can be used anywhere that rich-text can be used. They can be insert
 a picture or hyperlink.
 
 What is a snippet?
-=================
+==================
 Technically speaking, a snippet is just an ordinary bit of rich-text that can be shoe-horned into a Plone 
 page wherever you like. However, unlike templates, copy/paste, or other similar methods, snippets are 
 tied to an independent file, and then rendered when the page is rendered. This means that you can edit the snippet once, 
