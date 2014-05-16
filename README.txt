@@ -1,4 +1,4 @@
-.. contents::
+.. raw::
 
 Introduction
 ============
