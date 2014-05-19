@@ -1,0 +1,5 @@
+include *
+
+recursive-include uwosh/snippets *
+global-exclude *.pyc
+prune uwosh/snippets/tests
