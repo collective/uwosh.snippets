@@ -1,5 +1,8 @@
 Changelog
 =========
+.8.3a
+------------------
+- Fixed issue with the new regex
 
 .8.2a
 ------------------
