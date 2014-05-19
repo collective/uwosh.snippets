@@ -1,5 +1,7 @@
-include *
+include * 
 
-recursive-include uwosh/snippets *
+global-include uwosh/snippets *.js *.xml *.css *.zcml *.pt
+
 global-exclude *.pyc
+global-exclude *.DS_Store
 prune uwosh/snippets/tests

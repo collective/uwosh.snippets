@@ -16,9 +16,7 @@ class SnippetParser():
 		self.sm = SnippetManager()
 
 	snippetRegex = '<span'+
-				'(?=.*?data-type="snippet_tag"\s*)' + 
-				'(?=.*?data-snippet-id="([a-zA-Z0-9_-]+?)"\s*)' +
-				'.*?><\/span>'
+				'(?=.*?data-type="snippet_tag"\s*)(?=.*?data-snippet-id="([a-zA-Z0-9_-]+?)"\s*).*?><\/span>'
 
 	def parsePage(self, pageText):
 		result = self.parseSnippets(pageText)
