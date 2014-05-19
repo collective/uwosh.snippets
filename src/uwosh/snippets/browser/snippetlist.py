@@ -14,8 +14,7 @@ class SnippetList(BrowserView):
 			return self.browser_template()
 		elif self.request.get('json'):
 			if self.request.get('snippet_id'):
-				self.request.response.setHeader('Content-Type', 
-'application/JSON;;charset="utf-8"') 
+				self.request.response.setHeader('Content-Type', 'application/JSON;;charset="utf-8"') 
 				sm = SnippetManager()
 				snippet = sm.getSnippet(self.request.get('snippet_id'))
 
