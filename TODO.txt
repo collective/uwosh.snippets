@@ -1,0 +1,17 @@
+Things I (or anyone interested in contributing) need to fix:
+============================================================
+- AJAX submission doesn't handle any "bad" reponses very well.
+- The .snippets folder doesn't get hidden immediately (as it's supposed to)
+- Need to add a delete functionality in the snippet browser
+- Need to make TinyMCE remove the snippet button when the add-on is uninstalled
+- More unit tests
+
+Next phase of developement:
+===========================
+- Move snippets to a Dexterity object
+- Incorporate workflows
+- User/Role based security restrictions on adding/editing
+- Allow for snippet folder hierarchy
+- Plone 5 testing/integration
+- Search functionality?
+- JS unit testing?

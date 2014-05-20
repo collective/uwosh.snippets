@@ -1,20 +1,26 @@
 .. raw::html
 
+==============
+uwosh.snippets
+==============
+
+(Plone 4.3+)
+
 Introduction
-============
+------------
 The uwosh.snippets package allows the user to include dynamically updated rich-text snippets into a Plone page.
 The snippets can be used anywhere that rich-text can be used. They can be inserted into a page much like 
 a picture or hyperlink.
 
 What is a snippet?
-==================
+------------------
 Technically speaking, a snippet is just an ordinary bit of rich-text that can be shoe-horned into a Plone 
 page wherever you like. However, unlike templates, copy/paste, or other similar methods, snippets are 
 tied to an independent file, and then rendered when the page is rendered. This means that you can edit the snippet once, 
 and the changes are reflected instantly on any page that it is "inserted" into. 
 
 How to use
-==========
+----------
 Navigate to a pages edit view. Click somewhere inside the TinyMCE content window. The snippet
 will be placed wherever the cursor is. If you highlight a block of text instead, the snippet
 will replace whatever was highlighted.
