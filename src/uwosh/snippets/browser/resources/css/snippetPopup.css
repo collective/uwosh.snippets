@@ -35,6 +35,11 @@
 	float: left;
 }
 
+#snippet-browser .snippet-box > a {
+	width: 5%;
+	margin-left: 5px;
+}
+
 #snippet-browser .snippet-box.even {
 	background-color: #ddd;
 }
@@ -53,7 +58,7 @@
 }
 
 #snippet-browser .snippet-browser-desc {
-	width: 60%;
+	width: 50%;
 	padding-left: 10px;
 	height: auto;
 }

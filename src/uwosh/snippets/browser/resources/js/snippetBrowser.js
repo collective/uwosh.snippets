@@ -61,6 +61,34 @@ $(document).ready(function() {
 		$(this).removeClass('highlight');
 	});
 
+	$('.snippet-delete').click(function() {
+		event.preventDefault();
+		var url = $(this);
+		tinyMCEPopup.editor.windowManager.confirm("Are you sure you want to delete this snippet?", function (s) {
+			if(s)
+			{
+				$.ajax({
+		            url: $(url).attr('href'),
+		            success: function(data) {
+		            	if( data == 'True' )
+		            	{
+		            		tinyMCEPopup.editor.windowManager.alert("The snippet was deleted successfully.");	
+		            		$(url).parent().remove();
+		            	}
+		            	else
+		            	{
+		            		tinyMCEPopup.editor.windowManager.alert("Something when wrong. The snippet wasn't deleted: " + data);
+		            	}
+		            }
+		        });
+			}	
+			else
+			{
+				return false;
+			}
+		});
+	});
+
 	function sanitize(snippetId) {
 		snippet = snippetId.replace(/\./g, '\\.');
 		snippet = snippet.replace(/\:/g, '\\:');

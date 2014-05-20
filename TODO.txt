@@ -5,6 +5,7 @@ Things I (or anyone interested in contributing) need to fix:
 - Need to add a delete functionality in the snippet browser
 - Need to make TinyMCE remove the snippet button when the add-on is uninstalled
 - More unit tests
+- Remove the snippet button when editing a snippet. (Somehow....TinymCE is a cruel mistress)
 
 Next phase of developement:
 ===========================
