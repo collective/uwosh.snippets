@@ -28,5 +28,5 @@ class ISnippet(form.Schema):
 	                             description=u'The actual content to be rendered on the page.',
 	                             required=True)
 
-class SnippetsLayer(Interface):
+class ISnippetsLayer(Interface):
 	pass

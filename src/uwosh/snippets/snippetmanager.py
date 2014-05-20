@@ -58,6 +58,7 @@ class SnippetManager():
 
 		folder = self.index[snippetId].aq_parent
 		folder.manage_delObjects(snippetId)
+		self.indexSnippets()
 
 	def getSnippet(self, snippetId):
 

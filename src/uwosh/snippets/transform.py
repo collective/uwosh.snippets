@@ -6,12 +6,12 @@ from repoze.xmliter.utils import getHTMLSerializer
 
 from uwosh.snippets.parser import SnippetParser
 from Products.CMFCore.utils import getToolByName
-from uwosh.snippets.browser.interfaces import SnippetsLayer
+from uwosh.snippets.browser.interfaces import ISnippetsLayer
 from zope.component.hooks import getSite
 
 class SnippetTransform(object):
     implements(ITransform)
-    adapts(Interface, SnippetsLayer)
+    adapts(Interface, ISnippetsLayer)
 
     order = 9000
 
@@ -45,7 +45,7 @@ class SnippetTransform(object):
             return None
         try:
             result = getHTMLSerializer(result, pretty_print=False)
-        except (TypeError, etree.ParseError):
+        except (TypeError):
             return None
 
         return [ parser.parsePage(r) for r in result ]

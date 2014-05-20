@@ -50,13 +50,27 @@
             url: edit_url + item,
             dataType: 'json',
             success: function(data) {
-              var text = data.text;
+
               var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + item + '"]');
-              $(snippet).each(function() {
-                $(this).html(text);
-                $(this).css('outline', 'black dotted thin');
-                $(this).css('display', 'inline-block');
-              });
+              
+              if( data == false )
+              {
+                var text = '<span data-type="dead_snippet"></span>'
+                $(snippet).each(function()
+                {
+                  $(this).html(text);
+                  $(this).css('display', 'none');
+                });
+              }
+              else
+              {            
+                var text = data.text;
+                $(snippet).each(function() {
+                  $(this).html(text);
+                  $(this).css('outline', 'black dotted thin');
+                  $(this).css('display', 'inline-block');
+                });
+              }
             },
             error: function(xhr) {
               console.log(xhr);
@@ -84,7 +98,9 @@
         // o.content = text;
 
         var body = o.node;
+        $(body).find('span[data-type="dead_snippet"]').parent().remove();
         $(body).find('span[data-type="snippet_tag"]').html("");
+
 
         o.content = $(body).html();
       });

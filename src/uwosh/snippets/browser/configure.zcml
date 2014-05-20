@@ -13,7 +13,7 @@
 	    for="*"
 	    class=".snippetlist.SnippetList"
 	    permission="cmf.ManagePortal"
-        layer=".interfaces.SnippetsLayer"
+        layer=".interfaces.ISnippetsLayer"
 	    />
 
     <browser:page
@@ -21,7 +21,7 @@
         for="*"
         class=".addsnippet.SnippetForm"
         permission="cmf.ManagePortal"
-        layer=".interfaces.SnippetsLayer"
+        layer=".interfaces.ISnippetsLayer"
         />
 
     <browser:page
@@ -29,6 +29,14 @@
         for="*"
         class=".addsnippet.SnippetEditForm"
         permission="cmf.ManagePortal"
-        layer=".interfaces.SnippetsLayer"
+        layer=".interfaces.ISnippetsLayer"
+        />
+
+    <browser:page
+        name="delete-snippet"
+        for="*"
+        class=".deletesnippet.DeleteSnippet"
+        permission="cmf.ManagePortal"
+        layer=".interfaces.ISnippetsLayer"
         />
 </configure>

@@ -15,6 +15,7 @@
 			<div class="snippet-id" style="display: none;" tal:content="snippet/getId"></div>
 			<div class="snippet-browser-desc" tal:content="snippet/description"></div>
 			<a class="snippet-edit" tal:attributes="href string:${view/siteUrl}/@@edit-snippet?snippet-id=${snippet/getId}">Edit</a>
+			<a class="snippet-edit" tal:attributes="href string:${view/siteUrl}/@@delete-snippet?snippet-id=${snippet/getId}">Delete</a>
 			<br style="clear: left;" />
 		</div>
 	</div>

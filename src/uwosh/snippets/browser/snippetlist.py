@@ -16,7 +16,13 @@ class SnippetList(BrowserView):
 			if self.request.get('snippet_id'):
 				self.request.response.setHeader('Content-Type', 'application/JSON;;charset="utf-8"') 
 				sm = SnippetManager()
-				snippet = sm.getSnippet(self.request.get('snippet_id'))
+
+				try:
+					snippet = sm.getSnippet(self.request.get('snippet_id'))
+				except KeyError:
+					#Getting here means the request snippetID doesn't exist
+					#Returning False tells the AJAX handler to remove the snippet tag
+					return json.dumps(False)
 
 				return self.getSnippetAsJSON(snippet)
 		else:

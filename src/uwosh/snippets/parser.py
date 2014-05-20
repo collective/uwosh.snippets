@@ -31,6 +31,7 @@ class SnippetParser():
 			try:
 				pageText = replace(pageText, match.group(0), snippets[match.group(1)].getText())
 			except KeyError:
+				#The snippetID was invalid
 				pageText = replace(pageText, match.group(0), '')
 
 		return pageText
