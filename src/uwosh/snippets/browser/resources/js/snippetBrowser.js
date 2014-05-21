@@ -60,8 +60,8 @@ $(document).ready(function() {
 		$(this).removeClass('highlight');
 	});
 
-	$('.snippet-delete').click(function() {
-		event.preventDefault();
+	$('.snippet-delete').click(function(e) {
+		e.preventDefault();
 		var url = $(this);
 		tinyMCEPopup.editor.windowManager.confirm("Are you sure you want to delete this snippet?", function (s) {
 			if(s)
