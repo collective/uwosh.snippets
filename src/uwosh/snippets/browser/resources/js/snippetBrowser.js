@@ -36,7 +36,6 @@ $(document).ready(function() {
 		else
 		{
 			selected = sanitize(selected);
-			selectedSnippet.val(selected);
 
 			var id = "#snippet-" + selected;
 			setPreviewWindow(selected);
@@ -98,9 +97,27 @@ $(document).ready(function() {
 
 	function setPreviewWindow(snippet) {
 
-		$(t).find('#snippet-selection').val($(snippet).find('.snippet-id').text());
+		selectedSnippet = getSelectionElement();
 		selectedSnippet.val(snippet);
-		var selected = $(t).find('#snippet-' + snippet);
-		setSelected(selected);
+		setSelected();
+	}
+
+	function getSelectionElement()
+	{
+		//We need to do this the "hard" way because, when returning from 
+		//the snippet edit window, the t variable is nowhere to be found
+
+		windows = tinyMCEPopup.editor.windowManager.windows
+
+		for( value in windows ) {
+			element = windows[value].element.get()
+			frame = $(element).find('iframe')
+			doc = $(frame).contents()
+			if( $(doc).find('#snippet-selection').length >= 1 )
+			{
+				element = $(doc).find('#snippet-selection');
+				return element;
+			}
+		}
 	}
 })

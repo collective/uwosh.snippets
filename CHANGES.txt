@@ -1,5 +1,12 @@
 Changelog
 =========
+
+0.8.4a (05/21/14)
+------------------
+- Added snippet delete functionality
+- Added JS to polish delete
+
+
 .8.3a
 ------------------
 - Fixed issue with the new regex
