@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.5a (05/27/14)
+------------------
+- Added contenteditable tag to prevent users from editing snippets inline
+
+
 0.8.4a (05/21/14)
 ------------------
 - Added snippet delete functionality

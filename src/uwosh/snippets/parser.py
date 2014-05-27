@@ -5,7 +5,6 @@ from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from string import replace
 
-from plone.dexterity.utils import createContentInContainer
 from Products.CMFCore.utils import getToolByName
 
 from uwosh.snippets.snippetmanager import SnippetManager

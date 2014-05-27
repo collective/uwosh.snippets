@@ -166,6 +166,7 @@ $(document).ready(function() {
 
 		$(snippet).attr('data-type', 'snippet_tag');
 		$(snippet).attr('data-snippet-id', snippetId);
+		$(snippet).attr('contenteditable', 'false');
 
 		$(snippet).html(snippetText);
 
@@ -177,7 +178,7 @@ $(document).ready(function() {
 		if( snippetId != "" )
 		{
 			var style = "outline-style: dotted; outline-width: thin; outline-color: black; display: inline-block;";
-			return '<span style="'+ style +'" data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
+			return '<span style="'+ style +'" contenteditable="false" data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
 		}
 	}
 

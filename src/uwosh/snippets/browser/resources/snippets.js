@@ -35,7 +35,7 @@
       ed.onLoadContent.add(function(ed, e) {
         var snippets = $(ed.contentDocument).find('span[data-type="snippet_tag"]');
 
-        //We just want get each snippet once, if there are duplicates, just ignore them
+        //We just want to get each snippet once, if there are duplicates, just ignore them
         snippet_ids = [];
         $(snippets).each(function(index, item) {
           if( $.inArray($(item).attr('data-snippet-id'), snippet_ids) == -1 )
@@ -69,6 +69,7 @@
                   $(this).html(text);
                   $(this).css('outline', 'black dotted thin');
                   $(this).css('display', 'inline-block');
+                  $(this).attr('contenteditable', 'false');
                 });
               }
             },
@@ -79,27 +80,9 @@
         });
       });
       ed.onPostProcess.add(function(ed, o) {
-        // var regex = /<span\s*data-type="snippet_tag"\s*data-snippet-id="([a-zA-Z0-9_-]+?)"\s*>.+?<\/span>/
-
-        // var text = o.content;
-
-        // while( regex.test(text) )
-        // {
-        //   var match = regex.exec(text);
-
-        //   var tag = match[0]
-        //   var id = match[1];
-
-        //   var newTag = '<span data-type="snippet_tag" data-snippet-id="' + id + '"></span>';
-
-        //   text = text.replace(tag, newTag);
-        // }
-
-        // o.content = text;
-
         var body = o.node;
         $(body).find('span[data-type="dead_snippet"]').parent().remove();
-        $(body).find('span[data-type="snippet_tag"]').html("");
+        $(body).find('span[data-type="snippet_tag"]').html("").removeAttr('contenteditable');
 
 
         o.content = $(body).html();
@@ -112,7 +95,6 @@
       {
         ed.settings.force_p_newlines = 0;
         ed.settings.forced_root_block = false;
-        //ed.settings.force_br_newlines = true;
       }
 
       function openSnippetWindow(options)
