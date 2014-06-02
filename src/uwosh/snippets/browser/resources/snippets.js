@@ -69,6 +69,7 @@
                   $(this).html(text);
                   $(this).css('outline', 'black dotted thin');
                   $(this).css('display', 'inline-block');
+                  $(this).addClass('no-select');
                   $(this).attr('contenteditable', 'false');
                 });
               }

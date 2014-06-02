@@ -2,7 +2,11 @@
 	background: url('brackets.png')
 }
 
-.snippet-tag {
-	outline: black dotted thin;
-	display: inline-block;
+span.no-select
+{
+   user-select: none;
+   -o-user-select:none;
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
 }

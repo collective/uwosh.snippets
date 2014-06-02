@@ -52,6 +52,7 @@ $(document).ready(function() {
 				tinyMCEPopup.close();
 			}
 			tinyMCEPopup.editor.selection.setContent($(output).prop('outerHTML').toString());
+
 			tinyMCEPopup.close();
 		}
 		else if( snippet == undefined )
@@ -163,6 +164,7 @@ $(document).ready(function() {
 		var snippet = document.createElement('span');
 		$(snippet).css('outline', "black dotted thin");
 		$(snippet).css('display', 'inline-block');
+		$(snippet).addClass('no-select');
 
 		$(snippet).attr('data-type', 'snippet_tag');
 		$(snippet).attr('data-snippet-id', snippetId);
@@ -177,8 +179,11 @@ $(document).ready(function() {
 	{
 		if( snippetId != "" )
 		{
-			var style = "outline-style: dotted; outline-width: thin; outline-color: black; display: inline-block;";
-			return '<span style="'+ style +'" contenteditable="false" data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
+			var style = "outline-style: dotted; ";
+			style += "outline-width: thin; ";
+			style += "outline-color: black; "; 
+			style += "display: inline-block; ";
+			return '<span style="'+ style +'" class="no-select" contenteditable="false" data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
 		}
 	}
 
