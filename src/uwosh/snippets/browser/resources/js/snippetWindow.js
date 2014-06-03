@@ -3,10 +3,11 @@ $(document).ready(function() {
 	document.title = 'Add a snippet';
 	var t = $(this);
 
+	catchNew();
+
 	var editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
 
-	if( editor_snippet != false )
-	{
+	if( editor_snippet != false ) {
 		$('#snippet-selection').val($(editor_snippet).attr('data-snippet-id'));
 		setSelectedSnippet();
 	}
@@ -159,6 +160,19 @@ $(document).ready(function() {
 		return plug;
 	}
 
+	function catchNew()
+	{
+		//location.search returns anything after the ? in a URL
+		var str = location.search;
+
+		var newSnippet = str.match(/(\?|&)new_snippet=([a-zA-Z0-9%_-]+)(&|$|)?/)
+		if( newSnippet != null )
+		{
+			var name = newSnippet[2];
+			fetchSnippet(name);
+		}
+	}
+
 	function createSpanElement(snippetId, snippetText)
 	{
 		var snippet = document.createElement('span');
@@ -185,6 +199,22 @@ $(document).ready(function() {
 			style += "display: inline-block; ";
 			return '<span style="'+ style +'" class="no-select" contenteditable="false" data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
 		}
+	}
+
+	function fetchSnippet(snippetId)
+	{
+		var url = tinyMCEPopup.editor.documentBaseURI.source + '/@@get-snippet-list?json=true&snippet_id=';
+		url += snippetId
+
+		$.ajax({
+			url: url,
+			dataType: 'json',
+			success: function(responseText) {
+				var snippetId = '#snippet-' + responseText['id'];
+				var item = $(snippetId);
+				setSelectedSnippet(item);
+			},
+		})
 	}
 
 	function getSelectedSnippet() {

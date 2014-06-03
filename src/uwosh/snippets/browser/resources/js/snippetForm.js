@@ -17,12 +17,20 @@ $(document).ready(function() {
 		function successHandler(responseText, statusText, xhr, $form)
 		{
 			alert('The snippet was saved successfully!');
-			close();
+
+			var title = $($form).find('#form-widgets-title');
+			title = encodeURI($(title).val());
+			close(title);
 		}
 	});
 
-	function close() {
-		window.location.href = document.referrer;
+	function close(title) {
+		//window.location.href = document.referrer;
+		var form = $('#snippetTitleForm');
+		form.attr('action', document.referrer);
+		$(form).find('input').val(title);
+		form.submit();
+
 	}
 
 });
