@@ -19,6 +19,11 @@ page wherever you like. However, unlike templates, copy/paste, or other similar 
 tied to an independent file, and then rendered when the page is rendered. This means that you can edit the snippet once, 
 and the changes are reflected instantly on any page that it is "inserted" into. 
 
+**Terminology**
+:Snippet definition: The actual information that will be rendered onto the page. The snippet plugs are used as placeholders for their definitions 
+during editing. 
+:Snippet plug: The placeholder text that is placed into a page to represent it's respective definition. Whenever a page containing a plug is rendered, the snippet parser will fetch the definition associated with that particular plug and place it into the page in place of the plug. The definition of a snippet can be edited, and the changes will be immediately reflected everywhere a plug is inserted. 
+
 How to use
 ----------
 Navigate to a pages edit view. Click somewhere inside the TinyMCE content window. The snippet

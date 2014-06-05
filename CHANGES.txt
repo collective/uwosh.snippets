@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.8.6a (6/5/2014)
+------------------
+- Snippet ID's now aren't allowed to have any CSS-ID unsafe characters
+- Snippet plugs are now automatically updated when the base snippet is edited
+- The text inside snippet plugs can no longer be edited (that I'm aware of?)
+- Fixed numerous bugs preventing the "Selected snippet" box from populating
+
 0.8.5a (05/27/14)
 ------------------
 - Added contenteditable tag to prevent users from editing snippets inline
@@ -9,7 +16,7 @@ Changelog
 0.8.4a (05/21/14)
 ------------------
 - Added snippet delete functionality
-- Added JS to polish delete
+- Added JS to polish delete
 
 
 .8.3a
