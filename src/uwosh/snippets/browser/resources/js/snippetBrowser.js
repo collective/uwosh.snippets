@@ -2,8 +2,11 @@ $(document).ready(function() {
 
 	var t = tinyMCEPopup.getWindowArg('t');
 	var setSelected = tinyMCEPopup.getWindowArg('setSelected');
+	var reload = tinyMCEPopup.getWindowArg('reload');
 	var selectedSnippet = $(t).find('#snippet-selection');
 	var lastURL;
+
+	catchEdit();
 
 	if( selectedSnippet.val() != "" )
 	{
@@ -88,14 +91,28 @@ $(document).ready(function() {
 		});
 	});
 
-	function sanitize(snippetId) {
+	function catchEdit()
+	{
+		var referrer = document.referrer;
+
+		var match = referrer.match(/(\?|&)snippet-id=([a-zA-Z0-9-]+)(&|$|)?/);
+
+		if( match != null )
+		{
+			reload(match[2]);
+		}
+	}
+
+	function sanitize(snippetId)
+	{
 		snippet = snippetId.replace(/\./g, '\\.');
 		snippet = snippet.replace(/\:/g, '\\:');
 
 		return snippet;
 	}
 
-	function setPreviewWindow(snippet) {
+	function setPreviewWindow(snippet)
+	{
 
 		selectedSnippet = getSelectionElement();
 		selectedSnippet.val(snippet);

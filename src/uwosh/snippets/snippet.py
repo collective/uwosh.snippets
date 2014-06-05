@@ -1,5 +1,6 @@
 from uwosh.snippets.browser.interfaces import ISnippet
 from zope.interface import implements
+import re
 
 class Snippet():
 
@@ -9,7 +10,9 @@ class Snippet():
 		return self.description
 
 	def getId(self):
-		return self.id
+		#we return a "cleaned" ID. It should have been cleaned already at creation time....
+		#but better to error on the side of caution
+		return re.sub(r'\W', '', self.id)
 
 	def getText(self):
 		return self.text

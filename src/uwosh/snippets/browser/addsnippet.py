@@ -49,9 +49,12 @@ class SnippetForm(SchemaAddForm):
 	def create(self, data):
 		sm = SnippetManager()
 
+		#cleanup the title to create a more HTML friendly ID
+		snippetId = re.sub(r'\W', '', data['title'])
+
 		#TODO:
 		#Include support for different folders from this form.
-		snippet = sm.createSnippet(data['title'], None ,data)
+		snippet = sm.createSnippet(snippetId, None ,data)
 		
 
 		return snippet

@@ -17,20 +17,28 @@ $(document).ready(function() {
 		function successHandler(responseText, statusText, xhr, $form)
 		{
 			alert('The snippet was saved successfully!');
-
-			var title = $($form).find('#form-widgets-title');
-			title = encodeURI($(title).val());
-			close(title);
+			close();
 		}
 	});
 
-	function close(title) {
-		//window.location.href = document.referrer;
-		var form = $('#snippetTitleForm');
+	function close() {
+
+		//This means we're editing a snippet.
+		//We only want to pass the title back if it's a new snippet
+		if( $('#form-widgets-id').val().length > 0 )
+		{
+			window.location.href = document.referrer;
+			return;
+		}
+
+		var id = $('#form-widgets-title').val();
+		//Sanitize the id. It will be done again once it reaches the 
+		//form class, in case this fails (or the JS is subverted).
+		id = id.replace(/\W/g, '');
+
+		var form = $('#snippetIdForm');
 		form.attr('action', document.referrer);
-		$(form).find('input').val(title);
+		$(form).find('input').val(id);
 		form.submit();
-
 	}
-
 });

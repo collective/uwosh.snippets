@@ -93,14 +93,15 @@ $(document).ready(function() {
 		}, {
 			t: t,
 			setSelected: setSelectedSnippet,
+			reload: reload,
 		});
 	});
 
 	$('#snippet-preview-insert').click(function() {
-		if( $('#snippet-select').val() != "None" )
+		if( $('#snippet-selection').val() != "" )
 		{
 			var text = getSelectedSnippet();
-			var id = $(text).parent().find('.snippet-id').text();
+			var id = $(text).find('.snippet-id').text();
 			text = $(text).find('.snippet-text').html();
 
 			snippet = createSpanTag(id, text);
@@ -165,7 +166,7 @@ $(document).ready(function() {
 		//location.search returns anything after the ? in a URL
 		var str = location.search;
 
-		var newSnippet = str.match(/(\?|&)new_snippet=([a-zA-Z0-9%_-]+)(&|$|)?/)
+		var newSnippet = str.match(/(\?|&)new_snippet=([a-zA-Z0-9_-]+)(&|$|)?/)
 		if( newSnippet != null )
 		{
 			var name = newSnippet[2];
@@ -217,15 +218,59 @@ $(document).ready(function() {
 		})
 	}
 
-	function getSelectedSnippet() {
+	function getSelectedSnippet() 
+	{
 		var selected = $('#snippet-selection').val();
+
+		if( selected == "" )
+		{
+			return "None";
+		}
+		selected = selected.replace(/\W/g, '');
 		var id = '#snippet-' + selected;
 
 		return $(id);
 	}
 
-	function setSelectedSnippet(selected) {
-		snippet = typeof(selected) != 'undefined' ? selected : getSelectedSnippet();
+	function reload(snippetId)
+	{
+		snippet = $(snippetId);
+		if( typeof(snippet) == 'undefined' )
+		{
+			return false;
+		}
+		var url = tinyMCEPopup.editor.documentBaseURI.source + '/@@get-snippet-list?json=true&snippet_id=';
+		url += snippetId
+
+		$.ajax({
+			url: url,
+			dataType: 'json',
+			success: function (responseText) {
+				resetSnippet(responseText);
+			}
+		})
+	}
+
+	function setSelectedSnippet(selected) 
+	{
+
+		if( typeof(selected) == 'undefined' )
+		{
+			snippet = getSelectedSnippet();
+		}
+		else
+		{
+			snippet = selected;
+			$('#snippet-selection').val($(snippet).find('.snippet-id').text());
+		}
+
+		if( snippet == "None" )
+		{
+			$('#snippet-info-title').text('None');
+			$('#snippet-desc').text('None');
+			$('#snippet-info').show();
+			return true;
+		}
 
 		if( $('#snippet-normal-buttons').css('display') != "none" )
 		{
@@ -234,8 +279,8 @@ $(document).ready(function() {
 		}
 
 		$('#snippet-info-title').text(snippet.find('.snippet-title').text());
-		
-		var snippetDesc = snippet.find('.snippet-desc').text();
+
+		var snippetDesc = snippet.find('.snippet-description').text();
 		var descText = "None";
 
 		if( snippetDesc != "" )
@@ -246,5 +291,35 @@ $(document).ready(function() {
 		$('#snippet-info-desc').text(descText);
 		
 		$('#snippet-info').show();
+	}
+
+	function resetSnippet(responseText)
+	{
+		var id = responseText['id'];
+		snippet = '#snippet-' + id;
+
+		if( $(snippet).length <= 0 )
+		{
+			return false;
+		}
+
+		$.each(responseText, function(k,v) {
+			if( k == "id" )
+			{
+				//continue
+				return true;
+			}
+
+			var classname = '.snippet-' + k;
+			$(snippet).find(classname).text(v);
+		});
+
+		if( $('#snippet-selection').val() == id )
+		{
+			setSelectedSnippet(snippet);
+		}
+		var doc = tinyMCEPopup.editor.dom.doc;
+
+		$(doc).find('span[data-snippet-id="' + id + '"]').text(responseText['text'])
 	}
 });

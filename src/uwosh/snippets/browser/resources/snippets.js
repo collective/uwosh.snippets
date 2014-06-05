@@ -63,7 +63,7 @@
                 });
               }
               else
-              {            
+              {          
                 var text = data.text;
                 $(snippet).each(function() {
                   $(this).html(text);
@@ -83,7 +83,9 @@
       ed.onPostProcess.add(function(ed, o) {
         var body = o.node;
         $(body).find('span[data-type="dead_snippet"]').parent().remove();
-        $(body).find('span[data-type="snippet_tag"]').html("").removeAttr('contenteditable');
+        var snippets = $(body).find('span[data-type="snippet_tag"]');
+
+        $(snippets).html("").removeAttr('contenteditable');
 
 
         o.content = $(body).html();

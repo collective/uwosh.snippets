@@ -26,10 +26,6 @@
 		    <tal:notajax tal:condition="python:not ajax_load or ajax_include_head">
 		        <div tal:replace="structure provider:plone.htmlhead" />
 		        <link tal:replace="structure provider:plone.htmlhead.links" />
-
-		        <tal:comment replace="nothing">
-		            Various slots where you can insert elements in the header from a template.
-		        </tal:comment>
 		        <metal:topslot define-slot="top_slot" />
 		        <metal:headslot define-slot="head_slot" />
 		        <metal:styleslot define-slot="style_slot" />
@@ -45,8 +41,8 @@
 			<div style="padding: 10px">
 				<metal:use use-macro="context/@@ploneform-macros/titlelessform" />
 			</div>
-			<form method="get" id="snippetTitleForm">
-				<input type="hidden" name="new_snippet" value="NEW_SNIPPET_TITLE" />
+			<form method="get" id="snippetIdForm">
+				<input type="hidden" name="new_snippet" value="NEW_SNIPPET_ID" />
 				<noscript>
 					<button type="submit" />
 				</noscript>
