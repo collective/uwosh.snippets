@@ -15,6 +15,11 @@ class SnippetManager():
 		pt = getToolByName(portal, 'portal_url')
 		path = pt.getPortalObject()
 
+		folderExists = getattr(path, self.folderName, None)
+
+		if type( folderExists === 'NoneType' ):
+			path.invokeFactory('Folder', self.FolderName)
+
 		self.folder = path[self.folderName]
 
 		if not self.folder.getExcludeFromNav():
