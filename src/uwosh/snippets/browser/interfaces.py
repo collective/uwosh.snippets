@@ -20,7 +20,7 @@ class ISnippet(form.Schema):
 	description = zope.schema.Text(
 	                             title=u'Description',
 	                             description=u'A short explanation of the snippet.',
-	                             required=True)
+	                             required=False)
 
 	form.widget(text=WysiwygFieldWidget)
 	text = zope.schema.Text(

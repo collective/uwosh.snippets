@@ -1,6 +1,7 @@
 include * 
 
 global-include uwosh/snippets *.js *.xml *.css *.zcml *.pt
+global-include uwosh/snippets/profiles/default/structure
 
 global-exclude *.pyc
 global-exclude *.DS_Store
