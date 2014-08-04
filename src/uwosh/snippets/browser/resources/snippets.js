@@ -19,7 +19,7 @@
       });
 
       ed.onClick.add(function(ed, e) {
-          if( $(e.target).parents('span[data-type="snippet_tag"]').length > 0 )
+          if( $(e.target).parents('span[data-type="snippet_tag"]').length > 0 || $(e.target).attr('data-type') == 'snippet_tag')
           {
             snippet_element = e.target;
 
