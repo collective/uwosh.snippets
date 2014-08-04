@@ -1,8 +1,13 @@
 Changelog
 =========
+0.8.8 (8/4/2014)
+----------------
+- Missing .snippets folder issue fixed.
+- Description field now longer required.
+- Broken click-to-open functionality now fixed.
 
 0.8.6a (6/5/2014)
-------------------
+-----------------
 - Snippet ID's now aren't allowed to have any CSS-ID unsafe characters
 - Snippet plugs are now automatically updated when the base snippet is edited
 - The text inside snippet plugs can no longer be edited (that I'm aware of?)

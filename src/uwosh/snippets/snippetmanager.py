@@ -17,7 +17,7 @@ class SnippetManager():
 
 		folderExists = getattr(path, self.folderName, None)
 
-		if type( folderExists === 'NoneType' ):
+		if ( type( folderExists ) == 'NoneType' ):
 			path.invokeFactory('Folder', self.FolderName)
 
 		self.folder = path[self.folderName]
