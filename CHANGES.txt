@@ -1,5 +1,10 @@
 Changelog
 =========
+0.8.9a (8/4/2014)
+-----------------
+- Fixed missing .snippet folder issue...again
+- Fixed issue with tinymce icon not showing up
+
 0.8.8 (8/4/2014)
 ----------------
 - Missing .snippets folder issue fixed.
