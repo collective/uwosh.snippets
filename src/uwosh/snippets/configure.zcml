@@ -24,6 +24,14 @@
       description="Installs the uwosh.snippets package"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+
+    <genericsetup:registerProfile
+      name="uninstall"
+      title="uwosh.snippets"
+      directory="profiles/uninstall"
+      description="Removes the uwosh.snippets package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
   <!-- -*- extra stuff goes here -*- -->
 
   <adapter factory=".transform.SnippetTransform" name="uwosh.snippets" />

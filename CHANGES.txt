@@ -1,5 +1,13 @@
 Changelog
 =========
+0.9.01 (8/5/2014)
+-----------------
+- Fixed useless uninstall profile
+
+0.8.9 (8/4/2014)
+----------------
+- Fixed small JS bug introduced in 0.8.8
+
 0.8.9b (8/4/2014)
 -----------------
 - Browser UI no longer breaks when a snippet has no desc.
