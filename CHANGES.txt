@@ -1,5 +1,9 @@
 Changelog
 =========
+0.9.10 (8/6/2014)
+-----------------
+- Added button to allow the user to remove snippet plugs from the current page
+
 0.9.03 (8/5/2014)
 -----------------
 - Fixed bug preventing images from showing in preview window
