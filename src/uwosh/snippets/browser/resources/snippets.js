@@ -21,7 +21,14 @@
       ed.onClick.add(function(ed, e) {
           if( $(e.target).parents('span[data-type="snippet_tag"]').length > 0 || $(e.target).attr('data-type') == 'snippet_tag')
           {
-            snippet_element = e.target;
+            if( $(e.target).attr('data-type') == 'snippet_tag' )
+            {
+              snippet_element = e.target;
+            }
+            else
+            {
+              snippet_element = $(e.target).parents('span[data-type="snippet_tag"]');
+            }
 
             options = {
               current_url: url,
@@ -98,6 +105,8 @@
       {
         ed.settings.force_p_newlines = 0;
         ed.settings.forced_root_block = false;
+        ed.settings.relative_urls = false;
+        ed.settings.remove_script_host = true;
       }
 
       function openSnippetWindow(options)

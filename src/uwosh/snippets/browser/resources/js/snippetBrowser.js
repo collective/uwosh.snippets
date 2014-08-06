@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	var t = tinyMCEPopup.getWindowArg('t');
 	var setSelected = tinyMCEPopup.getWindowArg('setSelected');
-	var reload = tinyMCEPopup.getWindowArg('reload');
+	var snippet_reload = tinyMCEPopup.getWindowArg('reload');
 	var selectedSnippet = $(t).find('#snippet-selection');
 	var lastURL;
 
@@ -99,7 +99,7 @@ $(document).ready(function() {
 
 		if( match != null )
 		{
-			reload(match[2]);
+			snippet_reload(match[2]);
 		}
 	}
 

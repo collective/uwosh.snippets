@@ -1,5 +1,10 @@
 Changelog
 =========
+0.9.03 (8/5/2014)
+-----------------
+- Fixed bug preventing images from showing in preview window
+- Fixed bug breaking click-to-open when a snippet contains an image
+
 0.9.01 (8/5/2014)
 -----------------
 - Fixed useless uninstall profile

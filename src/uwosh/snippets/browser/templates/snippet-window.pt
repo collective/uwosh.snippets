@@ -12,8 +12,11 @@
 		<span id="snippet-info-title">None</span>
 		<label for="snippet-info-desc">Description:</label>
 		<span id="snippet-info-desc">None</span>
-		<input type="hidden" id="snippet-selection" />
-		<input type="button" value="Browse" id="snippet-select" />
+		<div>
+			<input type="hidden" id="snippet-selection" />
+			<input type="button" value="Browse" id="snippet-select" />
+			<input type="button" value="Remove" id="snippet-delete" style="display: none;" />
+		</div>
 	</div>
 	<div style="clear: both;"></div>
 	<label for="snippet-preview">Preview</label>

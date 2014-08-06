@@ -7,9 +7,22 @@ $(document).ready(function() {
 
 	var editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
 
-	if( editor_snippet != false ) {
+	if( editor_snippet !== undefined ) {
 		$('#snippet-selection').val($(editor_snippet).attr('data-snippet-id'));
 		setSelectedSnippet();
+
+		if( document.referrer.indexOf('/edit') > 0 )
+		{
+			$('#snippet-delete').show();
+		}
+		else
+		{
+			$('#snippet-delete').hide();
+		}
+	}
+	else
+	{
+		$('#snippet-delete').hide();
 	}
 
 	$('#snippet-create').click(function() {
@@ -31,6 +44,19 @@ $(document).ready(function() {
                     oneinstance: false,},
 		});
 		$(body).find('.snippet-create-container iframe').attr('height', '700px').attr('width', '500px');
+	});
+
+	$('#snippet-delete').click(function() {
+		tinyMCEPopup.editor.windowManager.confirm('Are you sure you want to remove the snippet plug from the current page?', function(s) {
+			if(s)
+			{
+				deletePlug(editor_snippet);
+			}
+			else
+			{
+				return true;
+			}
+		});
 	});
 
 	$('#snippet-insert').click(function() {
@@ -82,6 +108,8 @@ $(document).ready(function() {
 	});
 
 	$('#snippet-select').click(function() {
+		$('#snippet-delete').hide();
+
 		var url = tinyMCE.documentBaseURL;
 		var ed = tinyMCE.activeEditor;
 		ed.windowManager.open({
@@ -202,6 +230,11 @@ $(document).ready(function() {
 		}
 	}
 
+	function deletePlug(plug)
+	{
+		$(plug).remove();
+	}
+
 	function fetchSnippet(snippetId)
 	{
 		var url = tinyMCEPopup.editor.documentBaseURI.source + '/@@get-snippet-list?json=true&snippet_id=';
@@ -275,12 +308,12 @@ $(document).ready(function() {
 		if( $('#snippet-normal-buttons').css('display') != "none" )
 		{
 			//We want to preserve all the formatting, so we use .html(), not .text()
-			$('#snippet-preview').html(snippet.find('.snippet-text').html());
+			$('#snippet-preview').html($(snippet).find('.snippet-text').html());
 		}
 
-		$('#snippet-info-title').text(snippet.find('.snippet-title').text());
+		$('#snippet-info-title').text($(snippet).find('.snippet-title').text());
 
-		var snippetDesc = snippet.find('.snippet-description').text();
+		var snippetDesc = $(snippet).find('.snippet-description').text();
 		var descText = "None";
 
 		if( snippetDesc != "" )
@@ -311,7 +344,15 @@ $(document).ready(function() {
 			}
 
 			var classname = '.snippet-' + k;
-			$(snippet).find(classname).text(v);
+
+			if( k == 'text' )
+			{
+				$(snippet).find(classname).html(v);
+			}
+			else
+			{
+				$(snippet).find(classname).text(v);
+			}
 		});
 
 		if( $('#snippet-selection').val() == id )
@@ -320,6 +361,6 @@ $(document).ready(function() {
 		}
 		var doc = tinyMCEPopup.editor.dom.doc;
 
-		$(doc).find('span[data-snippet-id="' + id + '"]').text(responseText['text'])
+		$(doc).find('span[data-snippet-id="' + id + '"]').html(responseText['text'])
 	}
 });
