@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
 from uwosh.snippets.snippetmanager import SnippetManager
 
@@ -27,4 +28,4 @@ class DeleteSnippet(BrowserView):
 		"""
 		Breaking things, because I can
 		"""
-		return 
+		return

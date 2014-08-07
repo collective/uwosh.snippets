@@ -121,7 +121,7 @@ $(document).ready(function() {
 
 	function getSelectionElement()
 	{
-		//We need to do this the "hard" way because, when returning from 
+		//We need to do this the "hard" way because, when returning from
 		//the snippet edit window, the t variable is nowhere to be found
 
 		windows = tinyMCEPopup.editor.windowManager.windows

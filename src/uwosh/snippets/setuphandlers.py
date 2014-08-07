@@ -1,5 +1,7 @@
 from Products.CMFPlone.interfaces import INonInstallable
 from zope.interface import implements
+# -*- coding: utf-8 -*-
+__docformat__ = "epytext"
 
 class HiddenProfiles(object):
     implements(INonInstallable)

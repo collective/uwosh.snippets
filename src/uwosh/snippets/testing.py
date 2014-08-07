@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.testing import TEST_USER_NAME, PLONE_FIXTURE, login, \
     IntegrationTesting, PloneSandboxLayer, applyProfile, setRoles, \
     TEST_USER_ID, TEST_USER_PASSWORD

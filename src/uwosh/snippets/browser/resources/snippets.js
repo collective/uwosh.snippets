@@ -5,11 +5,11 @@
       tinymce.DOM.loadCSS(url + '/snippets.css');
 
       ed.addCommand('snippets', function(ui) {
-        
+
         options = {
           current_url: url,
         };
-        
+
         openSnippetWindow(options);
       });
 
@@ -59,7 +59,7 @@
             success: function(data) {
 
               var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + item + '"]');
-              
+
               if( data == false )
               {
                 var text = '<span data-type="dead_snippet"></span>'
@@ -70,7 +70,7 @@
                 });
               }
               else
-              {          
+              {
                 var text = data.text;
                 $(snippet).each(function() {
                   $(this).html(text);
@@ -97,8 +97,8 @@
 
         o.content = $(body).html();
       });
-      //Prevents TinyMCE from wrapping text in <p> tags. 
-      //Since these are meant to be used in-line, 
+      //Prevents TinyMCE from wrapping text in <p> tags.
+      //Since these are meant to be used in-line,
       //breaking to a new paragraph obviously isn't desired.
       var pageUrl = String(document.URL);
       if( pageUrl.indexOf('@@edit-snippet') >= 0 || pageUrl.indexOf('@@create-snippet') >= 0)

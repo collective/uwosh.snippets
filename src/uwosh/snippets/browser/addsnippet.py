@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.directives.form import SchemaAddForm, SchemaEditForm
 from plone.autoform.form import AutoExtensibleForm
 from Products.statusmessages.interfaces import IStatusMessage
@@ -97,7 +98,7 @@ class SnippetEditForm(SchemaEditForm):
 		for item in data:
 			attribute = getattr(snippet, item)
 			if item == 'text':
-				#For whatever reason, tinyMCE loves using the \xc2\xa0 code 
+				#For whatever reason, tinyMCE loves using the \xc2\xa0 code
 				data[item] = str(data[item]).replace('\xc2\xa0', ' ')
 
 			if attribute == data[item]:

@@ -8,7 +8,7 @@ $(document).ready(function() {
 	$('#form-buttons-save').click(function() {
 
 		var options = {
-			success:   successHandler, 
+			success:   successHandler,
 		};
 
 		$('#form').ajaxForm(options);
@@ -32,7 +32,7 @@ $(document).ready(function() {
 		}
 
 		var id = $('#form-widgets-title').val();
-		//Sanitize the id. It will be done again once it reaches the 
+		//Sanitize the id. It will be done again once it reaches the
 		//form class, in case this fails (or the JS is subverted).
 		id = id.replace(/\W/g, '');
 

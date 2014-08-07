@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest2 as unittest
 import pdb
 
@@ -25,19 +26,19 @@ class TestSnippetManager(BaseTest):
 
     def test_get_title(self):
         sm = SnippetManager()
-        
+
         snippet = sm.getSnippet(self.doc.getId())
         self.assertEqual(self.doc.Title(), snippet.getTitle())
 
     def test_get_text(self):
         sm = SnippetManager()
-        
+
         snippet = sm.getSnippet(self.doc.getId())
         self.assertEqual(self.doc.getRawText(), snippet.getText())
 
     def test_set_id(self):
         sm = SnippetManager()
-        
+
         snippet = sm.getSnippet(self.doc.getId())
         newId = "words"
         snippet.setId(newId)
@@ -45,7 +46,7 @@ class TestSnippetManager(BaseTest):
 
     def test_set_title(self):
         sm = SnippetManager()
-        
+
         snippet = sm.getSnippet(self.doc.getId())
         newTitle = "words"
         snippet.setTitle(newTitle)
@@ -53,7 +54,7 @@ class TestSnippetManager(BaseTest):
 
     def test_set_text(self):
         sm = SnippetManager()
-        
+
         snippet = sm.getSnippet(self.doc.getId())
         newText = " words words words"
         self.assertEqual(self.doc.getRawText(), snippet.getText())
