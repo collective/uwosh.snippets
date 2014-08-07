@@ -38,6 +38,11 @@
 
   <include package=".browser"/>
 
+  <utility
+    factory=".setuphandlers.HiddenProfiles"
+    name="snippets"
+    provides="Products.CMFPlone.interfaces.INonInstallable" />
+
   <browser:resourceDirectory
     name="uwosh.snippets"
     directory="browser/resources"
