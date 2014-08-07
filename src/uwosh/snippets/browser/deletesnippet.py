@@ -27,4 +27,4 @@ class DeleteSnippet(BrowserView):
 		"""
 		Breaking things, because I can
 		"""
-		return 
+		return

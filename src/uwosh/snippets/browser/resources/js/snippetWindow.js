@@ -139,7 +139,7 @@ $(document).ready(function() {
 			var sel = window.getSelection();
 			range = sel.getRangeAt(0);
 
-			//makes sure the user selection is inside the 
+			//makes sure the user selection is inside the
 			//preview window. Otherwise, the user could replace
 			//text anywhere on the window. Chaos ensues.
 			if( range.intersectsNode(preview) )
@@ -177,7 +177,7 @@ $(document).ready(function() {
 	function catchNestedSpans(plug) {
 
 		//once in a while, the snippet-tag spans will
-		//not get properly removed, so you'll have several nested 
+		//not get properly removed, so you'll have several nested
 		//inside one another. This function gets the
 		//upper-most of the 'snippet-plug' spans and returns it.
 
@@ -224,7 +224,7 @@ $(document).ready(function() {
 		{
 			var style = "outline-style: dotted; ";
 			style += "outline-width: thin; ";
-			style += "outline-color: black; "; 
+			style += "outline-color: black; ";
 			style += "display: inline-block; ";
 			return '<span style="'+ style +'" class="no-select" contenteditable="false" data-type="snippet_tag" data-snippet-id="' + snippetId + '">' + snippetText + '</span>';
 		}
@@ -251,7 +251,7 @@ $(document).ready(function() {
 		})
 	}
 
-	function getSelectedSnippet() 
+	function getSelectedSnippet()
 	{
 		var selected = $('#snippet-selection').val();
 
@@ -284,7 +284,7 @@ $(document).ready(function() {
 		})
 	}
 
-	function setSelectedSnippet(selected) 
+	function setSelectedSnippet(selected)
 	{
 
 		if( typeof(selected) == 'undefined' )

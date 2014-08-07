@@ -4,7 +4,7 @@ from uwosh.snippets.snippet import Snippet
 import re
 
 class SnippetManager():
-	#TODO: Get rid of the current folder scheme and 
+	#TODO: Get rid of the current folder scheme and
 	#make it automated
 
 	folderName = '.snippets'
@@ -41,7 +41,7 @@ class SnippetManager():
 		if not folder:
 			folder = self.folder
 
-		self.createSnippetDoc(snippetId, folder) 
+		self.createSnippetDoc(snippetId, folder)
 
 		doc = self.folder[snippetId]
 		if data['title']:
@@ -84,7 +84,7 @@ class SnippetManager():
 	def getSnippets(self, asDict=False):
 		
 		"""
-		Recursively finds all the snippet documents within the 
+		Recursively finds all the snippet documents within the
 		folder, and all sub-folders.
 		"""
 		

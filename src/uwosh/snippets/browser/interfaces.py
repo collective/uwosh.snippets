@@ -6,7 +6,7 @@ from zope.interface import Interface
 
 class ISnippet(form.Schema):
 
-	#Hidden field for the snippetId. This actually represents the 
+	#Hidden field for the snippetId. This actually represents the
 	#ID of the document storing the snippet. Since the ATDocument factory
 	#sets its own ID based on the title, we don't need to set it ourselves in the Add form
 	form.mode(id='hidden')

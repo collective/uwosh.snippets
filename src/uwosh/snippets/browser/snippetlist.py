@@ -15,7 +15,7 @@ class SnippetList(BrowserView):
 			return self.browser_template()
 		elif self.request.get('json'):
 			if self.request.get('snippet_id'):
-				self.request.response.setHeader('Content-Type', 'application/JSON;;charset="utf-8"') 
+				self.request.response.setHeader('Content-Type', 'application/JSON;;charset="utf-8"')
 				sm = SnippetManager()
 				snippetId = self.request.get('snippet_id')
 				snippetId = urllib.unquote(snippetId)
@@ -53,4 +53,4 @@ class SnippetList(BrowserView):
 		"""
 		Breaking things, because I can
 		"""
-		return 
+		return
