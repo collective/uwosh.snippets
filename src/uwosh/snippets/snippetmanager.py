@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 from uwosh.snippets.snippet import Snippet

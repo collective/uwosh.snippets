@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __docformat__ = "epytext"
 
 def setupVarious(context):

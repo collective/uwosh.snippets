@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 from plone.registry import field
 from plone.registry.record import Record

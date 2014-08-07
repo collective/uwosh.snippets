@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from uwosh.snippets.browser.interfaces import ISnippet
 from zope.interface import implements
 import re

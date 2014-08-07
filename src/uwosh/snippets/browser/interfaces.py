@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.directives import form
 import zope.schema
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget

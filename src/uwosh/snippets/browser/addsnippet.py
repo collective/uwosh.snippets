@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.directives.form import SchemaAddForm, SchemaEditForm
 from plone.autoform.form import AutoExtensibleForm
 from Products.statusmessages.interfaces import IStatusMessage
