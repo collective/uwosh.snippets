@@ -18,17 +18,15 @@ class SnippetList(BrowserView):
 			if self.request.get('snippet_id'):
 				self.request.response.setHeader('Content-Type', 'application/JSON;;charset="utf-8"')
 				sm = SnippetManager()
+
 				snippetId = self.request.get('snippet_id')
 				snippetId = urllib.unquote(snippetId)
 
-				try:
-					snippet = sm.getSnippet(snippetId)
-				except KeyError:
-					#Getting here means the request snippetID doesn't exist
-					#Returning False tells the AJAX handler to remove the snippet tag
-					return json.dumps(False)
+				snippetList = snippetId.split(',')
 
-				return self.getSnippetAsJSON(snippet)
+				snippet = self.getSnippetList(snippetList)
+
+				return snippet
 		else:
 			return self.window_template()
 
@@ -44,6 +42,28 @@ class SnippetList(BrowserView):
 
 	def getSnippetAsJSON(self, snippet):
 		return json.dumps(snippet, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+	def getSnippetList(self, snippetList):
+		sm = SnippetManager()
+
+		out = []
+
+		for snippet in snippetList:
+			try:
+				item = sm.getSnippet(snippet)
+
+			except KeyError:
+				#Getting here means the request snippetID doesn't exist
+				#Setting the items "dead" tells the AJAX handler to remove the snippet tag,
+				#if one exsists
+				item = { 
+					'id': snippet,
+					'dead': True
+				}
+
+			out.append( item )
+
+		return self.getSnippetAsJSON( out )
 
 	def siteUrl(self):
 		portal_url = getToolByName(self.context, "portal_url")

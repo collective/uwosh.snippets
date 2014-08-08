@@ -1,5 +1,11 @@
 Changelog
 =========
+0.9.15 (8/8/2014)
+-----------------
+- moved robot tests over from another branch
+- Changed JS on edit page load to get all snippets it needs at once, instead of one at a time
+- Reworked SnippetList class to accomodate aforementioned JS change
+
 0.9.11 (8/8/2014)
 -----------------
 - "Remove" button no long remains after removing a snippet plug

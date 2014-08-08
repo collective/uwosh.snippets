@@ -51,16 +51,28 @@
           }
         });
 
+        var edit_url = document.baseURI + '/@@get-snippet-list?json=true&snippet_id=';
+
+        var ids = [];
         $(snippet_ids).each(function(index, item) {
-          var edit_url = document.baseURI + '/@@get-snippet-list?json=true&snippet_id=';
-          $.ajax({
-            url: edit_url + item,
-            dataType: 'json',
-            success: function(data) {
+          ids.push(item);
+        });
 
-              var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + item + '"]');
+        var idList = ids.join();
 
-              if( data == false )
+        edit_url += idList;
+        $.ajax({
+          url: edit_url,
+          dataType: 'json',
+          success: function(data) {
+
+            $(data).each(function() {
+
+              var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + this.id + '"]');
+
+              var self = this;
+
+              if( self.dead == true )
               {
                 var text = '<span data-type="dead_snippet"></span>'
                 $(snippet).each(function()
@@ -71,7 +83,7 @@
               }
               else
               {
-                var text = data.text;
+                var text = self.text;
                 $(snippet).each(function() {
                   $(this).html(text);
                   $(this).css('outline', 'black dotted thin');
@@ -80,11 +92,11 @@
                   $(this).attr('contenteditable', 'false');
                 });
               }
-            },
-            error: function(xhr) {
-              console.log(xhr);
-            },
-          });
+            });
+          },
+          error: function(xhr) {
+            console.log(xhr);
+          },
         });
       });
       ed.onPostProcess.add(function(ed, o) {
