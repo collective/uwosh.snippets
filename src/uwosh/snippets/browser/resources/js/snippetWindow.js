@@ -51,6 +51,7 @@ $(document).ready(function() {
 			if(s)
 			{
 				deletePlug(editor_snippet);
+				$('#snippet-delete').hide();
 			}
 			else
 			{

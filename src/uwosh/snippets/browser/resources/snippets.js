@@ -39,7 +39,7 @@
           }
       });
 
-      ed.onLoadContent.add(function(ed, e) {
+      ed.onSetContent.add(function(ed, e) {
         var snippets = $(ed.contentDocument).find('span[data-type="snippet_tag"]');
 
         //We just want to get each snippet once, if there are duplicates, just ignore them
