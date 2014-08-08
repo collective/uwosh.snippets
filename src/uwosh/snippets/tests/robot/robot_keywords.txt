@@ -1,0 +1,152 @@
+*** Settings ***
+Library		CustomSeleniumLibrary.py
+
+*** Keywords ***
+Open Browser To Edit Page
+	Open Browser 			${HOME_PAGE}	${BROWSER}
+	Maximize Browser Window
+	Login Admin
+	Go To 					${EDIT_PAGE}
+
+Login Admin
+	Set Selenium Speed		.1
+	Set Selenium Implicit Wait 		5
+	Click Element	${LOGIN_LINK}
+	Input Text		${LOGIN_NAME}	admin
+	Input Text		${LOGIN_PASS}	admin
+	Click Element	${LOGIN_SUBMIT}
+
+Create Snippet 		[Arguments]	${TITLE}	${TEXT}
+	Click Element	${BROWSER_CREATE}
+	Input Text		${CREATE_TITLE}			${TITLE}
+	Input Text		${CREATE_DESC}			${TEST_DESC}
+	Select Frame 	${CREATE_TEXT_FRAME}
+	Input Text		${CREATE_TEXT}			${TEXT}
+	New Frame
+	Click Element	${CREATE_SAVE}
+	Handle Prompts
+	Check Preview Set 	${TITLE} 	${TEXT}
+
+Delete Snippet
+	Click Element 		${BROWSER_BROWSE}
+	New Frame
+	Click Element 		${TEST_BROWSER_DELETE}
+	Unselect Frame
+	Click Element		${DELETE_OK}
+	Click Element		${DELETE_OK}
+	New Frame
+	Click Element 		${TEST_BROWSER_DELETE_2}
+	Unselect Frame
+	Click Element		${DELETE_OK}
+	Click Element		${DELETE_OK}
+	Get Newest TinyMCE Window
+	Page Should Not Contain Element			${TEST_BROWSER_ITEM}
+	Page Should Not Contain Element			${TEST_BROWSER_ITEM_2}
+	Click Element		${BROWSER_CANCEL}
+	Check Delete
+
+Edit Snippet
+	Click Element	${BROWSER_BROWSE}
+	New Frame
+	Click Element 	${TEST_BROWSER_EDIT}
+	Select Frame 	${CREATE_TEXT_FRAME}
+	Clear Element	${CREATE_TEXT}
+	Input Text 		${CREATE_TEXT}			${TEST_TEXT_EDIT}
+	New Frame
+	Click Element 	${CREATE_SAVE}
+	Handle Prompts
+	New Frame
+	Click Element	${BROWSER_CANCEL}
+	Close Snippet Browser
+	Check Edit
+
+Insert Snippet
+	Click Element	${BROWSER_BROWSE}
+	New Frame
+	Click Element	${TEST_BROWSER_ITEM}
+	Click Element	${BROWSER_SELECT}
+	New Frame
+	Check Preview Set 	${TEST_TITLE} 	${TEST_TEXT}
+	Click Element	${BROWSER_INSERT}
+	Unselect Frame
+	Select Frame 	${EDIT_TEXT_FRAME}
+	Current Frame Contains		${TEST_TEXT}
+	Unselect Frame
+	Check Change 	${TEST_TEXT}
+	Select Frame 	${EDIT_TEXT_FRAME}
+	Click Element	${EDIT_SNIPPET}
+	New Frame
+	Check Preview Set 	${TEST_TITLE} 	${TEST_TEXT}
+
+Preview Snippet
+	Click Element		${PREVIEW_OPEN}
+	Click Element		${BROWSER_BROWSE}
+	New Frame
+	Click Element		${TEST_BROWSER_ITEM_2}
+	Click Element		${BROWSER_SELECT}
+	New Frame
+	Click Element		${PREVIEW_BOX}
+	Click Element		${PREVIEW_INSERT}
+	Current Frame Contains	${TEST_TEXT_2}
+	Click Element		${PREVIEW_SAVE}
+
+
+Open Snippet Browser
+	Wait Until Element Is Visible	${BROWSER_OPEN}
+	Click Element					${BROWSER_OPEN}
+	Wait For New Window
+	Get Newest TinyMCE Window
+
+Check Change 	[Arguments] 	${TEXT}
+	Click Element 		${EDIT_SAVE}
+	Wait Until Element Is Visible 	${CONTAINER}
+	Current Frame Contains			${TEXT}
+	Go To 		${EDIT_PAGE}
+
+Check Delete
+	Go To 				${HOME_PAGE}
+	Wait Until Element Is Visible				${CONTAINER}
+	Page Should Not Contain 					${TEST_TEXT_2}
+	Go To 				${EDIT_PAGE}
+
+Check Edit
+	Go To 		${HOME_PAGE}
+	Handle Prompts
+	Wait Until Element Is Visible	${CONTAINER}
+	Current Frame Contains			${TEST_TEXT_EDIT}
+	Go To 		${EDIT_PAGE}
+	Select Frame 	${EDIT_TEXT_FRAME}
+	Click Element 	${EDIT_SNIPPET}
+	New Frame
+	Check Preview Set 	${TEST_TITLE} 	${TEST_TEXT_EDIT}
+
+Check Preview Set 	[Arguments]	${TITLE} 	${TEXT}
+	Element Should Contain 		${INFO_TITLE}		${TITLE}
+	Element Should Contain 		${INFO_DESC}		${TEST_DESC}
+	Element Should Contain 		${INFO_TEXT}		${TEXT}
+
+Swap Snippets
+	Close Snippet Browser
+	Select Frame 	${EDIT_TEXT_FRAME}
+	Click Element 	${EDIT_SNIPPET}
+	New Frame
+	Click Element	${BROWSER_BROWSE}
+	New Frame
+	Click Element 	${TEST_BROWSER_ITEM_2}
+	Click Element	${BROWSER_SELECT}
+	New Frame
+	Click Element 	${BROWSER_INSERT}
+	Unselect Frame
+	Check Change 	${TEST_TEXT_2}
+
+
+New Frame
+	Unselect Frame
+	Get Newest TinyMCE Window
+
+Close Snippet Browser
+	Unselect Frame
+	Click Element	${BROWSER_CLOSE}
+
+Close Everything
+	Close Browser

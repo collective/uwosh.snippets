@@ -1,0 +1,50 @@
+*** Variables ***
+${HOME_PAGE}		http://localhost:7000/Plone/
+${EDIT_PAGE}		http://localhost:7000/Plone/front-page/edit
+${BROWSER}			chrome
+${LOGIN_LINK}		personaltools-login
+${LOGIN_NAME}		__ac_name
+${LOGIN_PASS}		__ac_password
+${LOGIN_SUBMIT}		css=div.formControls input.context
+
+${BROWSER_CREATE}	css=a#snippet-create
+${BROWSER_OPEN}		css=a.mce_snippetbutton
+${BROWSER_CLOSE}	css=a.mceClose
+${BROWSER_BROWSE}	snippet-select
+${BROWSER_SELECT}	snippet-browser-select
+${BROWSER_CANCEL}	snippet-browser-cancel
+${BROWSER_INSERT}	snippet-insert
+
+${CREATE_TITLE}		form-widgets-IBasic-title
+${CREATE_DESC}		form-widgets-IBasic-description
+${CREATE_TEXT_FRAME}	form-widgets-text_ifr
+${CREATE_TEXT}		content
+${CREATE_SAVE}		form-buttons-save
+${DELETE_OK}		css=a.mceOk
+
+
+${TEST_TITLE}		robot
+${TEST_TITLE_2}		Jiub
+${TEST_DESC}		This is a test
+${TEST_TEXT}		This is also a test<br />Yup.
+${TEST_TEXT_EDIT}	A murder most foul
+${TEST_TEXT_2}		REDACTED
+${TEST_BROWSER_ITEM}		css=div#snippet-browser-${TEST_TITLE}
+${TEST_BROWSER_ITEM_2}		css=div#snippet-browser-${TEST_TITLE_2}
+${TEST_BROWSER_DELETE}		${TEST_BROWSER_ITEM} > a.snippet-delete
+${TEST_BROWSER_DELETE_2}	${TEST_BROWSER_ITEM_2} > a.snippet-delete
+${TEST_BROWSER_EDIT}		${TEST_BROWSER_ITEM} > a.snippet-edit
+
+${INFO_TITLE}				snippet-info-title
+${INFO_DESC}				snippet-info-desc
+${INFO_TEXT}				snippet-preview
+
+${EDIT_TEXT_FRAME}	text_ifr
+${EDIT_SNIPPET}		css=span[data-snippet-id="robot"]
+${EDIT_SAVE}		form.button.save
+${CONTAINER}		content
+
+${PREVIEW_OPEN}		snippet-view
+${PREVIEW_BOX}		snippet-preview
+${PREVIEW_INSERT}	snippet-preview-insert
+${PREVIEW_SAVE}		snippet-preview-save

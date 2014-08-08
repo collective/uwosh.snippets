@@ -1,0 +1,36 @@
+*** Settings ***
+Resource	robot_variables.txt
+Resource	robot_keywords.txt
+
+*** Test Cases ***
+Begin
+	Open Browser To Edit Page
+
+Create
+	Set Log Level		TRACE
+	Open Snippet Browser
+	Create Snippet	${TEST_TITLE}	${TEST_TEXT}
+
+Insert
+	Insert Snippet
+
+Create Second
+	Create Snippet 	${TEST_TITLE_2}	${TEST_TEXT_2}
+
+Preview
+	Preview Snippet
+
+Edit
+	Open Snippet Browser
+	Edit Snippet
+
+Swap
+	Swap Snippets
+
+Delete
+	Open Snippet Browser
+	Delete Snippet
+
+End
+	Close Everything
+
