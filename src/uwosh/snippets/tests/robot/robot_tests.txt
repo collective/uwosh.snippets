@@ -27,6 +27,9 @@ Edit
 Swap
 	Swap Snippets
 
+Remove
+	Remove Snippets
+
 Delete
 	Open Snippet Browser
 	Delete Snippet

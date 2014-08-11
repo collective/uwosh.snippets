@@ -245,7 +245,19 @@ $(document).ready(function() {
 			url: url,
 			dataType: 'json',
 			success: function(responseText) {
-				var snippetId = '#snippet-' + responseText['id'];
+
+				var response = '';
+				
+				if( typeof( responseText.id === undefined ) )
+				{
+					response = responseText[0];
+				}
+				else
+				{
+					response = responseText;
+				}
+
+				var snippetId = '#snippet-' + response.id;
 				var item = $(snippetId);
 				setSelectedSnippet(item);
 			},

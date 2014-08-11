@@ -90,7 +90,6 @@ Preview Snippet
 	Current Frame Contains	${TEST_TEXT_2}
 	Click Element		${PREVIEW_SAVE}
 
-
 Open Snippet Browser
 	Wait Until Element Is Visible	${BROWSER_OPEN}
 	Click Element					${BROWSER_OPEN}
@@ -105,6 +104,7 @@ Check Change 	[Arguments] 	${TEXT}
 
 Check Delete
 	Go To 				${HOME_PAGE}
+	Handle Prompts
 	Wait Until Element Is Visible				${CONTAINER}
 	Page Should Not Contain 					${TEST_TEXT_2}
 	Go To 				${EDIT_PAGE}
@@ -139,6 +139,21 @@ Swap Snippets
 	Unselect Frame
 	Check Change 	${TEST_TEXT_2}
 
+Remove Snippets
+	Select Frame 	${EDIT_TEXT_FRAME}
+	Click Element 	${EDIT_SNIPPET_2}
+	New Frame
+	Check Preview Set 	${TEST_TITLE_2}		${TEST_TEXT_2}
+	Element Should Be Visible		${EDIT_REMOVE}
+	Click Element 	${EDIT_REMOVE}
+	Unselect Frame
+	Click Element 	${EDIT_REMOVE_OK}
+	New Frame
+	Element Should Not Be Visible 			${EDIT_REMOVE}
+	Click Element	${EDIT_CANCEL}
+	Select Frame 	${EDIT_TEXT_FRAME}
+	Element Should Not Be Visible	${EDIT_SNIPPET_2}
+	Unselect Frame
 
 New Frame
 	Unselect Frame

@@ -15,8 +15,8 @@ ${BROWSER_SELECT}	snippet-browser-select
 ${BROWSER_CANCEL}	snippet-browser-cancel
 ${BROWSER_INSERT}	snippet-insert
 
-${CREATE_TITLE}		form-widgets-IBasic-title
-${CREATE_DESC}		form-widgets-IBasic-description
+${CREATE_TITLE}		form.widgets.title
+${CREATE_DESC}		form.widgets.description
 ${CREATE_TEXT_FRAME}	form-widgets-text_ifr
 ${CREATE_TEXT}		content
 ${CREATE_SAVE}		form-buttons-save
@@ -41,7 +41,11 @@ ${INFO_TEXT}				snippet-preview
 
 ${EDIT_TEXT_FRAME}	text_ifr
 ${EDIT_SNIPPET}		css=span[data-snippet-id="robot"]
+${EDIT_SNIPPET_2}	css=span[data-snippet-id="Jiub"]
 ${EDIT_SAVE}		form.button.save
+${EDIT_REMOVE}		snippet-delete
+${EDIT_REMOVE_OK} 	css=a.mceOk
+${EDIT_CANCEL} 		snippet-cancel
 ${CONTAINER}		content
 
 ${PREVIEW_OPEN}		snippet-view
