@@ -9,8 +9,8 @@ Open Browser To Edit Page
 	Go To 					${EDIT_PAGE}
 
 Login Admin
-	Set Selenium Speed		.1
-	Set Selenium Implicit Wait 		5
+	Set Selenium Speed		.2
+	Set Selenium Implicit Wait 		2
 	Click Element	${LOGIN_LINK}
 	Input Text		${LOGIN_NAME}	admin
 	Input Text		${LOGIN_PASS}	admin
@@ -130,11 +130,13 @@ Swap Snippets
 	Select Frame 	${EDIT_TEXT_FRAME}
 	Click Element 	${EDIT_SNIPPET}
 	New Frame
+	Element Should Be Visible 	${EDIT_REMOVE}
 	Click Element	${BROWSER_BROWSE}
 	New Frame
 	Click Element 	${TEST_BROWSER_ITEM_2}
 	Click Element	${BROWSER_SELECT}
 	New Frame
+	Element Should Not Be Visible 	${EDIT_REMOVE}
 	Click Element 	${BROWSER_INSERT}
 	Unselect Frame
 	Check Change 	${TEST_TEXT_2}

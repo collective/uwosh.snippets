@@ -1,5 +1,11 @@
 Changelog
 =========
+0.9.18 (8/13/2014)
+------------------
+- Tweaked some of the robot tests, added a few others
+- Added exception for the XMLSyntaxError error
+- Fixed bug causing AJAX requests to be sent when they didn't need to
+
 0.9.15 (8/8/2014)
 -----------------
 - moved robot tests over from another branch

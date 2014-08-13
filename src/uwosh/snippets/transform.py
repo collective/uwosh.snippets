@@ -48,5 +48,7 @@ class SnippetTransform(object):
             result = getHTMLSerializer(result, pretty_print=False)
         except (TypeError):
             return None
+        except XMLSyntaxError:
+            return None 
 
         return [ parser.parsePage(r) for r in result ]

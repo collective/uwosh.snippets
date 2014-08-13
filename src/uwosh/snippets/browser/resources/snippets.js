@@ -51,53 +51,61 @@
           }
         });
 
-        var edit_url = document.baseURI + '/@@get-snippet-list?json=true&snippet_id=';
+        if( snippet_ids.length > 0 )
+        {
 
-        var ids = [];
-        $(snippet_ids).each(function(index, item) {
-          ids.push(item);
-        });
+          var edit_url = document.baseURI + '/@@get-snippet-list?json=true&snippet_id=';
+          
 
-        var idList = ids.join();
+          var ids = [];
+          $(snippet_ids).each(function(index, item) {
+            ids.push(item);
+          });
 
-        edit_url += idList;
-        $.ajax({
-          url: edit_url,
-          dataType: 'json',
-          success: function(data) {
+          var idList = ids.join();
 
-            $(data).each(function() {
+          edit_url += idList;
+          $.ajax({
+            url: edit_url,
+            dataType: 'json',
+            success: function(data) {
 
-              var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + this.id + '"]');
+              $(data).each(function() {
 
-              var self = this;
+                var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + this.id + '"]');
 
-              if( self.dead == true )
-              {
-                var text = '<span data-type="dead_snippet"></span>'
-                $(snippet).each(function()
+                var self = this;
+
+                if( self.dead == true )
                 {
-                  $(this).html(text);
-                  $(this).css('display', 'none');
-                });
-              }
-              else
-              {
-                var text = self.text;
-                $(snippet).each(function() {
-                  $(this).html(text);
-                  $(this).css('outline', 'black dotted thin');
-                  $(this).css('display', 'inline-block');
-                  $(this).addClass('no-select');
-                  $(this).attr('contenteditable', 'false');
-                });
-              }
-            });
-          },
-          error: function(xhr) {
-            console.log(xhr);
-          },
-        });
+                  var text = '<span data-type="dead_snippet"></span>'
+                  $(snippet).each(function()
+                  {
+                    $(this).html(text);
+                    $(this).css('display', 'none');
+                  });
+                }
+                else
+                {
+                  var text = self.text;
+                  $(snippet).each(function() {
+                    $(this).html(text);
+                    $(this).css('outline', 'black dotted thin');
+                    $(this).css('display', 'inline-block');
+                    $(this).addClass('no-select');
+                    $(this).attr('contenteditable', 'false');
+                  });
+                }
+              });
+            },
+            error: function(xhr) {
+              console.log(xhr);
+            },
+          });
+
+        }
+
+
       });
       ed.onPostProcess.add(function(ed, o) {
         var body = o.node;
