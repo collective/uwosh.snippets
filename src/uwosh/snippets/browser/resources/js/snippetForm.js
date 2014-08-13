@@ -1,44 +1,44 @@
-$(document).ready(function() {
+/*jslint browser: true, bitwise: true, passfail: true, eqeq: true, newcap: true, plusplus: true, regexp: true, white: false, */
+/*global alert, jQuery:false, document:false, window:false, location:false */
 
-	$('#form-buttons-cancel').click(function(e) {
-		e.preventDefault();
-		close();
-	});
+$(document).ready(function () {
 
-	$('#form-buttons-save').click(function() {
+  function close() {
 
-		var options = {
-			success:   successHandler,
-		};
+    //This means we're editing a snippet.
+    //We only want to pass the title back if it's a new snippet
+    if ($('#form-widgets-id').val().length > 0) {
+      window.location.href = document.referrer;
+      return;
+    }
 
-		$('#form').ajaxForm(options);
+    var id = $('#form-widgets-title').val();
+    //Sanitize the id. It will be done again once it reaches the
+    //form class, in case this fails (or the JS is subverted).
+    id = id.replace(/\W/g, '');
 
+    var form = $('#snippetIdForm');
+    form.attr('action', document.referrer);
+    $(form).find('input').val(id);
+    form.submit();
+  }
 
-		function successHandler(responseText, statusText, xhr, $form)
-		{
-			alert('The snippet was saved successfully!');
-			close();
-		}
-	});
+  $('#form-buttons-cancel').click(function (e) {
+    e.preventDefault();
+    close();
+  });
 
-	function close() {
+  $('#form-buttons-save').click(function () {
 
-		//This means we're editing a snippet.
-		//We only want to pass the title back if it's a new snippet
-		if( $('#form-widgets-id').val().length > 0 )
-		{
-			window.location.href = document.referrer;
-			return;
-		}
+    function successHandler() {
+      alert('The snippet was saved successfully!');
+      close();
+    }
 
-		var id = $('#form-widgets-title').val();
-		//Sanitize the id. It will be done again once it reaches the
-		//form class, in case this fails (or the JS is subverted).
-		id = id.replace(/\W/g, '');
+    var options = {
+      success:   successHandler,
+    };
 
-		var form = $('#snippetIdForm');
-		form.attr('action', document.referrer);
-		$(form).find('input').val(id);
-		form.submit();
-	}
+    $('#form').ajaxForm(options);
+  });
 });
