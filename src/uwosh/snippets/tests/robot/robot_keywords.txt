@@ -9,8 +9,8 @@ Open Browser To Edit Page
 	Go To 					${EDIT_PAGE}
 
 Login Admin
-	Set Selenium Speed		.2
-	Set Selenium Implicit Wait 		2
+	Set Selenium Speed		.1
+	Set Selenium Implicit Wait 		5
 	Click Element	${LOGIN_LINK}
 	Input Text		${LOGIN_NAME}	admin
 	Input Text		${LOGIN_PASS}	admin

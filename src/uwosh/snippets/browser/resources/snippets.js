@@ -30,7 +30,11 @@
         cmd : 'snippets',
       });
 
-      ed.onClick.add(function (e) {
+      /*jslint unparam: true*/
+
+      //Because the parameters are passed in a specified order, we need jsLint to ignore the unused 'ed' variable
+
+      ed.onClick.add(function (ed, e) {
         if ($(e.target).parents('span[data-type="snippet_tag"]').length > 0 || $(e.target).attr('data-type') == 'snippet_tag') {
           var snippet_element;
 
@@ -49,15 +53,16 @@
           openSnippetWindow(options);
         }
       });
+      /*jslint unparam: false*/
 
       ed.onSetContent.add(function (ed) {
         var snippets = $(ed.contentDocument).find('span[data-type="snippet_tag"]');
 
         //We just want to get each snippet once, if there are duplicates, just ignore them
         var snippet_ids = [];
-        $(snippets).each(function (item) {
-          if ($.inArray($(item).attr('data-snippet-id'), snippet_ids) == -1) {
-            snippet_ids.push($(item).attr('data-snippet-id'));
+        $(snippets).each(function (index) {
+          if ($.inArray($(snippets[index]).attr('data-snippet-id'), snippet_ids) == -1) {
+            snippet_ids.push($(snippets[index]).attr('data-snippet-id'));
           }
         });
 
@@ -66,8 +71,8 @@
           var edit_url = document.baseURI + '/@@get-snippet-list?json=true&snippet_id=';
 
           var ids = [];
-          $(snippet_ids).each(function (item) {
-            ids.push(item);
+          $(snippet_ids).each(function (index) {
+            ids.push(snippet_ids[index]);
           });
 
           var idList = ids.join();
@@ -111,7 +116,11 @@
         }
       });
 
-      ed.onPostProcess.add(function (o) {
+      /*jslint unparam: false*/
+
+      //Once again, the parameters are passed in a specific order here, so we need both of them,
+      //even though "ed" is never used. Therefore, we tell jsLint to ignore that for now.
+      ed.onPostProcess.add(function (ed, o) {
         var body = o.node;
         $(body).find('span[data-type="dead_snippet"]').parent().remove();
         var snippets = $(body).find('span[data-type="snippet_tag"]');
@@ -121,6 +130,9 @@
 
         o.content = $(body).html();
       });
+
+      /*jslint unparam: true*/
+
       //Prevents TinyMCE from wrapping text in <p> tags.
       //Since these are meant to be used in-line,
       //breaking to a new paragraph obviously isn't desired.

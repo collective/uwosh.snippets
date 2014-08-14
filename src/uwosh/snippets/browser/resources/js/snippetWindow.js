@@ -189,7 +189,7 @@ $(document).ready(function () {
       url: url,
       dataType: 'json',
       success: function (responseText) {
-        resetSnippet(responseText);
+        resetSnippet(responseText[0]);
       }
     });
   }

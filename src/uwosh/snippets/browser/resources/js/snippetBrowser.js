@@ -30,22 +30,33 @@ $(document).ready(function () {
     //the snippet edit window, the t variable is nowhere to be found
 
     var windows = tinyMCEPopup.editor.windowManager.windows;
+    var el, frame, doc;
 
-    $(windows).each(function () {
+    var objs = $.map(windows, function (value) {
+      return [value];
+    });
 
-      var element = windows[$(this)].element.get();
-      var frame = $(element).find('iframe');
-      var doc = $(frame).contents();
+    $(objs).each(function (index) {
+
+      el = objs[index].element.get();
+      frame = $(el).find('iframe');
+      doc = $(frame).contents();
+
       if ($(doc).find('#snippet-selection').length >= 1) {
-        element = $(doc).find('#snippet-selection');
-        return element;
+        el = $(doc).find('#snippet-selection');
+        return el;
       }
     });
   }
 
   function setPreviewWindow(snippet) {
 
-    selectedSnippet = getSelectionElement();
+    var type = typeof selectedSnippet;
+
+    if (type == undefined) {
+      selectedSnippet = getSelectionElement();
+    }
+
     selectedSnippet.val(snippet);
     setSelected();
   }
