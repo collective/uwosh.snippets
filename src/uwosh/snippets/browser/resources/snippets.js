@@ -116,7 +116,7 @@
         }
       });
 
-      /*jslint unparam: false*/
+      /*jslint unparam: true*/
 
       //Once again, the parameters are passed in a specific order here, so we need both of them,
       //even though "ed" is never used. Therefore, we tell jsLint to ignore that for now.
@@ -131,7 +131,7 @@
         o.content = $(body).html();
       });
 
-      /*jslint unparam: true*/
+      /*jslint unparam: false*/
 
       //Prevents TinyMCE from wrapping text in <p> tags.
       //Since these are meant to be used in-line,

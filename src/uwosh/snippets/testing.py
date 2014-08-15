@@ -74,12 +74,42 @@ class BaseTest(unittest.TestCase):
         folder.invokeFactory('Folder', 'testFolder')
         folder2 = folder['testFolder']
         folder2.invokeFactory('Document', 'testDoc2')
+        self.doc2 = folder2['testDoc2']
+
+        #########Test Strings###########################
+
+        #Control case. No plugs whatsoever
+        self.normalString = "This is a test! Or is it?"
+
+        #Normal test case, with 1 valid plug
+        self.testSingle = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc"></span> test! Or is it?'
 
         #need to verify that the regex will catch more than 1
-        self.testString = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testDoc"></span>?'
+        self.testMultiple = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testDoc"></span>?'
+
+        #An example of a string with an invalid snippet ID
+        self.testJunk = 'This is a <span data-type="snippet_tag" data-snippet-id="JunkID"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="JunkID"></span>?'
+
+        #An example where the JS failed to remove handle the in-editor snippet. 
+        self.testDeadSnippet = 'This is a <span data-type="snippet_tag" data-snippet-id="oldDoc">meaningless</span> test! Or is it?'
+
+        #An example where a snippet is inside another span. This verifies the parser's RegEx's ability to correctly pull out snippets.
+        self.benignSpan = 'This is a <span style="text-decoration: blink;"><span data-type="snippet_tag" data-snippet-id="testDoc"></span> test!</span> Or is it?'
+
+        #An example where a snippet contains a span. Since the span is inserted after the regex runs, this *shouldn't* be an issue, 
+        #but it never hurts to be careful
+        self.innerSpan = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc2"></span> test! Or is it?'
+
+        #An example with 2 different plus
+        self.differentPlugs = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc2"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testDoc"></span>?'
+
+        ################################################
+
 
         self.doc.setText("meaningless")
         self.doc.setTitle("Meaningless")
+
+        self.doc2.setText("<span style=\"text-decoration: blink;\">stupid</span>")
 
         wft = getToolByName(portal, 'portal_workflow')
         wft.setDefaultChain('simple_publication_workflow')
