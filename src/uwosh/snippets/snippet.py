@@ -4,6 +4,10 @@ from zope.interface import implements
 import re
 
 class Snippet():
+	#The Snippet class is an intermediary between the ATDocument object and the snippet UI.
+	#Each ATDocument in the .snippets folder represents 1 snippet definition.
+	#A separate class was created to cut down on extra, unneeded data when passing 
+	#info to the UI.
 
 	implements(ISnippet)
 
@@ -12,7 +16,7 @@ class Snippet():
 
 	def getId(self):
 		#we return a "cleaned" ID. It should have been cleaned already at creation time....
-		#but better to error on the side of caution
+		#but better to err on the side of caution
 		return re.sub(r'\W', '', self.id)
 
 	def getText(self):
@@ -22,6 +26,7 @@ class Snippet():
 		return self.title
 
 	def getWorkflowState(self):
+		#current unused
 		return self.state
 
 	def setDescription(self, description):
@@ -37,6 +42,7 @@ class Snippet():
 		self.title = snippetTitle
 
 	def setWorkflowState(self, state):
+		#currently unused
 		self.state = state
 
 

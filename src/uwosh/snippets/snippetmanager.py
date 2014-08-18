@@ -5,8 +5,9 @@ from uwosh.snippets.snippet import Snippet
 import re
 
 class SnippetManager():
-	#TODO: Get rid of the current folder scheme and
-	#make it automated
+	#The SnippetManager class organizes, collects, and creates all the snippets.
+	#It is in charge of create the Snippet objects from the ATDocument objects 
+	#representing them. It also handles creation/deletion of ATDocument objects.
 
 	folderName = '.snippets'
 

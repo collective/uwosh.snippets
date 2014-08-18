@@ -11,6 +11,10 @@ from Products.CMFCore.utils import getToolByName
 from uwosh.snippets.snippetmanager import SnippetManager
 
 class SnippetParser():
+	#The SnippetParser class handles the finding/replacing of snippets within a pages content.
+	#The page content is passed to a Parser object, and it then tries to pattern match 
+	#the <span> tags used to represent snippets. If it finds a valid snippet tag, 
+	#it replaces it with the appropriate snippet text. 
 
 	def __init__(self):
 		self.sm = SnippetManager()
