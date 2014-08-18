@@ -45,10 +45,11 @@ class SnippetTransform(object):
         if ce and ce in ('zip', 'deflate', 'compress'):
             return None
         try:
+            if result == ['']:
+                return None
+
             result = getHTMLSerializer(result, pretty_print=False)
         except (TypeError):
             return None
-        except XMLSyntaxError:
-            return None 
 
         return [ parser.parsePage(r) for r in result ]

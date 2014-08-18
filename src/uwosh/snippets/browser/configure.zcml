@@ -12,7 +12,7 @@
 	    name="get-snippet-list"
 	    for="*"
 	    class=".snippetlist.SnippetList"
-	    permission="cmf.ManagePortal"
+	    permission="cmf.ListFolderContents"
         layer=".interfaces.ISnippetsLayer"
 	    />
 
