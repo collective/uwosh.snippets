@@ -2,4 +2,7 @@
 dist/*
 dist/
 *.DS_Store
+src/uwosh/snippets/tests/robot/*.png
+src/uwosh/snippets/tests/robot/*.html
+src/uwosh/snippets/tests/robot/*.xml
 *.egg-info
