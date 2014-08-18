@@ -35,13 +35,6 @@ class UwoshsnippetsLayer(PloneSandboxLayer):
             context=configurationContext
         )
 
-        # Install products that use an old-style initialize() function
-        #z2.installProduct(app, 'Products.PloneFormGen')
-
-#    def tearDownZope(self, app):
-#        # Uninstall products installed above
-#        z2.uninstallProduct(app, 'Products.PloneFormGen')
-
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'uwosh.snippets:default')
         setRoles(portal, TEST_USER_ID, ['Manager'])
@@ -100,7 +93,7 @@ class BaseTest(unittest.TestCase):
         #but it never hurts to be careful
         self.innerSpan = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc2"></span> test! Or is it?'
 
-        #An example with 2 different plus
+        #An example with 2 different plugs
         self.differentPlugs = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc2"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testDoc"></span>?'
 
         ################################################
