@@ -30,6 +30,9 @@ class SnippetList(BrowserView):
 		else:
 			return self.window_template()
 
+	def getMemberPortal(self):
+		return getToolByName(self, 'portal_membership')
+	
 	def getSnippets(self):
 		sm = SnippetManager()
 

@@ -1,5 +1,6 @@
-<div id="snippet-list" tal:define="snippets view/getSnippets;member 
-								context/portal_membership/getAuthenticatedMember; 
+<div id="snippet-list" tal:define="snippets view/getSnippets;
+								portal view/getMemberPortal;
+								member portal/getAuthenticatedMember; 
 								roles python:member.getRolesInContext(here); ">
 	<script type="text/javascript" src="++resource++plone.app.jquery.js" />
 	<script type="text/javascript" src="../tiny_mce_popup.js" />
