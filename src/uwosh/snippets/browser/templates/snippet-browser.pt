@@ -8,14 +8,14 @@
 	<link rel="stylesheet" type="text/css" href="++resource++uwosh.snippets/css/snippetPopup.css" />
 
 	<label for="snippet-browser">Select a snippet</label>
-	<div id="snippet-browser">
+	<div id="snippet-browser" tal:define="member context/portal_membership/getAuthenticatedMember; roles python:member.getRolesInContext(here);">
 		<div class="snippet-box" tal:repeat="snippet snippets" tal:attributes="id string:snippet-browser-${snippet/getId}">
 			<input type="radio" class="snippet-browser-radio" name="snippet" tal:attributes="value snippet/id">
 			<div class="snippet-browser-title" tal:content="snippet/title"></div>
 			<div class="snippet-id" style="display: none;" tal:content="snippet/getId"></div>
 			<div class="snippet-browser-desc" tal:content="snippet/description"></div>
-			<a class="snippet-edit" tal:attributes="href string:${view/siteUrl}/@@edit-snippet?snippet-id=${snippet/getId}">Edit</a>
-			<a class="snippet-delete" tal:attributes="href string:${view/siteUrl}/@@delete-snippet?snippet-id=${snippet/getId}">Delete</a>
+			<a class="snippet-edit" tal:condition="python: 'Manager' in roles or 'Reviewer' in roles" tal:attributes="href string:${view/siteUrl}/@@edit-snippet?snippet-id=${snippet/getId}">Edit</a>
+			<a class="snippet-delete" tal:condition="python: 'Manager' in roles or 'Reviewer' in roles" tal:attributes="href string:${view/siteUrl}/@@delete-snippet?snippet-id=${snippet/getId}">Delete</a>
 			<br style="clear: left;" />
 		</div>
 	</div>
