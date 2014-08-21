@@ -4,7 +4,10 @@ Resource	robot_keywords.txt
 
 *** Test Cases ***
 Begin
-	Open Browser To Edit Page
+	Open Browser To Add Page
+
+New Page
+	Create New Page
 
 Create
 	Set Log Level		TRACE
@@ -23,6 +26,9 @@ Preview
 Edit
 	Open Snippet Browser
 	Edit Snippet
+
+Access Check
+	Check Restricted Access
 
 Swap
 	Swap Snippets

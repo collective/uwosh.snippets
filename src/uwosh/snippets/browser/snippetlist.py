@@ -6,6 +6,9 @@ from Products.CMFCore.utils import getToolByName
 import json
 import urllib
 
+from AccessControl import getSecurityManager, Unauthorized
+from Products.CMFCore.permissions import AddPortalContent, ModifyPortalContent, DeleteObjects
+
 class SnippetList(BrowserView):
 	window_template = ViewPageTemplateFile('templates/snippet-window.pt')
 	browser_template = ViewPageTemplateFile('templates/snippet-browser.pt')
@@ -30,6 +33,16 @@ class SnippetList(BrowserView):
 		else:
 			return self.window_template()
 
+	#Used by templates to check if the user has the rights to create/update/delete snippets
+	def getAllowed(self):
+		security = getSecurityManager()
+		sm = SnippetManager()
+
+		if security.checkPermission(AddPortalContent, sm.folder):
+			return True
+		else:
+			return False
+
 	def getMemberPortal(self):
 		return getToolByName(self, 'portal_membership')
 	
@@ -39,6 +52,20 @@ class SnippetList(BrowserView):
 		snippets = sm.getSnippets()
 		out = []
 		for snippet in snippets:
+
+			security = getSecurityManager()
+			doc = sm.folder[snippet.getId()]
+
+			if security.checkPermission(ModifyPortalContent, doc):
+				snippet.w = True
+			else:
+				snippet.w = False
+
+			if security.checkPermission(DeleteObjects, doc):
+				snippet.d = True
+			else:
+				snippet.d = False
+
 			out.append(snippet)
 
 		return out

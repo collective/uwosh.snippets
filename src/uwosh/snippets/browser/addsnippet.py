@@ -10,6 +10,10 @@ from uwosh.snippets.snippetmanager import SnippetManager
 from z3c.form.interfaces import ActionExecutionError
 from zope.interface import Invalid
 
+
+from AccessControl import getSecurityManager, Unauthorized
+from Products.CMFCore.permissions import ModifyPortalContent
+
 import re
 import zope
 import z3c
@@ -29,6 +33,10 @@ class SnippetForm(SchemaAddForm):
 
 		sm = SnippetManager()
 		index = sm.indexSnippets()
+
+		security = getSecurityManager()
+		if not security.checkPermission(ModifyPortalContent, sm.folder):
+			raise Unauthorized(u"You do not have the proper permissions to create/edit snippets.")
 
 		if 'title' in data:
 			if data['title'] in index:

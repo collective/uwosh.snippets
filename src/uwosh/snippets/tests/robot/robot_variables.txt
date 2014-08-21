@@ -1,12 +1,22 @@
 *** Variables ***
 ${HOME_PAGE}		http://localhost:7000/Plone/
-${EDIT_PAGE}		http://localhost:7000/Plone/front-page/edit
-${BROWSER}		chrome
+${ADD_PAGE}			${HOME_PAGE}createObject?type_name=Document
+${EDIT_PAGE} 		${HOME_PAGE}robottesting/edit
+${BROWSER}			chrome
 ${LOGIN_LINK}		personaltools-login
 ${LOGIN_NAME}		__ac_name
 ${LOGIN_PASS}		__ac_password
+${LOGIN_MENU}		user-name
+${LOGOUT}			${HOME_PAGE}logout
 ${LOGIN_SUBMIT}		css=div.formControls input.context
 
+${ADD_NEW} 			portal-contentmenu-factories
+${NEW_DOC}			${ADD_NEW} > a.contenttype-document
+${NEW_TITLE}		robottesting
+${NEW_DESC} 		Lazy People Like Robot Testing
+${NEW_TEXT}			This probably will look stupid with random snippets plugged into it.
+${NEW_TEXT_FRAME} 	text_ifr
+	
 ${BROWSER_CREATE}	css=a#snippet-create
 ${BROWSER_OPEN}		css=a.mce_snippetbutton
 ${BROWSER_CLOSE}	css=a.mceClose
@@ -22,7 +32,6 @@ ${CREATE_TEXT}		content
 ${CREATE_SAVE}		form-buttons-save
 ${DELETE_OK}		css=a.mceOk
 
-
 ${TEST_TITLE}		robot
 ${TEST_TITLE_2}		Jiub
 ${TEST_DESC}		This is a test
@@ -34,6 +43,10 @@ ${TEST_BROWSER_ITEM_2}		css=div#snippet-browser-${TEST_TITLE_2}
 ${TEST_BROWSER_DELETE}		${TEST_BROWSER_ITEM} > a.snippet-delete
 ${TEST_BROWSER_DELETE_2}	${TEST_BROWSER_ITEM_2} > a.snippet-delete
 ${TEST_BROWSER_EDIT}		${TEST_BROWSER_ITEM} > a.snippet-edit
+
+${TEST_EDIT_URL} 			${HOME_PAGE}@@edit-snippet?snippet-id=${TEST_TITLE}
+${TEST_DELETE_URL} 			${DELETE_PLUG}${TEST_TITLE}
+${TEST_CREATE_URL}			${HOME_PAGE}@@create-snippet
 
 ${INFO_TITLE}				snippet-info-title
 ${INFO_DESC}				snippet-info-desc
@@ -48,6 +61,9 @@ ${EDIT_REMOVE_OK} 	css=a.mceOk
 ${EDIT_CANCEL} 		snippet-cancel
 ${CONTAINER}		content
 
+${DELETE_PLUG}		${HOME_PAGE}@@delete-snippet?snippet-id=
+${DELETE_BUTTON}	input.destructive
+	
 ${PREVIEW_OPEN}		snippet-view
 ${PREVIEW_BOX}		snippet-preview
 ${PREVIEW_INSERT}	snippet-preview-insert

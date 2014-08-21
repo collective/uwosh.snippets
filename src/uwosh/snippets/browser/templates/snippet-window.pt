@@ -1,7 +1,4 @@
-<div id="snippet-list" tal:define="snippets view/getSnippets;
-								portal view/getMemberPortal;
-								member portal/getAuthenticatedMember; 
-								roles python:member.getRolesInContext(here); ">
+<div id="snippet-list" tal:define="snippets view/getSnippets; allowed view/getAllowed">
 	<script type="text/javascript" src="++resource++plone.app.jquery.js" />
 	<script type="text/javascript" src="../tiny_mce_popup.js" />
 	<script type="text/javascript" src="++resource++plone.app.jquerytools.js" />
@@ -30,7 +27,7 @@
 			<input type="button" value="Insert" id="snippet-insert" />
 			<input type="button" value="Cancel" id="snippet-cancel" />
 			<input type="button" value="Preview" id="snippet-view" />
-			<a tal:condition="python: 'Manager' in roles or 'Reviewer' in roles" tal:attributes="href string:${view/siteUrl}/@@create-snippet" id="snippet-create">Create a new snippet</a>
+			<a tal:condition="allowed" tal:attributes="href string:${view/siteUrl}/@@create-snippet" id="snippet-create">Create a new snippet</a>
 		</div>
 		<div id="snippet-preview-buttons" style="display: none;" class="snippet-buttons">
 			<p>In the preview window, click/highlight where you want the snippet, then click "Insert"</p>
