@@ -22,7 +22,7 @@
 	<form>
 		<div id="snippet-normal-buttons" class="snippet-buttons">
 			<input type="button" value="Select" id="snippet-browser-select" />
-			<input type="button" value="Cancel" id="snippet-browser-cancel" />
+			<input type="button" value="Close" id="snippet-browser-cancel" />
 		</div>
 	</form>
 </div>

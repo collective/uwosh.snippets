@@ -25,7 +25,7 @@
 	<form>
 		<div id="snippet-normal-buttons" class="snippet-buttons">
 			<input type="button" value="Insert" id="snippet-insert" />
-			<input type="button" value="Cancel" id="snippet-cancel" />
+			<input type="button" value="Close" id="snippet-cancel" />
 			<input type="button" value="Preview" id="snippet-view" />
 			<a tal:condition="allowed" tal:attributes="href string:${view/siteUrl}/@@create-snippet" id="snippet-create">Create a new snippet</a>
 		</div>
@@ -33,7 +33,7 @@
 			<p>In the preview window, click/highlight where you want the snippet, then click "Insert"</p>
 			<input type="button" value="Back" id="snippet-preview-cancel" />
 			<input type="button" value="Insert" id="snippet-preview-insert" />
-			<input type="button" value="Save" id="snippet-preview-save" />
+			<input type="button" value="Apply" id="snippet-preview-save" />
 		</div>
 	</form>
 	<div class="snippet" tal:repeat="snippet snippets" style="display: none;" tal:attributes="id string:snippet-${snippet/getId}">
