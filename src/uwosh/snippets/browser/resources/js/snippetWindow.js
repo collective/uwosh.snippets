@@ -344,8 +344,8 @@ $(document).ready(function () {
 
   $('#snippet-preview-save').click(function () {
 
-    var body = $('#snippet-preview').html();
-    tinyMCEPopup.editor.setContent(body);
+    var body = $('#snippet-preview').contents();
+    tinyMCEPopup.editor.setContent(body.html());
 
     tinyMCEPopup.close();
   });
