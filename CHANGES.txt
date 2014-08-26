@@ -1,5 +1,11 @@
 Changelog
 =========
+0.9.26 (8/26/2014)
+------------------
+- Changed wording on several links/buttons to make them more understandable
+- Fixed broken preview system
+- Snippet plugs are now removed from the current page when the respective snippet is deleted.
+
 0.9.24 (8/21/2014)
 ------------------
 - Changed user-role requirements for different parts of the snippet UI
