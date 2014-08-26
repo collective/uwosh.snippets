@@ -34,6 +34,17 @@ $(document).ready(function () {
     return $(id);
   }
 
+  function getSelectedSnippetText() {
+
+    var selected = getSelectedSnippet();
+
+    if (selected == "None") {
+      return "";
+    }
+
+    return $(selected).find('.snippet-text').html();
+  }
+
   function setSelectedSnippet(selected) {
 
     var type = typeof selected;
@@ -287,7 +298,7 @@ $(document).ready(function () {
   $('#snippet-preview-cancel').click(function () {
     $('#snippet-normal-buttons').show();
     $('#snippet-preview-buttons').hide();
-    $('#snippet-preview').html(getSelectedSnippet().find('.snippet-text').html());
+    $('#snippet-preview').html(getSelectedSnippetText());
   });
 
   $('#snippet-select').click(function () {
