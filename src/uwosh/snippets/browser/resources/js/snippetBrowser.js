@@ -122,6 +122,13 @@ $(document).ready(function () {
           url: $(url).attr('href'),
           success: function (data) {
             if (data == 'True') {
+
+              var doc = tinyMCEPopup.editor.contentDocument;
+              var id = $(url).parent().find('.snippet-id').html();
+
+              var plugs = $(doc).find('span[data-snippet-id="' + id + '"]');
+
+              $(plugs).remove();
               tinyMCEPopup.editor.windowManager.alert("The snippet was deleted successfully.");
               $(url).parent().remove();
 
