@@ -1,13 +1,14 @@
 *** Variables ***
-${HOME_PAGE}		http://localhost:7000/Plone/
-${ADD_PAGE}			${HOME_PAGE}createObject?type_name=Document
-${EDIT_PAGE} 		${HOME_PAGE}robottesting/edit
+${BASE_PAGE}		http://localhost:7000/Plone/
+${HOME_PAGE}		${BASE_PAGE}robottesting/
+${ADD_PAGE}			${BASE_PAGE}createObject?type_name=Document
+${EDIT_PAGE} 		${HOME_PAGE}edit
 ${BROWSER}			chrome
 ${LOGIN_LINK}		personaltools-login
 ${LOGIN_NAME}		__ac_name
 ${LOGIN_PASS}		__ac_password
 ${LOGIN_MENU}		user-name
-${LOGOUT}			${HOME_PAGE}logout
+${LOGOUT}			${BASE_PAGE}logout
 ${LOGIN_SUBMIT}		css=div.formControls input.context
 
 ${ADD_NEW} 			portal-contentmenu-factories

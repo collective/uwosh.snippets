@@ -5,7 +5,7 @@ Library		CustomSeleniumLibrary.py
 Open Browser To Add Page
 	Set Selenium Speed		.1
 	Set Selenium Implicit Wait 		5
-	Open Browser 			${HOME_PAGE}	${BROWSER}
+	Open Browser 			${BASE_PAGE}	${BROWSER}
 	Maximize Browser Window
 	Login Test User
 
@@ -34,8 +34,9 @@ Create New Page
 	Unselect Frame
 	Click Element 	${EDIT_SAVE}
 	Go To 			${LOGOUT}
-	Go To 			${HOME_PAGE}
+	Go To 			${BASE_PAGE}
 	Login Admin
+	Go To 			${HOME_PAGE}
 	Go To 			${EDIT_PAGE}
 
 Check Restricted Access
@@ -61,8 +62,9 @@ Check Restricted Access
 	Logout user
 	Go To 			${EDIT_PAGE}
 	Page Should Not Contain 		${BROWSER_BROWSE}
-	Go To 			${HOME_PAGE}
+	Go To 			${BASE_PAGE}
 	Login Admin
+	Go To 			${HOME_PAGE}
 	Go To 			${EDIT_PAGE}
 
 Create Snippet 		[Arguments]	${TITLE}	${TEXT}
