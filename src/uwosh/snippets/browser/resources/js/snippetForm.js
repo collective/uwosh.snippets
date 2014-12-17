@@ -28,6 +28,11 @@ $(document).ready(function () {
     close();
   });
 
+  $('#disable_mce').click(function() {
+    tinyMCE.activeEditor.remove();
+    $(this).hide();
+  });
+
   $('#form-buttons-save').click(function () {
 
     function successHandler() {

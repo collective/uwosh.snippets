@@ -40,6 +40,7 @@
 			<script type="text/javascript" src="++resource++uwosh.snippets/js/snippetForm.js" />
 			<div style="padding: 10px">
 				<metal:use use-macro="context/@@ploneform-macros/titlelessform" />
+				<a href="#" id="disable_mce">Text-only</a>
 			</div>
 			<form method="get" id="snippetIdForm">
 				<input type="hidden" name="new_snippet" value="NEW_SNIPPET_ID" />
