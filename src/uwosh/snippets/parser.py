@@ -19,7 +19,7 @@ class SnippetParser():
 	def __init__(self):
 		self.sm = SnippetManager()
 
-	snippetRegex = '<span(?=.*?data-type="snippet_tag"\s*)(?=.*?data-snippet-id="([a-zA-Z0-9\s_-]+?)"\s*)[^>]+?>[^<>]*?<\/span>'
+	snippetRegex = '<span(?=[^>]*?data-type="snippet_tag"\s*)(?=[^>]*?data-snippet-id="([a-zA-Z0-9\s_-]+?)"\s*)[^>]+?>[^<>]*?<\/span>'
 
 	def parsePage(self, pageText):
 		result = self.parseSnippets(pageText)
@@ -33,6 +33,7 @@ class SnippetParser():
 		snippets = self.sm.getSnippets(True)
 		for match in matches:
 			try:
+				import pdb; pdb.set_trace()
 				pageText = replace(pageText, match.group(0), snippets[match.group(1)].getText())
 			except KeyError:
 				#The snippetID was invalid
