@@ -29,9 +29,20 @@ $(document).ready(function () {
   });
 
   $('#disable_mce').click(function() {
-    tinyMCE.activeEditor.remove();
-    $(this).hide();
+    if( tinyMCE.activeEditor != null )
+    {
+      $(this).text("Enable editor.");
+      tinyMCE.activeEditor.remove();
+    }
+    else
+    {
+      $(this).text("Disable editor.");
+      var ed = new tinyMCE.Editor("form-widgets-text", tinyMCE.settings);
+      ed.render();
+    }
   });
+
+  $('#enable_mce')
 
   $('#form-buttons-save').click(function () {
 
