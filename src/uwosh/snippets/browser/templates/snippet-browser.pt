@@ -1,6 +1,6 @@
 <div id="snippet-list" tal:define="snippets view/getSnippets">
 	<script type="text/javascript" src="++resource++plone.app.jquery.js" />
-	<script type="text/javascript" src="../tiny_mce_popup.js" />
+	<script type="text/javascript" tal:attributes="src string:${view/siteUrl}/tiny_mce_popup.js" />
 	<script type="text/javascript" src="++resource++plone.app.jquerytools.js" />
 	<script type="text/javascript" src="++resource++plone.app.jquerytools.form.js" />
 	<script type="text/javascript" src="++resource++plone.app.jquerytools.overlayhelpers.js" />

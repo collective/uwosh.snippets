@@ -5,8 +5,10 @@ $(document).ready(function () {
   document.title = 'Add a snippet';
   var t = $(this);
 
-  var editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
+  var editor_snippet = "";
 
+  editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
+  
   function catchNestedSpans(plug) {
 
     //once in a while, the snippet-tag spans will
@@ -226,6 +228,8 @@ $(document).ready(function () {
     var url = tinyMCE.documentBaseURL;
     var doc = tinyMCE.DOM.doc;
     var body = $(doc).find('body');
+
+    tinyMCE.previous = document.location.href;
 
     if ($('#snippet-create-link').length <= 0) {
       $(body).append('<a id="snippet-create-link" href="' + url + '@@create-snippet" class="overlay" style="display: none">Click me</a>');

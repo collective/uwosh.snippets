@@ -5,10 +5,16 @@ $(document).ready(function () {
 
   function close() {
 
+    var before = window.location.href.indexOf('@@create-snippet');
+    var urlBase = window.location.href.substr(0, before);
+    var snippetWindow = "@@get-snippet-list";
+    var snippetBrowserURI = "?list-view=true";
+
+    var url = urlBase + snippetWindow;
     //This means we're editing a snippet.
     //We only want to pass the title back if it's a new snippet
     if ($('#form-widgets-id').val().length > 0) {
-      window.location.href = document.referrer;
+      window.location.href = url + snippetBrowserURI;
       return;
     }
 
@@ -18,8 +24,12 @@ $(document).ready(function () {
     id = id.replace(/\W/g, '');
 
     var form = $('#snippetIdForm');
-    form.attr('action', document.referrer);
-    $(form).find('input').val(id);
+    form.attr('action', url);
+
+    if (id != "") {
+      $(form).find('input').val(id);
+    }
+
     form.submit();
   }
 
@@ -31,7 +41,6 @@ $(document).ready(function () {
   //Not sure why this is hidden to begin with, but lets
   //make it visible again.
   $('.suppressVisualEditor').css('margin', '0').show();
-
   $('.formControls').css('margin', '0');
 
   $('#form-buttons-save').click(function () {
