@@ -28,21 +28,11 @@ $(document).ready(function () {
     close();
   });
 
-  $('#disable_mce').click(function() {
-    if( tinyMCE.activeEditor != null )
-    {
-      $(this).text("Enable editor.");
-      tinyMCE.activeEditor.remove();
-    }
-    else
-    {
-      $(this).text("Disable editor.");
-      var ed = new tinyMCE.Editor("form-widgets-text", tinyMCE.settings);
-      ed.render();
-    }
-  });
+  //Not sure why this is hidden to begin with, but lets
+  //make it visible again.
+  $('.suppressVisualEditor').css('margin', '0').show();
 
-  $('#enable_mce')
+  $('.formControls').css('margin', '0');
 
   $('#form-buttons-save').click(function () {
 

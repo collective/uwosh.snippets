@@ -1,5 +1,11 @@
 Changelog
 =========
+0.9.29 (12/19/2014)
+-------------------
+- Users can now reenable tinyMCE after disabling it
+- Fixed issue causing the backend regex from grabbing normal
+  (non-snippet) span tags
+
 0.9.27 (12/17/2014)
 -------------------
 - Added link to disable tinyMCE when creating a snippet

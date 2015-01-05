@@ -5,4 +5,5 @@ global-include uwosh/snippets/profiles/default/structure
 
 global-exclude *.pyc
 global-exclude *.DS_Store
+prune uwosh/snippets/tests/robot
 prune uwosh/snippets/tests
