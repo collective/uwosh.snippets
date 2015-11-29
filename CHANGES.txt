@@ -1,5 +1,16 @@
 Changelog
 =========
+
+0.9.30 (unreleased)
+-------------------
+
+- fix issue where a page constructed with many of the same snippets and a
+  snippet that contained the same markup as the page could cause huge
+  page output. We had a server using up 16 gigs of RAM trying to render
+  a complex page and then crashing the process.
+  [vangheem]
+
+
 0.9.29 (12/19/2014)
 -------------------
 - Users can now reenable tinyMCE after disabling it
