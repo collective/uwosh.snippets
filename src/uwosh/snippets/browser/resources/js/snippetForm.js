@@ -1,6 +1,3 @@
-/*jslint browser: true, bitwise: true, passfail: true, eqeq: true, newcap: true, plusplus: true, regexp: true, white: false, */
-/*global alert, jQuery:false, document:false, window:false, location:false */
-
 $(document).ready(function () {
 
   function close() {
@@ -26,7 +23,7 @@ $(document).ready(function () {
     var form = $('#snippetIdForm');
     form.attr('action', url);
 
-    if (id != "") {
+    if (id !== "") {
       $(form).find('input').val(id);
     }
 

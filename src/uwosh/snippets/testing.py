@@ -1,25 +1,14 @@
 # -*- coding: utf-8 -*-
-from plone.app.testing import TEST_USER_NAME, PLONE_FIXTURE, login, \
-    IntegrationTesting, PloneSandboxLayer, applyProfile, setRoles, \
-    TEST_USER_ID, TEST_USER_PASSWORD
-
-
+from plone.app.testing import setRoles, TEST_USER_ID
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import applyProfile
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
-
 from Products.CMFCore.utils import getToolByName
-
 import unittest2 as unittest
-
 from plone.testing import z2
-
 from zope.configuration import xmlconfig
-
-from uwosh.snippets.parser import SnippetParser
-from uwosh.snippets.snippetmanager import SnippetManager
 
 
 class UwoshsnippetsLayer(PloneSandboxLayer):
@@ -71,29 +60,29 @@ class BaseTest(unittest.TestCase):
 
         #########Test Strings###########################
 
-        #Control case. No plugs whatsoever
+        # Control case. No plugs whatsoever
         self.normalString = "This is a test! Or is it?"
 
-        #Normal test case, with 1 valid plug
+        # Normal test case, with 1 valid plug
         self.testSingle = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc"></span> test! Or is it?'
 
-        #need to verify that the regex will catch more than 1
+        # need to verify that the regex will catch more than 1
         self.testMultiple = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testDoc"></span>?'
 
-        #An example of a string with an invalid snippet ID
+        # An example of a string with an invalid snippet ID
         self.testJunk = 'This is a <span data-type="snippet_tag" data-snippet-id="JunkID"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="JunkID"></span>?'
 
-        #An example where the JS failed to remove handle the in-editor snippet. 
+        # An example where the JS failed to remove handle the in-editor snippet.
         self.testDeadSnippet = 'This is a <span data-type="snippet_tag" data-snippet-id="oldDoc">meaningless</span> test! Or is it?'
 
-        #An example where a snippet is inside another span. This verifies the parser's RegEx's ability to correctly pull out snippets.
+        # An example where a snippet is inside another span. This verifies the parser's RegEx's ability to correctly pull out snippets.
         self.benignSpan = 'This is a <span style="text-decoration: blink;"><span data-type="snippet_tag" data-snippet-id="testDoc"></span> test!</span> Or is it?'
 
-        #An example where a snippet contains a span. Since the span is inserted after the regex runs, this *shouldn't* be an issue, 
-        #but it never hurts to be careful
+        # An example where a snippet contains a span. Since the span is inserted after the regex runs, this *shouldn't* be an issue,
+        # but it never hurts to be careful
         self.innerSpan = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc2"></span> test! Or is it?'
 
-        #An example with 2 different plugs
+        # An example with 2 different plugs
         self.differentPlugs = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc2"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testDoc"></span>?'
 
         ################################################

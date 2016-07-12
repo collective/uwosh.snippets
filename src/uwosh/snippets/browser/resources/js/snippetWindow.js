@@ -1,5 +1,3 @@
-/*jslint browser: true, bitwise: true, passfail: true, eqeq: true, newcap: true, plusplus: true, regexp: true, white: false, */
-/*global alert, tinyMCEPopup, tinyMCE, jQuery:false, document:false, window:false, location:false */
 $(document).ready(function () {
 
   document.title = 'Add a snippet';
@@ -8,7 +6,7 @@ $(document).ready(function () {
   var editor_snippet = "";
 
   editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
-  
+
   function catchNestedSpans(plug) {
 
     //once in a while, the snippet-tag spans will
@@ -16,7 +14,7 @@ $(document).ready(function () {
     //inside one another. This function gets the
     //upper-most of the 'snippet-plug' spans and returns it.
 
-    if ($(plug).parent().attr('data-type') == 'snippet_tag') {
+    if ($(plug).parent().attr('data-type') === 'snippet_tag') {
       plug = catchNestedSpans($(plug).parent());
     }
 
@@ -26,7 +24,7 @@ $(document).ready(function () {
   function getSelectedSnippet() {
     var selected = $('#snippet-selection').val();
 
-    if (selected == "") {
+    if (selected === "") {
       return "None";
     }
 
@@ -40,7 +38,7 @@ $(document).ready(function () {
 
     var selected = getSelectedSnippet();
 
-    if (selected == "None") {
+    if (selected === "None") {
       return "";
     }
 
@@ -60,14 +58,14 @@ $(document).ready(function () {
       $('#snippet-selection').val($(snippet).find('.snippet-id').text());
     }
 
-    if (snippet == "None") {
+    if (snippet === "None") {
       $('#snippet-info-title').text('None');
       $('#snippet-desc').text('None');
       $('#snippet-info').show();
       return true;
     }
 
-    if ($('#snippet-normal-buttons').css('display') != "none") {
+    if ($('#snippet-normal-buttons').css('display') !== "none") {
       //We want to preserve all the formatting, so we use .html(), not .text()
       $('#snippet-preview').html($(snippet).find('.snippet-text').html());
     }
@@ -77,7 +75,7 @@ $(document).ready(function () {
     var snippetDesc = $(snippet).find('.snippet-description').text();
     var descText = "None";
 
-    if (snippetDesc != "") {
+    if (snippetDesc !== "") {
       descText = snippetDesc;
     }
 
@@ -117,7 +115,7 @@ $(document).ready(function () {
 
     var newSnippet = str.match(/(\?|&)new_snippet=([a-zA-Z0-9_\-]+)(&|$|)?/);
 
-    if (newSnippet != null) {
+    if (newSnippet !== null) {
       var name = newSnippet[2];
       fetchSnippet(name);
     }
@@ -139,7 +137,7 @@ $(document).ready(function () {
   }
 
   function createSpanTag(snippetId, snippetText) {
-    if (snippetId != "") {
+    if (snippetId !== "") {
       var style = "outline-style: dotted; ";
       style += "outline-width: thin; ";
       style += "outline-color: black; ";
@@ -162,14 +160,14 @@ $(document).ready(function () {
     }
 
     $.each(responseText, function (k, v) {
-      if (k == "id") {
+      if (k === "id") {
         //continue
         return true;
       }
 
       var classname = '.snippet-' + k;
 
-      if (k == 'text') {
+      if (k === 'text') {
         $(snippet).find(classname).html(v);
 
       } else {
@@ -178,7 +176,7 @@ $(document).ready(function () {
 
     });
 
-    if ($('#snippet-selection').val() == id) {
+    if ($('#snippet-selection').val() === id) {
       setSelectedSnippet(snippet);
     }
 
@@ -264,12 +262,12 @@ $(document).ready(function () {
 
     var text = getSelectedSnippet().find('.snippet-text').html();
 
-    if (snippet != "None") {
+    if (snippet !== "None") {
       var output = createSpanElement(snippet, text);
 
       editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
 
-      if (editor_snippet != false && editor_snippet != undefined) {
+      if (editor_snippet !== false && editor_snippet !== undefined) {
         editor_snippet = catchNestedSpans(editor_snippet);
         //editor_snippet.parentElement.replaceChild(output, editor_snippet);
         $(editor_snippet).replaceWith(output);
@@ -280,7 +278,7 @@ $(document).ready(function () {
 
       tinyMCEPopup.close();
 
-    } else if (snippet == undefined) {
+    } else if (snippet === undefined) {
 
       tinyMCEPopup.editor.windowManager.alert('You must select a snippet before saving.');
       $('#snippet-select').focus();
@@ -324,7 +322,7 @@ $(document).ready(function () {
   });
 
   $('#snippet-preview-insert').click(function () {
-    if ($('#snippet-selection').val() != "") {
+    if ($('#snippet-selection').val() !== "") {
 
       var text = getSelectedSnippet();
       var id = $(text).find('.snippet-id').text();
@@ -341,7 +339,7 @@ $(document).ready(function () {
       //preview window. Otherwise, the user could replace
       //text anywhere on the window. Chaos ensues.
       if (range.intersectsNode(preview)) {
-        if ($(range.startContainer.parentElement).attr('data-type') != 'snippet_tag') {
+        if ($(range.startContainer.parentElement).attr('data-type') !== 'snippet_tag') {
           sel.deleteFromDocument();
           range.insertNode($(snippet).get(0));
 

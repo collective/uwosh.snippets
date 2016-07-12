@@ -1,6 +1,3 @@
-/*jslint browser: true, bitwise: true, passfail: true, eqeq: true, newcap: true, plusplus: true, regexp: true, white: false, */
-/*global alert, tinyMCEPopup, jQuery:false, document:false, window:false, location:false */
-
 $(document).ready(function () {
 
   var t = tinyMCEPopup.getWindowArg('t');
@@ -13,7 +10,7 @@ $(document).ready(function () {
 
     var match = referrer.match(/(\?|&)snippet-id=([a-zA-Z0-9\-]+)(&|$|)?/);
 
-    if (match != null) {
+    if (match !== null) {
       snippet_reload(match[2]);
     }
   }
@@ -53,7 +50,7 @@ $(document).ready(function () {
 
     var type = typeof selectedSnippet;
 
-    if (type == undefined) {
+    if (type === undefined) {
       selectedSnippet = getSelectionElement();
     }
 
@@ -63,14 +60,14 @@ $(document).ready(function () {
 
   catchEdit();
 
-  if (selectedSnippet.val() != "") {
+  if (selectedSnippet.val() !== "") {
     var selected = $(':radio[value="' + selectedSnippet.val() + '"]');
     $(selected).attr('checked', true);
     $(selected).addClass('highlight');
   }
 
   $('.snippet-box').each(function (even) {
-    if (even % 2 == 0) {
+    if (even % 2 === 0) {
       $(this).addClass('even');
     }
     even += 1;
@@ -85,7 +82,7 @@ $(document).ready(function () {
 
     var current = $('input[name="snippet"]:checked').val();
 
-    if (current == undefined) {
+    if (current === undefined) {
       tinyMCEPopup.editor.windowManager.alert('You much choose a snippet to select.');
 
     } else {
@@ -121,7 +118,7 @@ $(document).ready(function () {
         $.ajax({
           url: $(url).attr('href'),
           success: function (data) {
-            if (data == 'True') {
+            if (data === 'True') {
 
               var doc = tinyMCEPopup.editor.contentDocument;
               var id = $(url).parent().find('.snippet-id').html();

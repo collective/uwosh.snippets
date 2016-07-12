@@ -6,9 +6,8 @@ from plone.transformchain.interfaces import ITransform
 from repoze.xmliter.utils import getHTMLSerializer
 
 from uwosh.snippets.parser import SnippetParser
-from Products.CMFCore.utils import getToolByName
 from uwosh.snippets.browser.interfaces import ISnippetsLayer
-from zope.component.hooks import getSite
+
 
 class SnippetTransform(object):
     implements(ITransform)
@@ -52,4 +51,4 @@ class SnippetTransform(object):
         except (TypeError):
             return None
 
-        return [ parser.parsePage(r) for r in result ]
+        return [parser.parsePage(r) for r in result]
