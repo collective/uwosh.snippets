@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version='0.9.29'
+version='2.0.0dev0'
 
 long_description = (
     open('README.rst').read()
@@ -40,7 +40,7 @@ setup(name='uwosh.snippets',
       zip_safe=False,
       install_requires=[
           'setuptools',
-	  'plone.directives.form',
+    	  'plone.directives.form',
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},

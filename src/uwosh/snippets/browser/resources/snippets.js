@@ -26,7 +26,7 @@
       });
 
       ed.addButton('snippetbutton', {
-        title : 'Add Snippet.',
+        text : 'Add Snippet',
         cmd : 'snippets',
       });
 

@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
-from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 from uwosh.snippets.snippet import Snippet
+from zope.component.hooks import getSite
+
+try:
+    from plone.app.textfield.value import RichTextValue
+except ImportError:
+    pass
 
 
 class SnippetManager():
@@ -17,14 +22,7 @@ class SnippetManager():
         pt = getToolByName(portal, 'portal_url')
         path = pt.getPortalObject()
 
-        try:
-            self.folder = path[self.folderName]
-        except KeyError:
-            path.invokeFactory('Folder', self.FolderName)
-            self.folder = path[self.folderName]
-
-        if not self.folder.getExcludeFromNav():
-            self.folder.setExcludeFromNav('true')
+        self.folder = path[self.folderName]
 
         self.index = self.indexSnippets()
 
@@ -53,7 +51,11 @@ class SnippetManager():
             doc.setDescription(data['description'])
 
         if data['text']:
-            doc.setText(data['text'])
+            if hasattr(doc, 'setText'):
+                doc.setText(data['text'])
+            else:
+                doc.text = RichTextValue(data['text'], mimeType='text/html',
+                                         outputMimeType='text/x-html-safe')
 
         self.index = self.indexSnippets()
 
@@ -72,7 +74,12 @@ class SnippetManager():
         snippet.setId(snippetId)
         doc = self.index[snippetId]
 
-        snippet.setText(doc.getRawText())
+        if hasattr(doc, 'getRawText'):
+            # archetypes
+            snippet.setText(doc.getRawText())
+        else:
+            snippet.setText(doc.text.output)
+
         snippet.setTitle(doc.Title())
         snippet.setDescription(doc.Description())
 
@@ -95,7 +102,7 @@ class SnippetManager():
         else:
             snippets = []
 
-        for item in items:
+        for item in items.keys():
 
                 if asDict:
                     snippets[item] = self.getSnippet(item)
@@ -114,10 +121,10 @@ class SnippetManager():
         items = folder.contentItems()
 
         for item in items:
-            if(item[1].Type() == u'Page'):
+            if item[1].portal_type == 'Document':
 
                 snippets[item[0]] = item[1]
-            elif(item[1].Type() == u'Folder'):
+            elif item[1].portal_type == u'Folder':
                 snippets = self.indexSnippets(snippets, item[1])
 
         return snippets
@@ -137,4 +144,8 @@ class SnippetManager():
             doc.setDescription(data['description'])
 
         if 'text' in data:
-            doc.setText(data['text'])
+            if hasattr(doc, 'setText'):
+                doc.setText(data['text'])
+            else:
+                doc.text = RichTextValue(data['text'], mimeType='text/html',
+                                         outputMimeType='text/x-html-safe')

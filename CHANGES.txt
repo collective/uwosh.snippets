@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.9.30 (unreleased)
--------------------
+2.0.0 (unreleased)
+------------------
 
 - fix issue where a page constructed with many of the same snippets and a
   snippet that contained the same markup as the page could cause huge
@@ -132,8 +132,7 @@ Changelog
 -------------------
 - Added ability to embed youtube videos.
 
-.1 
+.1
 -------------------
 - Basic proof-of-concept implementation
 - Added TinyMCE plugin
-
