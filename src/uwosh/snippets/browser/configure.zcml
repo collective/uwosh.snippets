@@ -8,35 +8,9 @@
 
     <include package="Products.CMFCore" file="permissions.zcml" />
 
-    <browser:page
-	    name="get-snippet-list"
-	    for="*"
-	    class=".snippetlist.SnippetList"
-	    permission="cmf.ListFolderContents"
-        layer=".interfaces.ISnippetsLayer"
-	    />
+    <browser:resourceDirectory
+      name="uwosh.snippets"
+      directory="resources"
+      />
 
-    <browser:page
-        name="create-snippet"
-        for="*"
-        class=".addsnippet.SnippetForm"
-        permission="cmf.ManagePortal"
-        layer=".interfaces.ISnippetsLayer"
-        />
-
-    <browser:page
-        name="edit-snippet"
-        for="*"
-        class=".addsnippet.SnippetEditForm"
-        permission="cmf.ManagePortal"
-        layer=".interfaces.ISnippetsLayer"
-        />
-
-    <browser:page
-        name="delete-snippet"
-        for="*"
-        class=".deletesnippet.DeleteSnippet"
-        permission="cmf.ManagePortal"
-        layer=".interfaces.ISnippetsLayer"
-        />
 </configure>

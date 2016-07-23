@@ -41,6 +41,8 @@ setup(name='uwosh.snippets',
       install_requires=[
           'setuptools',
     	  'plone.directives.form',
+          'plone.api',
+          'lxml'
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},

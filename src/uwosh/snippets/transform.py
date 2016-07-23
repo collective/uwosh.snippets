@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-from zope.interface import implements, Interface
-from zope.component import adapts
-
+from lxml.html import fromstring
+from plone import api
+from plone.app.uuid.utils import uuidToObject
+from plone.dexterity.interfaces import IDexterityContent
 from plone.transformchain.interfaces import ITransform
 from repoze.xmliter.utils import getHTMLSerializer
-
-from uwosh.snippets.parser import SnippetParser
 from uwosh.snippets.browser.interfaces import ISnippetsLayer
+from uwosh.snippets.parser import SnippetParser
+from zope.component import adapts
+from zope.interface import implements
+from zope.interface import Interface
 
 
 class SnippetTransform(object):
@@ -50,5 +53,26 @@ class SnippetTransform(object):
             result = getHTMLSerializer(result, pretty_print=False)
         except (TypeError):
             return None
+
+        site = api.portal.get()
+        root = result.tree.getroot()
+        rendered = {}
+        for el in root.cssselect('[data-type="snippet_tag"]'):
+            snippet_name = el.attrib.get('data-snippet-id')
+            if snippet_name not in rendered:
+                ob = uuidToObject(snippet_name)
+                if ob is None:
+                    ob = site.restrictedTraverse('.snippets/' + snippet_name, None)
+                if ob is not None:
+                    if IDexterityContent.providedBy(ob):
+                        rendered[snippet_name] = ob.text.output
+                    else:
+                        rendered[snippet_name] = ob.getText()
+            if snippet_name in rendered:
+                parent = el.getparent()
+                idx = parent.index(el)
+                parent[idx] = fromstring(rendered[snippet_name])
+
+        return result
 
         return [parser.parsePage(r) for r in result]

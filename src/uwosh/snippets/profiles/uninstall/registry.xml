@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+          i18n:domain="plone">
+
+  <record name="plone.custom_plugins"
+          interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema" field="custom_plugins">
+    <value purge="False">
+      <element remove="True">snippets|++resource++uwosh.snippets/snippets.js</element>
+    </value>
+  </record>
+  <record name="plone.custom_buttons"
+          interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema" field="custom_buttons">
+    <value purge="False">
+      <element remove="True">snippetbutton</element>
+    </value>
+  </record>
+
+</registry>
