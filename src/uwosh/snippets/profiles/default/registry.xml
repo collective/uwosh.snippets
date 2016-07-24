@@ -2,6 +2,9 @@
 <registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
           i18n:domain="plone">
 
+  <records interface="uwosh.snippets.interfaces.ISnippetsSettings"
+           prefix="uwosh.snippets" />
+
   <record name="plone.custom_plugins"
           interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema" field="custom_plugins">
     <value purge="False">

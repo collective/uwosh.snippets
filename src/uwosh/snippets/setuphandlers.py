@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
+
+from plone import api
 from Products.CMFPlone.interfaces import INonInstallable
 from zope.interface import implements
-# -*- coding: utf-8 -*-
-__docformat__ = "epytext"
 
 
 class HiddenProfiles(object):
@@ -18,5 +19,12 @@ class HiddenProfiles(object):
 
 
 def setupVarious(context):
-
     site = context.getSite()
+
+    if '.snippets' not in site.objectIds():
+        folder = api.content.create(
+            type='Folder', id='.snippets', title='Snippets', container=site)
+        try:
+            api.content.transition(folder, to_state='published')
+        except:
+            pass

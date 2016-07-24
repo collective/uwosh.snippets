@@ -1,6 +1,6 @@
 <layers>
     <layer
         name="uwosh.snippets"
-        interface="uwosh.snippets.browser.interfaces.ISnippetsLayer"
+        interface="uwosh.snippets.interfaces.ISnippetsLayer"
         />
 </layers>

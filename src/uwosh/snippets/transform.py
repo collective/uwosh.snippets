@@ -2,12 +2,14 @@
 from lxml.html import fromstring
 from plone import api
 from plone.app.uuid.utils import uuidToObject
-from plone.dexterity.interfaces import IDexterityContent
+from plone.registry.interfaces import IRegistry
 from plone.transformchain.interfaces import ITransform
+from Products.CMFCore.Expression import Expression
 from repoze.xmliter.utils import getHTMLSerializer
-from uwosh.snippets.browser.interfaces import ISnippetsLayer
-from uwosh.snippets.parser import SnippetParser
+from uwosh.snippets.interfaces import ISnippetsLayer
+from uwosh.snippets.utils import ExpressionEvaluator
 from zope.component import adapts
+from zope.component import getUtility
 from zope.interface import implements
 from zope.interface import Interface
 
@@ -19,7 +21,6 @@ class SnippetTransform(object):
     order = 9000
 
     def __init__(self, published, request):
-
         self.published = published
         self.request = request
 
@@ -30,12 +31,6 @@ class SnippetTransform(object):
         return result
 
     def transformIterable(self, result, encoding):
-
-        try:
-            parser = SnippetParser()
-        except AttributeError:
-            return result
-
         if self.request['PATH_INFO'].endswith('edit'):
             return result
 
@@ -57,6 +52,13 @@ class SnippetTransform(object):
         site = api.portal.get()
         root = result.tree.getroot()
         rendered = {}
+
+        registry = getUtility(IRegistry)
+
+        evaluator = ExpressionEvaluator()
+        expression = Expression(registry.get('uwosh.snippets.render_expression',
+                                             'context/text/output|context/getText|nothing'))
+
         for el in root.cssselect('[data-type="snippet_tag"]'):
             snippet_name = el.attrib.get('data-snippet-id')
             if snippet_name not in rendered:
@@ -64,15 +66,13 @@ class SnippetTransform(object):
                 if ob is None:
                     ob = site.restrictedTraverse('.snippets/' + snippet_name, None)
                 if ob is not None:
-                    if IDexterityContent.providedBy(ob):
-                        rendered[snippet_name] = ob.text.output
-                    else:
-                        rendered[snippet_name] = ob.getText()
+                    rendered[snippet_name] = evaluator.evaluate(expression, ob)
+
             if snippet_name in rendered:
-                parent = el.getparent()
-                idx = parent.index(el)
-                parent[idx] = fromstring(rendered[snippet_name])
+                val = rendered[snippet_name]
+                if val:
+                    parent = el.getparent()
+                    idx = parent.index(el)
+                    parent[idx] = fromstring(val)
 
         return result
-
-        return [parser.parsePage(r) for r in result]

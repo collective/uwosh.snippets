@@ -6,11 +6,24 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="uwosh.snippets">
 
-    <include package="Products.CMFCore" file="permissions.zcml" />
+  <browser:resourceDirectory
+    name="uwosh.snippets"
+    directory="resources"
+    />
 
-    <browser:resourceDirectory
-      name="uwosh.snippets"
-      directory="resources"
-      />
+  <browser:page
+    name="snippets-api"
+    for="*"
+    permission="cmf.ModifyPortalContent"
+    class=".api.SnippetsAPI"
+    layer="..interfaces.ISnippetsLayer"
+    />
+  <browser:page
+    name="snippets-controlpanel"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.SnippetsControlPanel"
+    permission="plone.app.controlpanel.Site"
+    layer="..interfaces.ISnippetsLayer"
+    />
 
 </configure>
