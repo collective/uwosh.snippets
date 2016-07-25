@@ -51,3 +51,31 @@ class TestTransform(BaseTest):
         self.assertTrue('<h2>Foobar 3</h2>' in result)
         self.assertTrue('<p>foobar 3</p>' in result)
         self.assertTrue('Foobar 4' not in result)
+
+    def test_render_header_nested(self):
+        page = self._create_page(text='''
+<h1>Foobar 1</h1>
+<p>foobar 1</p>
+<h1>Foobar 2</h1>
+<p>foobar 2</p>
+<h2>Foobar 3</h2>
+<p>foobar 3</p>
+<h3>Foobar 4</h3>
+<p>foobar 4</p>
+<h4>Foobar 5</h4>
+<p>foobar 5</p>
+<h3>Foobar 6</h3>
+<p>foobar 6</p>
+<h2>Foobar 7</h2>
+<p>foobar 7</p>
+''')
+
+        result = self._render_transform(page, 'Foobar 3')
+        self.assertTrue('Foobar 1' not in result)
+        self.assertTrue('Foobar 2' not in result)
+        self.assertTrue('<h2>Foobar 3</h2>' in result)
+        self.assertTrue('<p>foobar 3</p>' in result)
+        self.assertTrue('Foobar 4' in result)
+        self.assertTrue('Foobar 5' in result)
+        self.assertTrue('Foobar 6' in result)
+        self.assertTrue('Foobar 7' not in result)

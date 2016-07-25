@@ -59,12 +59,14 @@ def get_header_from_text(text, header):
     result = []
     found = False
     for el in dom:
-        if el.tag in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'):
-            if found:
-                # already processing found block, time to dive out
+        tag = el.tag.lower()
+        if tag in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'):
+            if found == tag or found > tag:
+                # found tag that is of equal or higher order than current tag
+                # in python, comparing string h2 < h3 == true
                 break
             if header.strip() == el.text.strip():
-                found = True
+                found = tag
         if found:
             result.append(tostring(el))
     return '\n'.join(result)
