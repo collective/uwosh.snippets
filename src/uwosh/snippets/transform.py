@@ -82,18 +82,26 @@ class SnippetTransform(object):
                 val = data['html']
                 if header:
                     val = get_header_from_text(val, header)
+
                 snippet_container = etree.Element('div')
 
+                className = 'snippet-container snippet-container-{}'.format(
+                    ob.portal_type.lower().replace(' ', '-')
+                )
+
+                if not val:
+                    val = '<p>Snippet could not be found</p>'
+                    className += ' snippet-container-missing'
+
                 snippet_container.attrib.update({
-                    'class': 'snippet-container snippet-container-{}'.format(
-                        ob.portal_type.lower().replace(' ', '-')
-                    ),
+                    'class': className,
                     'data-source-uid': IUUID(ob),
                     'data-source-id': ob.getId(),
                     'data-source-title': ob.Title(),
                     'data-source-path': '/'.join(ob.getPhysicalPath())[len(site_path):],
                     'data-source-header': header or ''
                 })
+
                 content_el = fromstring(val)
                 if content_el.tag == 'div':
                     # unwrap: fromstring auto adds div around content so we'll just take the

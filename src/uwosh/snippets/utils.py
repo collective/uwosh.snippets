@@ -35,6 +35,10 @@ class ExpressionEvaluator(object):
             ec = createExprContext(folder, self.site, context)
             # add 'context' as an alias for 'object'
             ec.setGlobal('context', context)
+            ec.contexts.update({
+                'context': context,
+            })
+            ec.contexts.update(kwargs)
             for name, val in kwargs.items():
                 ec.setGlobal(name, val)
             return expression(ec)

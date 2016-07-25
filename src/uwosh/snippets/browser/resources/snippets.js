@@ -153,7 +153,7 @@
                   header: header
                 }
               }).done(function(resp){
-                ed.insertContent(ed.dom.createHTML('div', {
+                ed.insertContent(ed.dom.createHTML('span', {
                   class: 'snippet-tag snippet-tag-' + data[0].portal_type.toLowerCase().replace(' ', '-'),
                   'data-type': 'snippet_tag',
                   contenteditable: false,
