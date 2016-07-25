@@ -69,7 +69,7 @@ def get_header_from_text(text, header):
                 # found tag that is of equal or higher order than current tag
                 # in python, comparing string h2 < h3 == true
                 break
-            if el.text and header.strip() == el.text.strip():
+            if header.strip() == el.text_content().strip():
                 found = tag
         if found:
             result.append(tostring(el))
