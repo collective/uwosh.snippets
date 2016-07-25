@@ -8,6 +8,7 @@ from Products.CMFCore.Expression import Expression
 from repoze.xmliter.utils import getHTMLSerializer
 from uwosh.snippets.interfaces import ISnippetsLayer
 from uwosh.snippets.utils import ExpressionEvaluator
+from uwosh.snippets.utils import get_header_from_text
 from zope.component import adapts
 from zope.component import getUtility
 from zope.interface import implements
@@ -61,6 +62,7 @@ class SnippetTransform(object):
 
         for el in root.cssselect('[data-type="snippet_tag"]'):
             snippet_name = el.attrib.get('data-snippet-id')
+            header = el.attrib.get('data-header')
             if snippet_name not in rendered:
                 ob = uuidToObject(snippet_name)
                 if ob is None:
@@ -70,6 +72,8 @@ class SnippetTransform(object):
 
             if snippet_name in rendered:
                 val = rendered[snippet_name]
+                if header:
+                    val = get_header_from_text(val, header)
                 if val:
                     parent = el.getparent()
                     idx = parent.index(el)

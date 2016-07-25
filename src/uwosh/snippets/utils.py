@@ -2,6 +2,7 @@ from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from lxml.html import fromstring
+from lxml.html import tostring
 from plone import api
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.Expression import createExprContext
@@ -49,5 +50,21 @@ def render_snippet(ob, header=None):
     result = evaluator.evaluate(expression, ob)
     if result and header:
         # need to find header in result
-        dom = fromstring(result)
+        result = get_header_from_text(result, header)
     return result
+
+
+def get_header_from_text(text, header):
+    dom = fromstring(text)
+    result = []
+    found = False
+    for el in dom:
+        if el.tag in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'):
+            if found:
+                # already processing found block, time to dive out
+                break
+            if header.strip() == el.text.strip():
+                found = True
+        if found:
+            result.append(tostring(el))
+    return '\n'.join(result)

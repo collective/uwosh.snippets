@@ -33,7 +33,6 @@ about TinyMCE, visit their `website <http://www.tinymce.com>`_.
 TODO
 ----
 
-- rendering header selection
 - link integrity
   - patch to add link integrity links
 

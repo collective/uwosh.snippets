@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-
 from plone import api
+from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFPlone.interfaces import INonInstallable
 from zope.interface import implements
 
@@ -22,9 +22,9 @@ def setupVarious(context):
     site = context.getSite()
 
     if '.snippets' not in site.objectIds():
-        folder = api.content.create(
-            type='Folder', id='.snippets', title='Snippets', container=site)
         try:
+            folder = api.content.create(
+                type='Folder', id='.snippets', title='Snippets', container=site)
             api.content.transition(folder, to_state='published')
-        except:
+        except (api.exc.InvalidParameterError, WorkflowException):
             pass

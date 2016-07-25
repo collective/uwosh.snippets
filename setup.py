@@ -42,7 +42,9 @@ setup(name='uwosh.snippets',
           'setuptools',
     	  'plone.directives.form',
           'plone.api',
-          'lxml'
+          'lxml',
+          'z3c.unconfigure',
+          'plone.app.linkintegrity'
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},
