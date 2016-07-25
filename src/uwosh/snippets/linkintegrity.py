@@ -84,7 +84,8 @@ def checkSnippetReferences(obj):
 
     dom = fromstring(html)
     for el in dom.cssselect('h1,h2,h3,h4,h5,h6'):
-        obj_headers.append(el.text.strip())
+        if el.text:
+            obj_headers.append(el.text.strip())
 
     broken = []
     for link in getIncomingLinks(obj):
