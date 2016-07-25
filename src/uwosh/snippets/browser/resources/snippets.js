@@ -40,7 +40,7 @@
   '</div>' +
   '<div class="snippets-preview" style="display: none">' +
     '<h2>Snippet Preview</h2>' +
-    '<div class="inner"></div>' +
+    '<div class="inner" style="padding: 10px;background: white;border: 1px solid #ccc;"></div>' +
   '</div>' +
   '<button class="plone-btn plone-btn-default cancel-btn">Cancel</button>' +
   '<button class="plone-btn plone-btn-primary insert-btn" disabled="true">Insert</button>' +
@@ -96,7 +96,7 @@
                   var $sections = $('.snippets-section', modal.$modal);
                   $sections.show();
                   $('select', $sections).empty();
-                  $('select', $sections).append($('<option value="">Select header</option>'));
+                  $('select', $sections).append($('<option value="">All</option>'));
                   headers.forEach(function(header){
                     var $option = $('<option value="' + header + '">' + header + '</option>');
                     $('select', $sections).append($option);
@@ -137,6 +137,7 @@
           $('button', modal.$modal).off('click').on('click', function(){
             var $btn = $(this);
             if(!$btn.hasClass('insert-btn')){
+              modal.hide();
               return;
             }
 
