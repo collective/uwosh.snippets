@@ -71,6 +71,11 @@
           var $re = $('input.pat-relateditems', modal.$modal);
           var re = $re.data('pattern-relateditems');
 
+          // pay attention to browsing option
+          if(re.options.browsing){
+            re.browsing = re.options.browsing;
+          }
+
           re.$el.on('change', function(){
             // populate preview and section list
             var data = re.$el.select2('data');

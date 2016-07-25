@@ -22,7 +22,9 @@ class ISnippetsSettings(Interface):
                 u'i': u'portal_type',
                 u'v': [u'Document', u'Folder'],
                 u'o': u'plone.app.querystring.operation.selection.any'
-            }]
+            }],
+            "browsing": True,
+            "basePath": "/.snippets"
         }, indent=4).decode('utf8'),
     )
 
