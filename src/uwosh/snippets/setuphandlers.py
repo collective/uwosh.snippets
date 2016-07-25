@@ -19,6 +19,9 @@ class HiddenProfiles(object):
 
 
 def setupVarious(context):
+    if not context.readDataFile('uwosh.snippets.marker.txt'):
+        return
+
     site = context.getSite()
 
     if '.snippets' not in site.objectIds():
