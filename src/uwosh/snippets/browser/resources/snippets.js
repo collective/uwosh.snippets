@@ -142,17 +142,20 @@
 
             if(data && data.length > 0){
               utils.loading.show();
+              var header = $('.snippets-section select', modal.$modal).val();
               $.ajax({
                 url: $('body').attr('data-base-url') + '/@@snippets-api',
                 data: {
                   uid: data[0].UID,
-                  action: 'code'
+                  action: 'code',
+                  header: header
                 }
               }).done(function(resp){
                 ed.insertContent(ed.dom.createHTML('div', {
                   'data-type': 'snippet_tag',
                   contenteditable: false,
-                  'data-snippet-id': data[0].UID
+                  'data-snippet-id': data[0].UID,
+                  'data-header': header
                 }, resp.result));
               }).fail(function(){
                 alert('error loading snippet data');
@@ -171,8 +174,8 @@
       });
 
       ed.addButton('snippetbutton', {
-        text : 'Add Snippet',
         cmd : 'snippets',
+        image: $('body').attr('data-portal-url') + '/++resource++uwosh.snippets/brackets.png'
       });
     },
   });

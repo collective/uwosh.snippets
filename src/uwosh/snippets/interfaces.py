@@ -30,7 +30,7 @@ class ISnippetsSettings(Interface):
         title=u'Code display expression',
         description=u'TALs expression for what is displayed for the snippet when '
                     u'editing with TinyMCE. This can be html. '
-                    u'Available variables: context, uid, anchor',
+                    u'Available variables: context, uid, header',
         default=u'string:Snippet:[ID=${context/@@uuid}]'
     )
 

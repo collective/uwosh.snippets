@@ -33,11 +33,9 @@ about TinyMCE, visit their `website <http://www.tinymce.com>`_.
 TODO
 ----
 
-- save header selection in data attrib
 - rendering header selection
 - link integrity
   - patch to add link integrity links
-- fix button icon
 
 
 - would be nice: re-add support for add/edit/delete snippets in the modal

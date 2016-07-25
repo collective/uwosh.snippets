@@ -51,9 +51,9 @@ class SnippetsAPI(BrowserView):
         expression = Expression(registry.get('uwosh.snippets.code_display_expression',
                                              'string:Snippet:[ID=${context/@@uuid}]'))
 
-        anchor = self.request.form.get('anchor') or ''
+        header = self.request.form.get('header') or ''
 
         return {
             'success': True,
-            'result': evaluator.evaluate(expression, ob, uid=uid, anchor=anchor)
+            'result': evaluator.evaluate(expression, ob, uid=uid, header=header)
         }
