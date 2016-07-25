@@ -33,5 +33,9 @@ about TinyMCE, visit their `website <http://www.tinymce.com>`_.
 TODO
 ----
 
+- link integrity for anchors
+  - on edit handler, see if linked to
+  - if removed add status message warning...
+
 - would be nice: re-add support for add/edit/delete snippets in the modal
   - doesn't fit as well into how we're allowing snippets from anywhere on the site now

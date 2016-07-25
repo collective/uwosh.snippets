@@ -154,6 +154,7 @@
                 }
               }).done(function(resp){
                 ed.insertContent(ed.dom.createHTML('div', {
+                  class: 'snippet-tag snippet-tag-' + data[0].portal_type.toLowerCase().replace(' ', '-'),
                   'data-type': 'snippet_tag',
                   contenteditable: false,
                   'data-snippet-id': data[0].UID,

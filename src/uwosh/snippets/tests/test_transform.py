@@ -26,6 +26,15 @@ class TestTransform(BaseTest):
         page = self._create_page()
         self.assertTrue('<p>foobar</p>' in self._render_transform(page))
 
+    def test_should_include_container(self):
+        page = self._create_page()
+        self.assertTrue('snippet-container-document' in self._render_transform(page))
+
+    def test_should_include_data_attributes_on_source(self):
+        page = self._create_page()
+        result = self._render_transform(page)
+        self.assertTrue('data-source-uid="' + IUUID(page) in result)
+
     def test_customize_render_expression(self):
         registry = queryUtility(IRegistry)
         registry['uwosh.snippets.render_expression'] = u'context/Title'

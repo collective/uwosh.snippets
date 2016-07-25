@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from lxml import etree
+from plone.uuid.interfaces import IUUID
 from lxml.html import fromstring
 from plone import api
 from plone.app.uuid.utils import uuidToObject
@@ -51,6 +53,7 @@ class SnippetTransform(object):
             return None
 
         site = api.portal.get()
+        site_path = '/'.join(site.getPhysicalPath())
         root = result.tree.getroot()
         rendered = {}
 
@@ -68,15 +71,41 @@ class SnippetTransform(object):
                 if ob is None:
                     ob = site.restrictedTraverse('.snippets/' + snippet_name, None)
                 if ob is not None:
-                    rendered[snippet_name] = evaluator.evaluate(expression, ob)
+                    rendered[snippet_name] = {
+                        'html': evaluator.evaluate(expression, ob),
+                        'ob': ob
+                    }
 
             if snippet_name in rendered:
-                val = rendered[snippet_name]
+                data = rendered[snippet_name]
+                ob = data['ob']
+                val = data['html']
                 if header:
                     val = get_header_from_text(val, header)
+                snippet_container = etree.Element('div')
+
+                snippet_container.attrib.update({
+                    'class': 'snippet-container snippet-container-{}'.format(
+                        ob.portal_type.lower().replace(' ', '-')
+                    ),
+                    'data-source-uid': IUUID(ob),
+                    'data-source-id': ob.getId(),
+                    'data-source-title': ob.Title(),
+                    'data-source-path': '/'.join(ob.getPhysicalPath())[len(site_path):],
+                    'data-source-header': header or ''
+                })
+                content_el = fromstring(val)
+                if content_el.tag == 'div':
+                    # unwrap: fromstring auto adds div around content so we'll just take the
+                    # inside of it instead
+                    for inside_el in content_el:
+                        snippet_container.append(inside_el)
+                else:
+                    snippet_container.append(content_el)
+
                 if val:
                     parent = el.getparent()
                     idx = parent.index(el)
-                    parent[idx] = fromstring(val)
+                    parent[idx] = snippet_container
 
         return result
