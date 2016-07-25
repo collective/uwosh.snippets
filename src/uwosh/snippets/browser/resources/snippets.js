@@ -38,7 +38,7 @@
     '<span class="formHelp">You can select a particular section of the page to render.</span>' +
     '<select></select>' +
   '</div>' +
-  '<div class="snippets-preview">' +
+  '<div class="snippets-preview" style="display: none">' +
     '<h2>Snippet Preview</h2>' +
     '<div class="inner"></div>' +
   '</div>' +
@@ -85,6 +85,7 @@
               }).done(function(data){
                 $('.insert-btn', modal.$modal).removeAttr('disabled');
                 var $els = $('<div>' + data.result + '</div>');
+                $('.snippets-preview', modal.$modal).show();
                 $('.snippets-preview .inner', modal.$modal).append($els);
                 // parse to find headers...
                 var headers = [];
@@ -108,6 +109,7 @@
               });
             }else{
               // clear out
+              $('.snippets-preview', modal.$modal).hide();
               $('.snippets-section', modal.$modal).hide();
               $('.snippets-preview .inner', modal.$modal).empty();
               $('.insert-btn', modal.$modal).attr('disabled', 'true');

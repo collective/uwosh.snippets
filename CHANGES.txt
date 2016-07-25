@@ -4,10 +4,16 @@ Changelog
 2.0.0 (unreleased)
 ------------------
 
-- fix issue where a page constructed with many of the same snippets and a
-  snippet that contained the same markup as the page could cause huge
-  page output. We had a server using up 16 gigs of RAM trying to render
-  a complex page and then crashing the process.
+- Add site setup configuration
+  [vangheem]
+
+- Integrate link integrity
+  [vangheem]
+
+- Be able to add any content for a snippet
+  [vangheem]
+
+- Use lxml to parse doc
   [vangheem]
 
 
