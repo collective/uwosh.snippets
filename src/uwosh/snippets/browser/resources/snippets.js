@@ -57,7 +57,7 @@
         });
       });
 
-      function openSnippetWindow() {
+      function openSnippetWindow($node) {
         var $el = $('<div/>');
         $('body').append($el);
         var modal = new Modal($el, {
@@ -159,13 +159,19 @@
                   header: header
                 }
               }).done(function(resp){
-                ed.insertContent(ed.dom.createHTML('span', {
+                var attrs = {
                   class: 'snippet-tag snippet-tag-' + data[0].portal_type.toLowerCase().replace(' ', '-'),
                   'data-type': 'snippet_tag',
                   contenteditable: false,
                   'data-snippet-id': data[0].UID,
                   'data-header': header
-                }, resp.result));
+                };
+                if($node){
+                  $node.attr(attrs);
+                  $node.text(resp.result);
+                }else{
+                  ed.insertContent(ed.dom.createHTML('span', attrs, resp.result));
+                }
               }).fail(function(){
                 alert('error loading snippet data');
               }).always(function(){
@@ -179,7 +185,12 @@
       }
 
       ed.addCommand('snippets', function () {
-        openSnippetWindow();
+        var $el = $(ed.selection.getNode());
+        if($el.is('[data-type="snippet_tag"]')){
+          openSnippetWindow($el);
+        }else{
+          openSnippetWindow();
+        }
       });
 
       ed.addButton('snippetbutton', {
