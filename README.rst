@@ -4,7 +4,12 @@
 uwosh.snippets
 ==============
 
-(Plone 5.0+)
+Plone Version Compatibility
+---------------------------
+
+Version 2.x is compatible with Plone 5.0+
+
+Earlier versions are compatible with Plone 4
 
 Introduction
 ------------
@@ -22,7 +27,6 @@ Since the placeholders (referred to as "plugs") are being stored on the page, in
 text they represent, they never need to be updated. You simply just edit the snippet "definition"
 and immediately the changes will be propagated everywhere that you have a plug in your website.
 
-
 How to use
 ----------
 In order to use the uwosh.snippets add-on, the TinyMCE WYSIWYG editor needs to be installed
@@ -35,3 +39,15 @@ TODO
 
 - would be nice: re-add support for add/edit/delete snippets in the modal
   - doesn't fit as well into how we're allowing snippets from anywhere on the site now
+  
+Credits
+-------
+
+The original concept was developed by Sam Schwartz for the Office of International Education at University of Wisconsin Oshkosh.
+
+Plone 5 compatibility was developed by Nathan Van Gheem / Wildcard Corp. for Philip Bauer / Starzel.de.
+
+Maintainers
+-----------
+
+This add-on is maintained by Wildcard Corp., https://wildcardcorp.com, developers of the Castle CMS enhanced distribution of Plone, https://castlecms.io 
