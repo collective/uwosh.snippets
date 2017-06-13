@@ -32,7 +32,6 @@
       description="Removes the uwosh.snippets package"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-  <!-- -*- extra stuff goes here -*- -->
 
   <adapter factory=".transform.SnippetTransform" name="uwosh.snippets" />
 
@@ -43,8 +42,32 @@
     name="snippets"
     provides="Products.CMFPlone.interfaces.INonInstallable" />
 
-  <browser:resourceDirectory
-    name="uwosh.snippets"
-    directory="browser/resources"
-    />
+  <!-- remove link integrity update references since we are providing it ourselves -->
+  <unconfigure>
+    <subscriber
+      for="plone.app.relationfield.interfaces.IDexterityHasRelations
+           zope.lifecycleevent.interfaces.IObjectCopiedEvent"
+      handler="plone.app.linkintegrity.handlers.modifiedDexterity" />
+    <subscriber
+      for="plone.app.relationfield.interfaces.IDexterityHasRelations
+           zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler="plone.app.linkintegrity.handlers.modifiedDexterity" />
+    <subscriber
+      for="plone.app.relationfield.interfaces.IDexterityHasRelations
+           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+      handler="plone.app.linkintegrity.handlers.modifiedDexterity" />
+  </unconfigure>
+  <subscriber
+    for="plone.app.relationfield.interfaces.IDexterityHasRelations
+         zope.lifecycleevent.interfaces.IObjectCopiedEvent"
+    handler=".linkintegrity.modifiedDexterity" />
+  <subscriber
+    for="plone.app.relationfield.interfaces.IDexterityHasRelations
+         zope.lifecycleevent.interfaces.IObjectAddedEvent"
+    handler=".linkintegrity.modifiedDexterity" />
+  <subscriber
+    for="plone.app.relationfield.interfaces.IDexterityHasRelations
+         zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+    handler=".linkintegrity.modifiedDexterity" />
+
 </configure>

@@ -1,6 +1,0 @@
-<layers>
-    <layer
-        name="uwosh.snippets"
-        interface="uwosh.snippets.browser.interfaces.ISnippetsLayer"
-        />
-</layers>

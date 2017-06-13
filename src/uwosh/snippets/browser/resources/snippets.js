@@ -1,149 +1,202 @@
-/*jslint browser: true, bitwise: true, passfail: true, eqeq: true, newcap: true, plusplus: true, regexp: true, white: false, */
-/*global alert, tinyMCEPopup, tinyMCE, tinymce, jQuery:false, document:false, window:false, location:false */
+/* global $, tinyMCEPopup, tinyMCE, tinymce, jQuery:false, document:false, window:false, location:false */
 
 (function () {
-  tinymce.create('tinymce.plugins.SnippetsPlugin', {
-    init : function (ed, url) {
+  'use strict';
 
-      function openSnippetWindow(options) {
-        ed.windowManager.open({
-          file: url + '/@@get-snippet-list',
-          width: 800,
-          height: 700,
-          inline: 1,
-        }, options);
+  var API_URL = $('body').attr('data-base-url') + '/@@snippets-api';
+
+  var Modal = require('mockup-patterns-modal');
+  var _ = require('underscore');
+  var utils = require('mockup-utils');
+
+  var reOptions = {
+    vocabularyUrl: $('body').attr('data-portal-url') + '/@@getVocabulary?name=plone.app.vocabularies.Catalog',
+    maximumSelectionSize: 1
+  };
+
+  // load config
+  $.ajax({
+    url: API_URL,
+    data: {
+      action: 'configuration'
+    }
+  }).done(function(data){
+    reOptions = $.extend({}, true, reOptions, JSON.parse(data.relatedItemsOptions));
+  });
+
+  var ModaleTemplate = _.template('<div>' +
+  '<h1>Add snippet</h1>' +
+  '<div>' +
+    '<div class="form-group snippets-content">' +
+      '<label>Select content</label>' +
+      '<input class="pat-relateditems" type="text"' +
+            " data-pat-relateditems='<%= reOptions %>' />" +
+    '</div>' +
+  '</div>' +
+  '<div class="form-group snippets-section" style="display:none">' +
+    '<label>Select section</label>' +
+    '<span class="formHelp">You can select a particular section of the page to render.</span>' +
+    '<select></select>' +
+  '</div>' +
+  '<div class="snippets-preview" style="display: none">' +
+    '<h2>Snippet Preview</h2>' +
+    '<div class="inner" style="padding: 10px;background: white;border: 1px solid #ccc;"></div>' +
+  '</div>' +
+  '<button class="plone-btn plone-btn-default cancel-btn">Cancel</button>' +
+  '<button class="plone-btn plone-btn-primary insert-btn" disabled="true">Insert</button>' +
+'</div>');
+
+  tinymce.create('tinymce.plugins.SnippetsPlugin', {
+
+    init : function (ed) {
+
+      ed.on('init', function(){
+        // make all existing not editable
+        $('[data-type="snippet_tag"]', ed.getBody()).each(function(){
+          this.setAttribute('contenteditable', false);
+        });
+      });
+
+      function openSnippetWindow($node) {
+        var $el = $('<div/>');
+        $('body').append($el);
+        var modal = new Modal($el, {
+          html: ModaleTemplate({
+            reOptions: JSON.stringify(reOptions)
+          }),
+          content: null,
+          buttons: '.plone-btn'
+        });
+        modal.on('shown', function() {
+          var $re = $('input.pat-relateditems', modal.$modal);
+          var re = $re.data('pattern-relateditems');
+
+          // pay attention to browsing option
+          if(re.options.browsing){
+            re.browsing = re.options.browsing;
+          }
+
+          re.$el.on('change', function(){
+            // populate preview and section list
+            var data = re.$el.select2('data');
+            if(data && data.length > 0){
+              utils.loading.show();
+              $.ajax({
+                url: API_URL,
+                data: {
+                  uid: data[0].UID,
+                  action: 'render'
+                }
+              }).done(function(data){
+                $('.insert-btn', modal.$modal).removeAttr('disabled');
+                var $els = $('<div>' + data.result + '</div>');
+                $('.snippets-preview', modal.$modal).show();
+                $('.snippets-preview .inner', modal.$modal).append($els);
+                // parse to find headers...
+                var headers = [];
+                $('h1,h2,h3,h4,h5,h6', $els).each(function(){
+                  headers.push($(this).text());
+                });
+                if(headers.length > 0){
+                  var $sections = $('.snippets-section', modal.$modal);
+                  $sections.show();
+                  $('select', $sections).empty();
+                  $('select', $sections).append($('<option value="">All</option>'));
+                  headers.forEach(function(header){
+                    var $option = $('<option value="' + header + '">' + header + '</option>');
+                    $('select', $sections).append($option);
+                  });
+                }
+              }).fail(function(){
+                alert('error loading snippet data');
+              }).always(function(){
+                utils.loading.hide();
+              });
+            }else{
+              // clear out
+              $('.snippets-preview', modal.$modal).hide();
+              $('.snippets-section', modal.$modal).hide();
+              $('.snippets-preview .inner', modal.$modal).empty();
+              $('.insert-btn', modal.$modal).attr('disabled', 'true');
+            }
+          });
+
+          $('.snippets-section select', modal.$modal).on('change', function(){
+            var header = this.value;
+            var data = re.$el.select2('data');
+            if(data && data.length > 0){
+              $.ajax({
+                url: API_URL,
+                data: {
+                  uid: data[0].UID,
+                  action: 'render',
+                  header: header
+                }
+              }).done(function(data){
+                var $els = $('<div>' + data.result + '</div>');
+                $('.snippets-preview .inner', modal.$modal).empty().append($els);
+              });
+            }
+          });
+
+          $('button', modal.$modal).off('click').on('click', function(){
+            var $btn = $(this);
+            if(!$btn.hasClass('insert-btn')){
+              modal.hide();
+              return;
+            }
+
+            var data = re.$el.select2('data');
+
+            if(data && data.length > 0){
+              utils.loading.show();
+              var header = $('.snippets-section select', modal.$modal).val();
+              $.ajax({
+                url: $('body').attr('data-base-url') + '/@@snippets-api',
+                data: {
+                  uid: data[0].UID,
+                  action: 'code',
+                  header: header
+                }
+              }).done(function(resp){
+                var attrs = {
+                  class: 'snippet-tag snippet-tag-' + data[0].portal_type.toLowerCase().replace(' ', '-'),
+                  'data-type': 'snippet_tag',
+                  contenteditable: false,
+                  'data-snippet-id': data[0].UID,
+                  'data-header': header
+                };
+                if($node){
+                  $node.attr(attrs);
+                  $node.text(resp.result);
+                }else{
+                  ed.insertContent(ed.dom.createHTML('span', attrs, resp.result));
+                }
+              }).fail(function(){
+                alert('error loading snippet data');
+              }).always(function(){
+                utils.loading.hide();
+              });
+            }
+            modal.hide();
+          });
+        });
+        modal.show();
       }
 
-      tinymce.DOM.loadCSS(url + '/snippets.css');
-
       ed.addCommand('snippets', function () {
-
-        var options = {
-          current_url: url,
-        };
-
-        openSnippetWindow(options);
+        var $el = $(ed.selection.getNode());
+        if($el.is('[data-type="snippet_tag"]')){
+          openSnippetWindow($el);
+        }else{
+          openSnippetWindow();
+        }
       });
 
       ed.addButton('snippetbutton', {
-        title : 'Add Snippet.',
         cmd : 'snippets',
+        image: $('body').attr('data-portal-url') + '/++resource++uwosh.snippets/brackets.png'
       });
-
-      /*jslint unparam: true*/
-
-      //Because the parameters are passed in a specified order, we need jsLint to ignore the unused 'ed' variable
-
-      ed.onClick.add(function (ed, e) {
-        if ($(e.target).parents('span[data-type="snippet_tag"]').length > 0 || $(e.target).attr('data-type') == 'snippet_tag') {
-          var snippet_element;
-
-          if ($(e.target).attr('data-type') == 'snippet_tag') {
-            snippet_element = e.target;
-
-          } else {
-            snippet_element = $(e.target).parents('span[data-type="snippet_tag"]');
-          }
-
-          var options = {
-            current_url: url,
-            editor_snippet: snippet_element,
-          };
-
-          openSnippetWindow(options);
-        }
-      });
-      /*jslint unparam: false*/
-
-      ed.onSetContent.add(function (ed) {
-        var snippets = $(ed.contentDocument).find('span[data-type="snippet_tag"]');
-
-        //We just want to get each snippet once, if there are duplicates, just ignore them
-        var snippet_ids = [];
-        $(snippets).each(function (index) {
-          if ($.inArray($(snippets[index]).attr('data-snippet-id'), snippet_ids) == -1) {
-            snippet_ids.push($(snippets[index]).attr('data-snippet-id'));
-          }
-        });
-
-        if (snippet_ids.length > 0) {
-
-          var edit_url = document.baseURI + '/@@get-snippet-list?json=true&snippet_id=';
-
-          var ids = [];
-          $(snippet_ids).each(function (index) {
-            ids.push(snippet_ids[index]);
-          });
-
-          var idList = ids.join();
-
-          edit_url += idList;
-          $.ajax({
-            url: edit_url,
-            dataType: 'json',
-            success: function (data) {
-
-              $(data).each(function () {
-
-                var snippet = $(tinyMCE.activeEditor.contentDocument).find('span[data-snippet-id="' + this.id + '"]');
-
-                var self = this;
-
-                if (self.dead == true) {
-                  var text = '<span data-type="dead_snippet"></span>';
-
-                  $(snippet).each(function () {
-                    $(this).html(text);
-                    $(this).css('display', 'none');
-                  });
-                } else {
-                  var output = self.text;
-                  $(snippet).each(function () {
-                    $(this).html(output);
-                    $(this).css('outline', 'black dotted thin');
-                    $(this).css('display', 'inline-block');
-                    $(this).addClass('no-select');
-                    $(this).attr('contenteditable', 'false');
-                  });
-                }
-              });
-            },
-            error: function (xhr) {
-              console.log(xhr);
-            },
-          });
-
-        }
-      });
-
-      /*jslint unparam: true*/
-
-      //Once again, the parameters are passed in a specific order here, so we need both of them,
-      //even though "ed" is never used. Therefore, we tell jsLint to ignore that for now.
-      ed.onPostProcess.add(function (ed, o) {
-        var body = o.node;
-        $(body).find('span[data-type="dead_snippet"]').parent().remove();
-        var snippets = $(body).find('span[data-type="snippet_tag"]');
-
-        $(snippets).html("").removeAttr('contenteditable');
-
-
-        o.content = $(body).html();
-      });
-
-      /*jslint unparam: false*/
-
-      //Prevents TinyMCE from wrapping text in <p> tags.
-      //Since these are meant to be used in-line,
-      //breaking to a new paragraph obviously isn't desired.
-      var pageUrl = String(document.URL);
-
-      if (pageUrl.indexOf('@@edit-snippet') >= 0 || pageUrl.indexOf('@@create-snippet') >= 0) {
-        ed.settings.force_p_newlines = 0;
-        ed.settings.forced_root_block = false;
-        ed.settings.relative_urls = false;
-        ed.settings.remove_script_host = true;
-      }
     },
   });
   tinymce.PluginManager.add('snippets', tinymce.plugins.SnippetsPlugin);
