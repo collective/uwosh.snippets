@@ -16,22 +16,23 @@ long_description = (
 
 setup(name='uwosh.snippets',
       version=version,
-      description="Adds dynamic rich-text snippets",
+      description="Adds reusable dynamically-rendered rich-text snippets",
       long_description=long_description,
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Environment :: Web Environment",
         "Framework :: Plone",
+        "Framework :: Plone :: 5.0",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='',
       author='Sam Schwartz',
-      author_email='obct537@gmail.com',
-      url='https://github.com/obct537/snippets',
+      author_email='sam.schwartz@wildcardcorp.com',
+      url='https://github.com/collective/uwosh.snippets',
       license='gpl',
       namespace_packages=['uwosh',],
       package_dir={'' : 'src'},
