@@ -4,7 +4,8 @@ Changelog
 2.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- enhance user doc in README
+  [tkimnguyen]
 
 
 2.0.1 (2017-08-27)
