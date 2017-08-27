@@ -1,10 +1,12 @@
 Changelog
 =========
 
-2.0.1 (unreleased)
+2.0.1 (2017-08-27)
 ------------------
 
-- Nothing changed yet.
+- fix MANIFEST to include missing marker file to enable creation of
+  .snippets folder on activation
+  [tkimnguyen]
 
 
 2.0.0 (2017-06-13)

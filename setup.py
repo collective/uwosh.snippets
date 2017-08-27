@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.0.1.dev0'
+version = '2.0.1'
 
 long_description = (
     open('README.rst').read()
@@ -29,7 +29,7 @@ setup(name='uwosh.snippets',
         "Programming Language :: Python :: 2.7",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='',
+      keywords='snippet,dynamic,reusable,fragment',
       author='Sam Schwartz',
       author_email='sam.schwartz@wildcardcorp.com',
       url='https://github.com/collective/uwosh.snippets',
