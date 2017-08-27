@@ -1,8 +1,11 @@
-.. raw::html
-
 ==============
 uwosh.snippets
 ==============
+
+Adds dynamically-updated rich text snippets to Plone. Update a 
+snippet to display the change everywhere the snippet is used 
+(pages, news items, events, anywhere rich text and TinyMCE 
+appear).
 
 Plone Version Compatibility
 ---------------------------
