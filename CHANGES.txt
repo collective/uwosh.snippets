@@ -4,7 +4,8 @@ Changelog
 2.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- more step by step user documentation
+  [tkimnguyen]
 
 
 2.0.2 (2017-08-27)
