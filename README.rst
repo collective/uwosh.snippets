@@ -20,7 +20,7 @@ Introduction
 The uwosh.snippets package allows you to include dynamically updated
 rich text snippets (chunks of rich text) anywhere in your site that
 uses the TinyMCE editor (i.e., any rich text field), including
-Documents (Pages), News Items, and Events.
+Pages, News Items, and Events.
 
 Snippets can be used anywhere that rich text can be used. They are
 inserted into a page much like you would an image or hyperlink.
@@ -55,30 +55,87 @@ How to use
 - Edit your buildout.cfg to add uwosh.snippets to your eggs.
 - Run buildout.
 - Restart your instance or clients.
-- go to Site Setup -> Add-ons
-- Install uwosh.snippets
+- Go to Site Setup -> Add-ons
+- Activate uwosh.snippets
 
 A new folder called "Snippets" (with ID ".snippets") will be created
 at the root of your site; that is the default location where the
 add-on will look for snippets.
 
-Navigate to the Snippets folder. Add a Document (Page); give it a
-meaningful title and summary to help you and other content editors
-locate the snippet most easily; in the body of the Document, enter any
-rich text. You can use any TinyMCE formatting tools you wish, and you
-can even use the HTML view to add and modify arbitrarily complex
-HTML. Save the Document. You have created your first snippet! You can
-use this snippet in one or more places on your site.
+To add a snippet:
 
-When you create or edit a Document ("Page"), TinyMCE will have a new
-"{{}}" toolbar icon. When you click it, you will see a list of all
-snippets found in the Snippets folder. When you click on a snippet, a
-reference to it (a "plug") will be inserted into the rich text at the
-cursor location. When you press Save, instead of seeing the snippet
-plug you will see the rich text contents of the snippet.
+- Navigate to the Snippets folder.
+- Add a Page. Give it a meaningful title and summary to
+  help you and other content editors locate the snippet most
+  easily. In the body, enter any rich text. You can use TinyMCE's
+  Tools -> Source Code (HTML) view to insert arbitrarily complex HTML,
+  as long as it satisfies your site's HTML Filtering settings.
+- Click the Save button.
+
+You have created your first snippet! You can use this snippet in one
+or more places on your site, anywhere TinyMCE is used as the editor.
+
+To insert a snippet:
+
+- Add or edit a Page (or Event or News Item or any other content
+  item that has a rich text field that uses the TinyMCE editor).
+- In the TinyMCE editor, place your cursor where you will want to have
+  the snippet's rich text appear.
+- Click on TinyMCE's new "{{}}" toolbar icon to bring up the snippet
+  search dialog, which by default looks in your site's Snippets
+  folder.
+- Use the search dialog to locate the snippet you want to
+  insert. Click in the search dialog's text field. You will see a list
+  of all snippets in your snippets folder. If you enter text in the
+  search field, you will see only the snippets that match the search
+  term you entered.
+- Click on the snippet you want to insert. The Snippet Preview will
+  show you the contents of the snippet you selected. Use the "Select
+  section" drop down to choose the portion of the snippet you want to
+  preview (this is useful if you have particularly long snippets).
+- Click the Insert button. A reference to the snippet (a "plug") will
+  be inserted into the rich text at the cursor location. It will look
+  something like "Snippet:[ID=82341234bcda]".
+- Click the Save button.
+
+Instead of seeing the snippet plug you will now see the rich text
+contents of the snippet.
+
+Settings
+--------
+
+uwosh.snippets includes a control panel, available at Site Setup ->
+Snippets ('@@snippets-controlpanel').
+
+Related items settings:
+
+- Use this to change the directory in which to look for snippets (by
+  default, a folder with the ID `.snippets` and title `Snippets`). For
+  example, to look for snippets in a folder with the ID `blabla` at
+  the root of your site, change the value of `basePath` from `/.snippets` to `/blabla`.
+- You can also modify the content type you use as snippets. By
+  default, this is Pages (Documents). For example, to use the rich
+  text field of a News Item, change the value of `selectableTypes`
+  from `[Document]` to `[News Item]`.
+
+Code display expression:
+
+- Use this to modify the way a snippet reference ("plug") is displayed
+  inside the TinyMCE editing area. Defaults to
+  `string:Snippet:[ID=${context/@@uuid}]`. This is probably not a
+  setting you will want to change.
+
+Render expression:
+
+- Use this to specify the TAL expression that renders a
+  snippet. Defaults to
+  `context/text/output|context/getText|nothing`. This is probably not
+  a setting you will want to change. See the `TAL expression
+  documentation
+  <https://docs.plone.org/develop/plone/functionality/expressions.html>`_.
 
 Requirements
-----------
+------------
 
 The TinyMCE WYSIWYG editor needs to be installed and enabled. A basic
 understanding of its use is also highly recommended. For more
