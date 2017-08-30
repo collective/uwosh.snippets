@@ -4,7 +4,8 @@ Changelog
 2.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- add note about rendering snippets inline
+  [tkimnguyen]
 
 
 2.0.3 (2017-08-29)
