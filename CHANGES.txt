@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.4 (unreleased)
+2.0.4 (2017-08-30)
 ------------------
 
 - add note about rendering snippets inline
