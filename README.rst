@@ -134,6 +134,18 @@ Render expression:
   documentation
   <https://docs.plone.org/develop/plone/functionality/expressions.html>`_.
 
+Notes
+-----
+
+If you want a snippet to be rendered without causing a line break
+(because of the `p` tag that TinyMCE wraps around the rich text), edit
+the snippet and, beneath the TinyMCE rich text editing area, use the
+Text drop down and choose `text/x-web-textile`. Then manually remove
+the `p` tag around the snippet's rich text and click Save. The rich
+text will be saved without TinyMCE re-wrapping it with the `p` tag,
+and when you use the snippet elsewhere it will not start a new
+paragraph.
+
 Requirements
 ------------
 
