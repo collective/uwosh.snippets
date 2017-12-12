@@ -4,7 +4,9 @@ Changelog
 2.0.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Handle missing objects when pages with
+  snippets have been deleted
+  [cdw9]
 
 
 2.0.4 (2017-08-30)

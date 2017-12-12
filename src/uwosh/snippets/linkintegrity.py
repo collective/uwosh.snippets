@@ -47,6 +47,9 @@ def getSnippetRefsFromHtml(html):
 
 
 def findTextAreas(obj):
+    if not obj:
+        yield []
+        return
     fti = getUtility(IDexterityFTI, name=obj.portal_type)
     schema = fti.lookupSchema()
     additional_schema = getAdditionalSchemata(
