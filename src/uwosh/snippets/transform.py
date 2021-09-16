@@ -57,7 +57,7 @@ class SnippetTransform(object):
         if ce and ce in ('zip', 'deflate', 'compress'):
             return None
         try:
-            if result == ['']:
+            if result in [[''], [b'']]:
                 return None
 
             result = getHTMLSerializer(result, pretty_print=False)
