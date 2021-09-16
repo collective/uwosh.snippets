@@ -2,11 +2,11 @@
 from plone import api
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFPlone.interfaces import INonInstallable
-from zope.interface import implements
+from zope.interface import implementer
 
 
+@implementer(INonInstallable)
 class HiddenProfiles(object):
-    implements(INonInstallable)
 
     def getNonInstallableProfiles(self):
         """

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.0.5.dev0'
+version = '3.0.dev0'
 
 long_description = (
     open('README.rst').read()
@@ -26,7 +26,7 @@ setup(name='uwosh.snippets',
         "Framework :: Plone :: 5.0",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='snippet,dynamic,reusable,fragment',
@@ -41,7 +41,6 @@ setup(name='uwosh.snippets',
       zip_safe=False,
       install_requires=[
           'setuptools',
-    	  'plone.directives.form',
           'plone.api',
           'lxml',
           'z3c.unconfigure>=1.1',

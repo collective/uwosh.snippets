@@ -25,7 +25,7 @@ class ISnippetsSettings(Interface):
             }],
             "browsing": True,
             "basePath": "/.snippets"
-        }, indent=4).decode('utf8'),
+        }, indent=4),
     )
 
     code_display_expression = schema.TextLine(

@@ -13,12 +13,12 @@ from uwosh.snippets.utils import ExpressionEvaluator
 from uwosh.snippets.utils import get_header_from_text
 from zope.component import adapts
 from zope.component import getUtility
-from zope.interface import implements
+from zope.interface import implementer
 from zope.interface import Interface
 
 
+@implementer(ITransform)
 class SnippetTransform(object):
-    implements(ITransform)
     adapts(Interface, ISnippetsLayer)
 
     order = 9000
