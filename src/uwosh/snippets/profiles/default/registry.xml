@@ -18,4 +18,14 @@
     </value>
   </record>
 
+  <record name="plone.custom_attributes" interface="Products.CMFPlone.interfaces.controlpanel.IFilterSchema" field="custom_attributes">
+      <value purge="False">
+        <element>data-type</element>
+        <element>data-snippet-id</element>
+        <element>data-iframe</element>
+        <element>data-iframe-width</element>
+        <element>data-iframe-height</element>
+      </value>
+    </record>
+
 </registry>
