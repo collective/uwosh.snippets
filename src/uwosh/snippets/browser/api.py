@@ -57,3 +57,12 @@ class SnippetsAPI(BrowserView):
             'success': True,
             'result': evaluator.evaluate(expression, ob, uid=uid, header=header)
         }
+
+
+class Render(BrowserView):
+    """
+    iFrame view for snippets
+    """
+
+    def __call__(self):
+        return render_snippet(self.context)

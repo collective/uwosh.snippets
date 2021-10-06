@@ -25,5 +25,11 @@
     permission="plone.app.controlpanel.Site"
     layer="..interfaces.ISnippetsLayer"
     />
+  <browser:page
+    name="raw"
+    for="*"
+    permission="zope2.View"
+    class=".api.Render"
+    />
 
 </configure>
