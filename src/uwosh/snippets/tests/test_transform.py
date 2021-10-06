@@ -19,8 +19,8 @@ class TestTransform(BaseTest):
 <div data-type="snippet_tag" data-snippet-id="{}" data-header="{}"></div>
 </body>
 </html>'''.format(IUUID(page), header)
-
-        return ''.join(transform.transformIterable(html, None))
+        transformed = transform.transformIterable(html, None)
+        return str(transformed)
 
     def test_replace_tag(self):
         page = self._create_page()
