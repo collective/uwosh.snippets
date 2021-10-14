@@ -3,6 +3,21 @@ from zope import schema
 from zope.interface import Interface
 
 import json
+import six
+
+
+json_value = json.dumps({
+                'selectableTypes': ['Document'],
+                'baseCriteria': [{
+                    u'i': u'portal_type',
+                    u'v': [u'Document', u'Folder'],
+                    u'o': u'plone.app.querystring.operation.selection.any'
+                }],
+                "browsing": True,
+                "basePath": "/.snippets"
+            }, indent=4)
+
+settings = json_value.decode('utf8') if six.PY2 else json_value
 
 
 class ISnippetsLayer(Interface):
@@ -16,16 +31,7 @@ class ISnippetsSettings(Interface):
         description=u"Pattern options for related items widget used for snippet selection",
         required=False,
         constraint=validate_json,
-        default=json.dumps({
-            'selectableTypes': ['Document'],
-            'baseCriteria': [{
-                u'i': u'portal_type',
-                u'v': [u'Document', u'Folder'],
-                u'o': u'plone.app.querystring.operation.selection.any'
-            }],
-            "browsing": True,
-            "basePath": "/.snippets"
-        }, indent=4),
+        default=settings,
     )
 
     code_display_expression = schema.TextLine(
