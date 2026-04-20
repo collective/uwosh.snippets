@@ -8,8 +8,6 @@
 
   <five:registerPackage package="." initialize=".initialize" />
 
-  <includeDependencies package="." />
-
   <genericsetup:importStep
       name="uwosh.snippets"
       title="uwosh.snippets special import handlers"
