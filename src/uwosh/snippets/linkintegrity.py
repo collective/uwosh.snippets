@@ -79,7 +79,7 @@ def checkSnippetReferences(obj):
                                          'context/text/output|context/getText|nothing'))
     obj_headers = []
     html = evaluator.evaluate(expression, obj)
-    if not html:
+    if not html or not html.strip():
         return
 
     dom = fromstring(html)
