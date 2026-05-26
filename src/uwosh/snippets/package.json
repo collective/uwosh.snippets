@@ -1,0 +1,22 @@
+{
+  "name": "uwosh-snippets-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend build for uwosh.snippets TinyMCE plugin",
+  "scripts": {
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
+    "watch": "NODE_ENV=development webpack --config webpack.config.js --watch"
+  },
+  "dependencies": {
+    "@patternslib/patternslib": "^9.10.5",
+    "jquery": "^3.7.1"
+  },
+  "devDependencies": {
+    "@patternslib/dev": "^4.0.0",
+    "webpack": "^5.106.0",
+    "webpack-cli": "^6.0.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
