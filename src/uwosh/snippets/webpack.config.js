@@ -7,11 +7,11 @@ const webpack_config = require("@patternslib/dev/webpack/webpack.config").config
 module.exports = () => {
   let config = {
     entry: {
-      snippets: path.resolve(__dirname, "uwosh/snippets/browser/resources/src/snippets.js"),
+      snippets: path.resolve(__dirname, "browser/resources/snippets.js"),
     },
     output: {
       filename: "[name].js",
-      path: path.resolve(__dirname, "uwosh/snippets/browser/resources"),
+      path: path.resolve(__dirname, "browser/resources/build"),
     },
   };
 

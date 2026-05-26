@@ -1,12 +1,12 @@
 /* global $, tinyMCEPopup, tinyMCE, tinymce, jQuery:false, document:false, window:false, location:false */
 
+import Modal from "@patternslib/patternslib/src/pat/modal/modal";
+import utils from "@patternslib/patternslib/src/core/utils";
+
 (function () {
   'use strict';
 
   var API_URL = $('body').attr('data-base-url') + '/@@snippets-api';
-
-  var Modal = require('mockup-patterns-modal');
-  var utils = require('mockup-utils');
 
   var reOptions = {
     vocabularyUrl: $('body').attr('data-portal-url') + '/@@getVocabulary?name=plone.app.vocabularies.Catalog',
