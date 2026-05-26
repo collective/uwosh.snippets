@@ -6,7 +6,6 @@
   var API_URL = $('body').attr('data-base-url') + '/@@snippets-api';
 
   var Modal = require('mockup-patterns-modal');
-  var _ = require('underscore');
   var utils = require('mockup-utils');
 
   var reOptions = {
@@ -24,13 +23,14 @@
     reOptions = $.extend({}, true, reOptions, JSON.parse(data.relatedItemsOptions));
   });
 
-  var ModaleTemplate = _.template('<div>' +
+  function modalTemplate(context) {
+    var template = '<div>' +
   '<h1>Add snippet</h1>' +
   '<div>' +
     '<div class="form-group snippets-content">' +
       '<label>Select content</label>' +
       '<input class="pat-relateditems" type="text"' +
-            " data-pat-relateditems='<%= reOptions %>' />" +
+            " data-pat-relateditems='__REOPTIONS__' />" +
     '</div>' +
     '<div class="form-group snippets-iframe">' +
       '<p>If snippet should display in an iframe, check this box, then specify a width and height</p>' +
@@ -53,7 +53,10 @@
   '</div>' +
   '<button class="plone-btn plone-btn-default cancel-btn">Cancel</button>' +
   '<button class="plone-btn plone-btn-primary insert-btn" disabled="true">Insert</button>' +
-'</div>');
+'</div>';
+
+    return template.replace('__REOPTIONS__', context.reOptions);
+  }
 
   tinymce.create('tinymce.plugins.SnippetsPlugin', {
 
@@ -70,7 +73,7 @@
         var $el = $('<div/>');
         $('body').append($el);
         var modal = new Modal($el, {
-          html: ModaleTemplate({
+          html: modalTemplate({
             reOptions: JSON.stringify(reOptions)
           }),
           content: null,
