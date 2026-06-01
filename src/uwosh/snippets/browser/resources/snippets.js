@@ -1,6 +1,6 @@
 /* global $, tinyMCEPopup, tinyMCE, tinymce, jQuery:false, document:false, window:false, location:false */
 
-import Modal from "@patternslib/patternslib/src/pat/modal/modal";
+import registry from "@patternslib/patternslib/src/core/registry";
 import utils from "@patternslib/patternslib/src/core/utils";
 
 (function () {
@@ -29,8 +29,8 @@ import utils from "@patternslib/patternslib/src/core/utils";
   '<div>' +
     '<div class="form-group snippets-content">' +
       '<label>Select content</label>' +
-      '<input class="pat-relateditems" type="text"' +
-            " data-pat-relateditems='__REOPTIONS__' />" +
+      '<input class="pat-contentbrowser" type="text"' +
+            " data-pat-contentbrowser='__REOPTIONS__' />" +
     '</div>' +
     '<div class="form-group snippets-iframe">' +
       '<p>If snippet should display in an iframe, check this box, then specify a width and height</p>' +
@@ -58,10 +58,7 @@ import utils from "@patternslib/patternslib/src/core/utils";
     return template.replace('__REOPTIONS__', context.reOptions);
   }
 
-  tinymce.create('tinymce.plugins.SnippetsPlugin', {
-
-    init : function (ed) {
-
+  tinymce.PluginManager.add('snippets', function (ed) {
       ed.on('init', function(){
         // make all existing not editable
         $('[data-type="snippet_tag"]', ed.getBody()).each(function(){
@@ -72,7 +69,7 @@ import utils from "@patternslib/patternslib/src/core/utils";
       function openSnippetWindow($node) {
         var $el = $('<div/>');
         $('body').append($el);
-        var modal = new Modal($el, {
+        var modal = registry.patterns["plone-modal"].init($el, {
           html: modalTemplate({
             reOptions: JSON.stringify(reOptions)
           }),
@@ -80,23 +77,21 @@ import utils from "@patternslib/patternslib/src/core/utils";
           buttons: '.plone-btn'
         });
         modal.on('shown', function() {
-          var $re = $('input.pat-relateditems', modal.$modal);
-          var re = $re.data('pattern-relateditems');
+          var $re = $('input.pat-contentbrowser', modal.$modal);
 
-          // pay attention to browsing option
-          if(re.options.browsing){
-            re.browsing = re.options.browsing;
-          }
+          $re.on('change', function(){
 
-          re.$el.on('change', function(){
-            // populate preview and section list
-            var data = re.$el.select2('data');
+            var value = (this && typeof this.value === 'string')
+            if (!value) {
+              return;
+            }
+            var data = this.value;
             if(data && data.length > 0){
-              utils.loading.show();
+              //utils.loading.show();
               $.ajax({
                 url: API_URL,
                 data: {
-                  uid: data[0].UID,
+                  uid: data,
                   action: 'render'
                 }
               }).done(function(data){
@@ -122,7 +117,6 @@ import utils from "@patternslib/patternslib/src/core/utils";
               }).fail(function(){
                 alert('error loading snippet data');
               }).always(function(){
-                utils.loading.hide();
               });
             }else{
               // clear out
@@ -135,12 +129,12 @@ import utils from "@patternslib/patternslib/src/core/utils";
 
           $('.snippets-section select', modal.$modal).on('change', function(){
             var header = this.value;
-            var data = re.$el.select2('data');
+            var data = this.value;
             if(data && data.length > 0){
               $.ajax({
                 url: API_URL,
                 data: {
-                  uid: data[0].UID,
+                  uid: data,
                   action: 'render',
                   header: header
                 }
@@ -158,27 +152,25 @@ import utils from "@patternslib/patternslib/src/core/utils";
               return;
             }
 
-            var data = re.$el.select2('data');
+            var data = $re[0].value;
             var in_iframe = $('#display-iframe').is(':checked');
             var iframe_width = $('#iframe-width').val();
             var iframe_height = $('#iframe-height').val();
-
             if(data && data.length > 0){
-              utils.loading.show();
               var header = $('.snippets-section select', modal.$modal).val();
               $.ajax({
                 url: $('body').attr('data-base-url') + '/@@snippets-api',
                 data: {
-                  uid: data[0].UID,
+                  uid: data,
                   action: 'code',
                   header: header
                 }
               }).done(function(resp){
                 var attrs = {
-                  class: 'snippet-tag snippet-tag-' + data[0].portal_type.toLowerCase().replace(' ', '-'),
+                  class: 'snippet-tag snippet-tag-' + resp.result.toLowerCase().replace(' ', '-'),
                   'data-type': 'snippet_tag',
                   contenteditable: false,
-                  'data-snippet-id': data[0].UID,
+                  'data-snippet-id': data,
                   'data-header': header,
                   'data-iframe': in_iframe,
                   'data-iframe-width': iframe_width,
@@ -211,11 +203,19 @@ import utils from "@patternslib/patternslib/src/core/utils";
         }
       });
 
-      ed.addButton('snippetbutton', {
-        cmd : 'snippets',
-        image: $('body').attr('data-portal-url') + '/++resource++uwosh.snippets/brackets.png'
-      });
-    },
+      if (ed.ui && ed.ui.registry && ed.ui.registry.addButton) {
+        ed.ui.registry.addButton('snippetbutton', {
+          text: '{{}}',
+          tooltip: 'Add snippet',
+          onAction: function () {
+            ed.execCommand('snippets');
+          }
+        });
+      } else if (ed.addButton) {
+        ed.addButton('snippetbutton', {
+          cmd : 'snippets',
+          image: $('body').attr('data-portal-url') + '/++resource++uwosh.snippets/brackets.png'
+        });
+      }
   });
-  tinymce.PluginManager.add('snippets', tinymce.plugins.SnippetsPlugin);
 }());
