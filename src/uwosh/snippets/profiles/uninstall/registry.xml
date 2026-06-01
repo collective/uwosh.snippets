@@ -5,6 +5,7 @@
   <record name="plone.custom_plugins"
           interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema" field="custom_plugins">
     <value purge="False">
+      <element remove="True">snippets|++resource++uwosh.snippets/build/snippets.js</element>
       <element remove="True">snippets|++resource++uwosh.snippets/snippets.js</element>
     </value>
   </record>
