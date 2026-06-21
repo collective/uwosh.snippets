@@ -5,7 +5,7 @@ Things I (or anyone interested in contributing) need to fix:
 - More unit tests
 - Remove the snippet button when editing a snippet. (Somehow....TinymCE is a cruel mistress)
 
-Next phase of developement:
+Next phase of development:
 ===========================
 - Move snippets to a Dexterity object
 - Incorporate workflows
